@@ -46,3 +46,17 @@ export function getDataFromNodes(repoNodes: RepoNode[]): {
         forks,
     };
 }
+
+export function encode(value: string) {
+    let buff = Buffer.from(value, "utf-8");
+    return buff.toString("base64");
+}
+export function decode(value: string) {
+    return Buffer.from(value, "base64").toString("utf-8");
+}
+
+export function isProd() {
+    return process.env.NODE_ENV === "production"
+        ? "https://github-stats.vercel.app"
+        : "localhost:3000";
+}

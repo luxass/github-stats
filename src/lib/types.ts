@@ -39,3 +39,15 @@ export type LanguageNode = {
     color: string;
     name: string;
 };
+
+export type Theme = {
+    title?: string;
+    icon?: string;
+    text?: string;
+    background?: string;
+    border?: string;
+};
+
+export type ExtendedTheme = Theme & {
+    url: string;
+};
