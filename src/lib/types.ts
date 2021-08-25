@@ -1,3 +1,4 @@
+
 export type UserStats = {
     stars: string;
     forks: string;
@@ -39,8 +40,15 @@ export type LanguageNode = {
     color: string;
     name: string;
 };
-
 export type Theme = {
+    name: string;
+    identifier: string;
+    design: {
+        stats?: ThemeDesign;
+        repo?: ThemeDesign;
+    };
+};
+export type ThemeDesign = {
     title?: string;
     icon?: string;
     text?: string;

@@ -58,5 +58,5 @@ export function decode(value: string) {
 export function isProd() {
     return process.env.NODE_ENV === "production"
         ? "https://github-stats.vercel.app"
-        : "localhost:3000";
+        : "http://localhost:3000";
 }
