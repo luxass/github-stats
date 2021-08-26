@@ -1,0 +1,20 @@
+{
+    "name": "Dracula",
+    "identifier": "THEME_DRACULA",
+    "design": {
+        "stats": {
+            "title": "#ff6e96",
+            "icon": "#79dafa",
+            "text": "#f8f8f2",
+            "background": "#282a36",
+            "border": "#e4e2e2"
+        },
+        "repo": {
+            "title": "#ff6e96",
+            "icon": "#79dafa",
+            "text": "#f8f8f2",
+            "background": "#282a36",
+            "border": "#e4e2e2"
+        }
+    }
+}

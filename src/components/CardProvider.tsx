@@ -12,7 +12,16 @@ type ProviderProps = {
 
 export default function CardProvider({ query, design }: ProviderProps) {
     return (
-        <div>
+        <div
+            style={{
+                backgroundColor: "green",
+                width: "100%",
+                height: "calc(100vh - 60px)",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+            }}
+        >
             {query === "user" ? (
                 <StatsCard design={design.stats} />
             ) : (

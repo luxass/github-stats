@@ -59,3 +59,7 @@ export type ThemeDesign = {
 export type ExtendedTheme = Theme & {
     url: string;
 };
+export type BuildingBlock = {
+    type: "title" | "icon" | "text" | "background" | "border";
+    value: string;
+}

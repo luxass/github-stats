@@ -43,7 +43,7 @@ export function getThemes(): ExtendedTheme[] {
             fs.readFileSync(path.join(process.cwd(), "themes", theme), "utf-8")
         );
         return Object.assign(themeObj, {
-            url: `${isProd()}/editor?q=gg&tq=${themeObj.identifier}`,
+            url: `${isProd()}/editor?tq=${themeObj.identifier}`,
         });
     });
 }
