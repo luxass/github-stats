@@ -6,24 +6,25 @@ import styled from "styled-components";
 import CardProvider from "src/components/CardProvider";
 import { getTheme, getThemes, getThemesNameAndId } from "@lib/theme";
 import EditorPane from "../components/editor/EditorPane";
-import Renderer from "../components/editor/Renderer"
+import Renderer from "../components/editor/Renderer";
 import { BuildingBlock } from "@lib/types";
+import Collapsible from "../components/Collapsible";
+import ColorPicker from "src/components/color/ColorPicker";
 const EditorWrapper = styled.div`
     width: 100%;
     height: 100vh;
     display: flex;
     background-color: purple;
 `;
-
-const EditorHeader = styled.div`
-    width: 100%;
-    height: 60px;
+const EditorDivider = styled.div`
+    border: 1px solid green;
+    height: 1px;
+    margin: 1rem 0;
 `;
-
-const ShowIcons = styled.input`
-    width: 100px;
+const EditorHeader = styled.h1`
+    text-align: center;
+    padding: 0.25rem 0;
 `;
-
 
 export default function EditorPage({
     query,
@@ -35,7 +36,7 @@ export default function EditorPage({
     const [blocks, setBlocks] = useState<BuildingBlock[]>([]);
 
     useEffect(() => {
-        console.log(theme);
+        console.log(findTheme(theme.toUpperCase()));
     });
 
     const handleChange = (selectedOption: any) => {
@@ -48,26 +49,42 @@ export default function EditorPage({
         label: theme.name,
     }));
 
-    const exportBlocksToTheme = () => {
+    const findTheme = function findTheme(identifier: string) {
+        return themes.filter((theme) => theme.identifier === identifier)[0];
+    };
+    const createBlocks = () => {};
 
-    }
     return (
         <EditorWrapper>
             <EditorPane width={"300px"}>
-                <h1>gdfg</h1>
-                <button
-                    onClick={() => {
-                        setBlocks([
-                            ...blocks,
-                            {
-                                type: "border",
-                                value: "test",
-                            },
-                        ]);
+                <Select
+                    onChange={handleChange}
+                    options={options}
+                    value={{
+                        value: theme,
+                        label: theme,
                     }}
-                >
-                    create block
-                </button>
+                />
+                <EditorDivider />
+                <div>
+                    <input type="text" />
+                    <input type="text" />
+
+                    <button
+                        onClick={() => {
+                            setBlocks([
+                                ...blocks,
+                                {
+                                    type: "border",
+                                    value: "test",
+                                },
+                            ]);
+                        }}
+                    >
+                        create block
+                    </button>
+                </div>
+                <ColorPicker />
                 <ul>
                     {blocks.map((block, index) => {
                         return (
@@ -79,7 +96,7 @@ export default function EditorPage({
                 </ul>
             </EditorPane>
             <EditorPane width={"calc(100% - 300px)"} flex>
-                <Renderer />
+                <Renderer designs={findTheme(theme.toUpperCase()).design} />
             </EditorPane>
             {/* Modal Renderer to popup with the exported blocks with a description on what to do */}
             {/*  <EditorHeader>

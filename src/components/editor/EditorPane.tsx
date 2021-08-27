@@ -11,6 +11,7 @@ const Pane = styled.div.attrs(({ width, flex }: PaneProps) => ({
             ? `
             justify-content: center;
             align-items: center;
+            flex-direction: column;
         `
             : ``}
 `;

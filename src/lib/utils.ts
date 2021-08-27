@@ -1,5 +1,5 @@
 import { RepoNode } from "./types";
-
+import tinycolor from "tinycolor2";
 /**
  * Breaks the text if the length is more than 50.
  * @param text
@@ -59,4 +59,24 @@ export function isProd() {
     return process.env.NODE_ENV === "production"
         ? "https://github-stats.vercel.app"
         : "http://localhost:3000";
+}
+
+
+/**
+ * Returns the correct color constrast for the given hex color.
+ *
+ * Formula ((Red value X 299) + (Green value X 587) + (Blue value X 114)) / 1000
+ * found on https://www.w3.org/TR/AERT/
+ *
+ * @param hex
+ * @returns {string}
+ */
+export function getColorConstrast(hexColor: string): string {
+    const rgbColor = tinycolor(hexColor).toRgb();
+    if (rgbColor === null) {
+        return "#fff";
+    }
+    console.log(rgbColor)
+    const yiq = ((rgbColor.r * 299) + (rgbColor.g * 587) + (rgbColor.b * 114)) / 1000;
+    return yiq >= 128 ? "#000" : "#fff";
 }
