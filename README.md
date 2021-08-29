@@ -2,7 +2,7 @@
  <img width="150px" src="docs/logo.svg" align="center" alt="GitHub Stats" />
 
  <h2 align="center">GitHub Stats</h2>
- <p align="center">Get dynamically generated GitHub stats on your readmes!</p>
+ <p align="center">✨ Dynamically generated github statistics for your readmes</p>
 </p>
 
   <p align="center">
@@ -31,10 +31,10 @@
 
 Copy the following code into your readme file and change the `username` to match your GitHub username.
 
-
 ```md
 [![DeprecatedLuxas' GitHub stats](https://github-stats.vercel.app/api/user/username)](https://github.com/deprecatedluxas/github-stats)
 ```
+
 #### Want to hide the icons?
 
 We got you covered! You can pass `hide_icons=true` as a query parameter to hide the icons.
@@ -47,10 +47,10 @@ We got you covered! You can pass `hide_icons=true` as a query parameter to hide 
 
 Copy the following code into your readme file and change the `username` to match your GitHub username and `reponame` to match your repository name.
 
-
 ```md
 [![DeprecatedLuxas' GitHub stats](https://github-stats.vercel.app/api/user/username/repo/reponame)](https://github.com/deprecatedluxas/github-stats)
 ```
+
 #### Want to hide the owner?
 
 We got you covered! You can pass `hide_owner=true` as a query parameter to hide the owner.
@@ -68,7 +68,6 @@ Use the `?tq=THEME_IDENTIFIER` as a parameter to choose a theme.
 ```md
 ![Deprecatedluxas's GitHub stats](https://github-stats.vercel.app/api/user/deprecatedluxas?tq=THEME_DRACULA)
 ```
-
 
 ### Inbuilt Themes
 
@@ -91,7 +90,6 @@ You can customize the appearance of your `Stats Card` or `Repo Card` however you
 
 > Note on _hex color_: Write the hex color without the #, because the # is used as a hash in the URL.
 
-
 #### Exclusive Options to Stats Card:
 
 -   `custom_title` - Sets a custom title for the card
@@ -100,7 +98,6 @@ You can customize the appearance of your `Stats Card` or `Repo Card` however you
 #### Exclusive Options to Repo Card:
 
 -   `hide_owner` - Hides the repo's owner name _(boolean)_
-
 
 ## How to contribute
 

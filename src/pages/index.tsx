@@ -45,7 +45,7 @@ export default function Home() {
                 <CenteredBox>
                     <H1>GitHub Stats Home Page</H1>
                     <Description>
-                        Not special here, go to our GitHub Repo for magic ✨
+                        Nothing special here, go to our GitHub Repo for magic ✨
                     </Description>
                     <RedirectButton goTo="https://github.com/deprecatedluxas/github-stats">
                         Checkout GitHub Repo ✨

@@ -4,7 +4,7 @@ export async function graphql<T>(query: string, variables: T) {
     return await fetch("https://api.github.com/graphql", {
         method: "POST",
         headers: {
-            Authorization: `bearer ${process.env.GITHUB_TOKEN}`,
+            Authorization: `bearer ${process.env.GITHUB_TOKEN_1}`,
         },
         body: JSON.stringify({
             query: query,
@@ -20,7 +20,7 @@ export async function request(path: string) {
     return await fetch(`https://api.github.com/${path}`, {
         method: "GET",
         headers: {
-            Authorization: `bearer ${process.env.GITHUB_TOKEN}`,
+            Authorization: `bearer ${process.env.GITHUB_TOKEN_1}`,
         },
     }).then((response) => response.json());
 }
