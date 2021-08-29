@@ -4,18 +4,33 @@ import RepoCard from "@lib/cards/repoCard";
 import { graphql } from "@lib/fetcher";
 import { RepoStats } from "@lib/types";
 import { breakMultiLineText } from "@lib/utils";
+import parseQuery from "@lib/parseQuery";
+import { combineStylesWithTheme, getFallbackDesign } from "@lib/theme";
 
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    const { user, repo } = req.query as {
-        user: string;
-        repo: string;
-    };
-
+    const {
+        user,
+        repo,
+        tq,
+        hide_owner,
+        title,
+        icon,
+        text,
+        background,
+        border,
+    } = parseQuery(req.query);
+    const themeDesign = getFallbackDesign(tq, {
+        title,
+        icon,
+        text,
+        background,
+        border,
+    });
     res.setHeader("Content-Type", "image/svg+xml");
-
+    res.setHeader("Cache-Control", "public, max-age=7200");
     try {
         const { data } = await graphql<{
             login: string;
@@ -23,7 +38,7 @@ export default async function handler(
         }>(
             `
                 fragment RepoInfo on Repository {
-                    name: nameWithOwner
+                    name: ${hide_owner ? "name" : "nameWithOwner"}
                     stars: stargazers {
                         totalCount
                     }
@@ -75,8 +90,6 @@ export default async function handler(
         let { name, description, language, stars, forks } = dataRepo;
         description = description || "No description provided";
 
-        // TODO: Parse Description for unicode emojis
-
         const repoData: RepoStats = {
             name: name,
             description: breakMultiLineText(description),
@@ -84,8 +97,13 @@ export default async function handler(
             stars: stars,
             forks: forks,
         };
-        return res.status(200).send(RepoCard(repoData));
+
+        return res
+            .status(200)
+            .send(new RepoCard(themeDesign, repoData).render());
     } catch (err) {
-        return res.status(500).send(ErrorCard(breakMultiLineText(err.message)));
+        return res
+            .status(500)
+            .send(new ErrorCard(themeDesign, err.message).render());
     }
 }

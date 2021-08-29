@@ -1,0 +1,11 @@
+{
+    "name": "Default",
+    "identifier": "THEME_DEFAULT",
+    "design": {
+        "title": "#2f80ed",
+        "icon": "#586069",
+        "text": "#333",
+        "background": "#fffefe",
+        "border": "#e4e2e2"
+    }
+}

@@ -6,6 +6,10 @@ const GlobalStyle = createGlobalStyle`
       padding: 0;
       box-sizing: border-box;
     }
+
+    html {
+        font-family: Arial, sans-serif;
+    }
 `;
 function MyApp({ Component, pageProps }: AppProps) {
     return (

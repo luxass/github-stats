@@ -1,34 +1,125 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<p align="center">
+ <img width="150px" src="docs/logo.svg" align="center" alt="GitHub Stats" />
 
-## Getting Started
+ <h2 align="center">GitHub Stats</h2>
+ <p align="center">Get dynamically generated GitHub stats on your readmes!</p>
+</p>
 
-First, run the development server:
+  <p align="center">
+    <a href="https://github.com/deprecatedluxas/github-stats/issues/new/choose">Report Bug</a>
+    -
+    <a href="https://github.com/deprecatedluxas/github-stats/issues/new/choose">Request Feature</a>
+  </p>
+  
+</p>
 
-```bash
-npm run dev
-# or
-yarn dev
+## Contents
+
+-   [Usage](#usage)
+    -   [Stats Card](#stats-card)
+    -   [Repo Card](#repo-card)
+-   [Themes](#themes)
+-   [Customization](#customization)
+    -   [Common Options](#common-options)
+    -   [Stats Card Exclusive Options](#exclusive-options-to-stats-card)
+    -   [Repo Card Exclusive Options](#exclusive-options-to-repo-card)
+-   [How to contribute](#how-to-contribute)
+
+## Usage
+
+### Stats Card
+
+Copy the following code into your readme file and change the `username` to match your GitHub username.
+
+
+```md
+[![DeprecatedLuxas' GitHub stats](https://github-stats.vercel.app/api/user/username)](https://github.com/deprecatedluxas/github-stats)
+```
+#### Want to hide the icons?
+
+We got you covered! You can pass `hide_icons=true` as a query parameter to hide the icons.
+
+```md
+[![DeprecatedLuxas' GitHub stats](https://github-stats.vercel.app/api/user/username?hide_icons=true)](https://github.com/deprecatedluxas/github-stats)
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Repo Card
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Copy the following code into your readme file and change the `username` to match your GitHub username and `reponame` to match your repository name.
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+```md
+[![DeprecatedLuxas' GitHub stats](https://github-stats.vercel.app/api/user/username/repo/reponame)](https://github.com/deprecatedluxas/github-stats)
+```
+#### Want to hide the owner?
 
-## Learn More
+We got you covered! You can pass `hide_owner=true` as a query parameter to hide the owner.
 
-To learn more about Next.js, take a look at the following resources:
+```md
+[![DeprecatedLuxas' GitHub stats](https://github-stats.vercel.app/api/user/deprecatedluxas?hide_owner=true)](https://github.com/deprecatedluxas/github-stats)
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Themes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+With our inbuilt themes, you can customize the look of the without doing any additional [customization](#customization).
 
-## Deploy on Vercel
+Use the `?tq=THEME_IDENTIFIER` as a parameter to choose a theme.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```md
+![Deprecatedluxas's GitHub stats](https://github-stats.vercel.app/api/user/deprecatedluxas?tq=THEME_DRACULA)
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+### Inbuilt Themes
+
+You can preview all the themes right [here](./themes/README.md) or you can check out the theme files [here](./themes/).
+
+> Note: You can at any time contribute your own theme.
+
+## Customization
+
+You can customize the appearance of your `Stats Card` or `Repo Card` however you wish with URL parameters.
+
+#### Common Options:
+
+-   `title` - Card's title color _(hex color)_
+-   `text` - Body text color _(hex color)_
+-   `icon` - Icons color if available _(hex color)_
+-   `border` - Card's border color _(hex color)_
+-   `background` - Card's background color _(hex color)_
+-   `tq` - identifier of the theme, choose from [all available themes](./themes/README.md)
+
+> Note on _hex color_: Write the hex color without the #, because the # is used as a hash in the URL.
+
+
+#### Exclusive Options to Stats Card:
+
+-   `custom_title` - Sets a custom title for the card
+-   `hide_icons` - Hides the icons _(boolean)_
+
+#### Exclusive Options to Repo Card:
+
+-   `hide_owner` - Hides the repo's owner name _(boolean)_
+
+
+## How to contribute
+
+Have an idea? Found a bug? See [how to contribute](CONTRIBUTING.md)
+
+## :purple_heart: Support the project
+
+This project is 100% free and open source. If you like it, please consider supporting the project, there are a few ways you can do so:
+
+-   Starring and sharing the project
+-   Report any bugs, glitches or errors that you find
+
+## Related Projects
+
+-   Inspired by a desire to improve upon
+    [anuraghazra/github-readme-stats](https://github.com/anuraghazra/github-readme-stats)
+-   Makes use of [GitHub Octicons](https://primer.style/octicons/) to precisely
+    match the GitHub UI
+
+## :scroll: License
+
+[MIT](LICENSE) © Lucas Norgaard

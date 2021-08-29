@@ -46,3 +46,11 @@ export function getDataFromNodes(repoNodes: RepoNode[]): {
         forks,
     };
 }
+
+
+export function isProd() {
+    return process.env.NODE_ENV === "production"
+        ? "https://github-stats.vercel.app"
+        : "http://localhost:3000";
+}
+

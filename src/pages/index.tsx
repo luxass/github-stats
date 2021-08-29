@@ -3,6 +3,7 @@ import Head from "next/head";
 import styled from "styled-components";
 
 const CenteredBoxWrapper = styled.div`
+    background-color: #111111;
     width: 100%;
     height: 100vh;
     display: flex;
@@ -13,11 +14,23 @@ const CenteredBoxWrapper = styled.div`
 const CenteredBox = styled.div`
     width: 500px;
     height: 250px;
-    border: 2px solid rgba(0, 118, 255, 0.9);
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+    background-color: #1f1f1f;
+    border: 1px solid #00a36c;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.4);
     text-align: center;
     border-radius: 10px;
     padding: 1rem;
+`;
+
+const H1 = styled.h1`
+    color: white;
+    margin: 10px 0 30px 0;
+`;
+
+const Description = styled.p`
+    color: gray;
+    margin: 10px 0;
+    font-style: italic;
 `;
 
 export default function Home() {
@@ -26,13 +39,16 @@ export default function Home() {
             <Head>
                 <title>GitHub Stats</title>
                 <meta name="description" content="GitHub Stats" />
-                <link rel="icon" href="/favicon.ico" />
+                <link rel="alternate icon" type="image/svg" href="/favicon.svg" />
             </Head>
             <CenteredBoxWrapper>
                 <CenteredBox>
-                    <h1>GitHub Stats Page</h1>
+                    <H1>GitHub Stats Home Page</H1>
+                    <Description>
+                        Not special here, go to our GitHub Repo for magic ✨
+                    </Description>
                     <RedirectButton goTo="https://github.com/deprecatedluxas/github-stats">
-                        Go to github repo
+                        Checkout GitHub Repo ✨
                     </RedirectButton>
                 </CenteredBox>
             </CenteredBoxWrapper>

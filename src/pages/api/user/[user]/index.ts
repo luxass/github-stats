@@ -4,13 +4,33 @@ import StatsCard from "@lib/cards/statsCard";
 import { breakMultiLineText, getDataFromNodes } from "@lib/utils";
 import { graphql } from "@lib/fetcher";
 import { RepoNode, UserStats } from "@lib/types";
+import parseQuery from "@lib/parseQuery";
+import { getFallbackDesign } from "@lib/theme";
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    const { user } = req.query as { user: string };
-    res.setHeader("Content-Type", "image/svg+xml");
+    const {
+        user,
+        tq,
+        custom_title,
+        hide_icons,
+        title,
+        icon,
+        text,
+        background,
+        border,
+    } = parseQuery(req.query);
 
+    const themeDesign = getFallbackDesign(tq, {
+        title,
+        icon,
+        text,
+        background,
+        border,
+    });
+    res.setHeader("Content-Type", "image/svg+xml");
+    res.setHeader("Cache-Control", "public, max-age=7200");
     try {
         const { data } = await graphql<{
             login: string;
@@ -75,8 +95,15 @@ export default async function handler(
             contributions:
                 data.user.repositoriesContributedTo.totalCount.toString(),
         };
-        return res.status(200).send(StatsCard(user, userStats));
+        return res.status(200).send(
+            new StatsCard(themeDesign, user, userStats, {
+                customTitle: custom_title,
+                hideIcons: hide_icons,
+            }).render()
+        );
     } catch (err) {
-        return res.status(500).send(ErrorCard(breakMultiLineText(err.message)));
+        return res
+            .status(500)
+            .send(new ErrorCard(themeDesign, err.message).render());
     }
 }
