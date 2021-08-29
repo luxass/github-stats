@@ -1,7 +1,77 @@
 import fs from "fs";
 import path from "path";
-import { ExtendedTheme, Theme } from "./types";
-import { encode, isProd } from "./utils";
+import { ExtendedTheme, Theme, ThemeDesign } from "./types";
+import { isProd } from "./utils";
+
+export function getFallbackColor(
+    color: string | undefined,
+    fallbackColor: string
+) {
+    return color ? `${(color.startsWith("#") ? "" : "#")}${color}` : fallbackColor;
+}
+
+export function getFallbackDesign(
+    theme: string | undefined,
+    overwriteDesign: ThemeDesign
+): ThemeDesign {
+    const defaultThemeObj = getTheme("THEME_DEFAULT")!;
+    const selectedThemeObj = getTheme(theme || "THEME_DEFAULT") || defaultThemeObj!;
+
+    const title = getFallbackColor(
+        overwriteDesign.title || selectedThemeObj.design.title,
+        defaultThemeObj.design.title!
+    );
+    const icon = getFallbackColor(
+        overwriteDesign.icon || selectedThemeObj.design.icon,
+        defaultThemeObj.design.icon!
+    );
+    const text = getFallbackColor(
+        overwriteDesign.text || selectedThemeObj.design.text,
+        defaultThemeObj.design.text!
+    );
+    const background = getFallbackColor(
+        overwriteDesign.background || selectedThemeObj.design.background,
+        defaultThemeObj.design.background!
+    );
+    const border = getFallbackColor(
+        overwriteDesign.border || selectedThemeObj.design.border,
+        defaultThemeObj.design.border!
+    );
+    return { title, icon, text, background, border };
+}
+
+export function combineStylesWithTheme(
+    theme: string,
+    styles: ThemeDesign
+): ThemeDesign {
+    const themeObj = getTheme(theme) || getTheme("THEME_DEFAULT")!;
+
+    const newThemeObj = Object.assign(themeObj.design, styles);
+
+    console.log(newThemeObj);
+    return {};
+
+    // const themeObj: ExtendedTheme = themes.filter(
+    //     (obj) => obj.identifier === theme.toUpperCase()
+    // )[0];
+    // const defaultTheme = themes.filter(
+    //     (theme) => theme.identifier === "THEME_DEFAULT"
+    // )[0];
+
+    // const buildingBlocks: BuildingBlock[] = Object.keys(themeDesign)
+    //     .filter((key: string) =>
+    //         ["title", "icon", "text", "background", "border"].includes(
+    //             key
+    //         )
+    //     )
+    //     .map((key) => {
+    //         console.log(key);
+    //         return {
+    //             type: key,
+    //             value: themeDesign[key],
+    //         };
+    //     });
+}
 
 export function getThemesNameAndId() {
     let themes = fs
@@ -18,7 +88,7 @@ export function getThemesNameAndId() {
     });
 }
 
-export function getTheme(themeIdentifier: string): Theme {
+export function getTheme(themeIdentifier: string): Theme | undefined {
     let themes = fs
         .readdirSync(path.join(process.cwd(), "themes"))
         .filter((theme) => path.extname(theme) === ".json");
@@ -31,7 +101,10 @@ export function getTheme(themeIdentifier: string): Theme {
                 )
             )
         )
-        .filter((theme: Theme) => theme.identifier.toLowerCase() === themeIdentifier.toLowerCase())[0];
+        .filter(
+            (theme: Theme) =>
+                theme.identifier.toLowerCase() === themeIdentifier.toLowerCase()
+        )[0];
 }
 
 export function getThemes(): ExtendedTheme[] {

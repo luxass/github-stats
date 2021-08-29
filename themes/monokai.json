@@ -2,19 +2,10 @@
     "name": "Monokai",
     "identifier": "THEME_MONOKAI",
     "design": {
-        "stats": {
-            "title": "#eb1f6a",
-            "icon": "#e28905",
-            "text": "#f1f1eb",
-            "background": "#272822",
-            "border": "#e4e2e2"
-        },
-        "repo": {
-            "title": "#eb1f6a",
-            "icon": "#e28905",
-            "text": "#f1f1eb",
-            "background": "#272822",
-            "border": "#e4e2e2"
-        }
+        "title": "#eb1f6a",
+        "icon": "#e28905",
+        "text": "#f1f1eb",
+        "background": "#272822",
+        "border": "#e4e2e2"
     }
 }

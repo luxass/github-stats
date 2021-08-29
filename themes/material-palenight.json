@@ -2,19 +2,10 @@
     "name": "Material Palenight",
     "identifier": "THEME_MATERIAL_PALENIGHT",
     "design": {
-        "stats": {
-            "title": "#c792ea",
-            "icon": "#89ddff",
-            "text": "#a6accd",
-            "background": "#292d3e",
-            "border": "#e4e2e2"
-        },
-        "repo": {
-            "title": "#c792ea",
-            "icon": "#89ddff",
-            "text": "#a6accd",
-            "background": "#292d3e",
-            "border": "#e4e2e2"
-        }
+        "title": "#c792ea",
+        "icon": "#89ddff",
+        "text": "#a6accd",
+        "background": "#292d3e",
+        "border": "#e4e2e2"
     }
 }

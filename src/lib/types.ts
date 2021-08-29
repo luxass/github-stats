@@ -1,3 +1,8 @@
+export type StatsCardOptions = {
+    customTitle?: string;
+    hideIcons?: string;
+};
+
 export type UserStats = {
     stars: string;
     forks: string;
@@ -42,14 +47,11 @@ export type LanguageNode = {
 export type Theme = {
     name: string;
     identifier: string;
-    design: ThemeDesigns;
-};
-
-export type ThemeDesigns = {
-    stats?: ThemeDesign;
-    repo?: ThemeDesign;
+    design: ThemeDesign;
 };
 export type ThemeDesign = {
+    [key: string]: string;
+} & {
     title?: string;
     icon?: string;
     text?: string;
@@ -59,9 +61,4 @@ export type ThemeDesign = {
 
 export type ExtendedTheme = Theme & {
     url: string;
-};
-
-export type BuildingBlock = {
-    type: "title" | "icon" | "text" | "background" | "border";
-    value: string;
 };

@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
 const StyledButton = styled.a`
-    margin-top: 2rem;
+    margin-top: 3rem;
     text-decoration: none;
     color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
+    background-color: #00a36c;
+    border-color: #00a36c;
     display: inline-block;
     font-weight: 400;
     text-align: center;
