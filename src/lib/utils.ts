@@ -50,7 +50,7 @@ export function getDataFromNodes(repoNodes: RepoNode[]): {
 
 export function isProd() {
     return process.env.NODE_ENV === "production"
-        ? "https://github-stats.vercel.app"
+        ? "https://gh-statistics.vercel.app/"
         : "http://localhost:3000";
 }
 
