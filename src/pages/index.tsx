@@ -39,7 +39,7 @@ export default function Home() {
             <Head>
                 <title>GitHub Stats</title>
                 <meta name="description" content="GitHub Stats" />
-                <link rel="alternate icon" type="image/svg" href="/favicon.svg" />
+                <link rel="icon" href="/favicon.ico" />
             </Head>
             <CenteredBoxWrapper>
                 <CenteredBox>
