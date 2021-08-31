@@ -67,7 +67,7 @@ export function getThemes(): ExtendedTheme[] {
     console.log(process.cwd());
     console.log(fs.readdirSync("../"));
     console.log(fs.readdirSync(path.join(process.cwd())));
-    console.log(fs.readdirSync(path.join(__dirname)));
+    console.log(fs.readdirSync(path.join("public")));
     const directory = path.join(process.cwd(), `_themes`);
     console.log(fs.readdirSync(directory));
     let themes = fs
