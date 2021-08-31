@@ -33,7 +33,7 @@ export default class StatsCard extends BaseCard {
         }
         return `
         <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="360" height="185" viewBox="0 0 360 185" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji" font-size="14px">
-            <rect x="5" y="5" width="calc(100% - 10px)" height="calc(100% - 10px)" fill="${background}" stroke="${border}" stroke-width="1px" rx="6px" ry="6px" />
+            <rect x="5" y="5" width="350" height="175" fill="${background}" stroke="${border}" stroke-width="1px" rx="6px" ry="6px" />
             <text fill="${title}" x="25" y="35">${cardTitle}</text>
             <g transform="translate(${hideIcons ? "0" : "25"}, 55)">
                 <g transform="translate(0, 0)">
