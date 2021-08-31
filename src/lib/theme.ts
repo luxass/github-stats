@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import themes from "../../themes/themes.json";
 import { ExtendedTheme, Theme, ThemeDesign } from "./types";
 import { isProd } from "./utils";
 
@@ -44,41 +45,12 @@ export function getFallbackDesign(
 }
 
 export function getTheme(themeIdentifier: string): Theme | undefined {
-    let themes = fs
-        .readdirSync(path.join(process.cwd(), "themes"))
-        .filter((theme) => path.extname(theme) === ".json");
-    return themes
-        .map((theme) =>
-            JSON.parse(
-                fs.readFileSync(
-                    path.join(process.cwd(), "themes", theme),
-                    "utf-8"
-                )
-            )
-        )
-        .filter(
-            (theme: Theme) =>
-                theme.identifier.toLowerCase() === themeIdentifier.toLowerCase()
-        )[0];
+    return themes.filter(
+        (theme: Theme) =>
+            theme.identifier.toLowerCase() === themeIdentifier.toLowerCase()
+    )[0];
 }
 
-export function getThemes(): ExtendedTheme[] {
-    console.log(__dirname);
-    console.log(process.cwd());
-    console.log(fs.readdirSync("../"));
-    console.log(fs.readdirSync(path.join(process.cwd())));
-    console.log(fs.readdirSync(path.join("public")));
-    const directory = path.join(process.cwd(), `_themes`);
-    console.log(fs.readdirSync(directory));
-    let themes = fs
-        .readdirSync(path.join(process.cwd(), "themes"))
-        .filter((theme) => path.extname(theme) === ".json");
-    return themes.map((theme) => {
-        const themeObj: Theme = JSON.parse(
-            fs.readFileSync(path.join(process.cwd(), "themes", theme), "utf-8")
-        );
-        return Object.assign(themeObj, {
-            url: `${isProd()}/editor?tq=${themeObj.identifier}`,
-        });
-    });
+export function getThemes(): Theme[] {
+    return themes;
 }

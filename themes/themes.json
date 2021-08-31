@@ -1,0 +1,57 @@
+[
+    {
+        "name": "Default",
+        "identifier": "THEME_DEFAULT",
+        "design": {
+            "title": "#2f80ed",
+            "icon": "#586069",
+            "text": "#333",
+            "background": "#fffefe",
+            "border": "#e4e2e2"
+        }
+    },
+    {
+        "name": "Dracula",
+        "identifier": "THEME_DRACULA",
+        "design": {
+            "title": "#ff6e96",
+            "icon": "#79dafa",
+            "text": "#f8f8f2",
+            "background": "#282a36",
+            "border": "#e4e2e2"
+        }
+    },
+    {
+        "name": "Monokai",
+        "identifier": "THEME_MONOKAI",
+        "design": {
+            "title": "#eb1f6a",
+            "icon": "#e28905",
+            "text": "#f1f1eb",
+            "background": "#272822",
+            "border": "#e4e2e2"
+        }
+    },
+    {
+        "name": "OneDark",
+        "identifier": "THEME_ONEDARK",
+        "design": {
+            "title": "#e4bf7a",
+            "icon": "#8eb573",
+            "text": "#df6d74",
+            "background": "#282c34",
+            "border": "#e4e2e2"
+        }
+    },
+    {
+        "name": "Material Palenight",
+        "identifier": "THEME_MATERIAL_PALENIGHT",
+        "design": {
+            "title": "#c792ea",
+            "icon": "#89ddff",
+            "text": "#a6accd",
+            "background": "#292d3e",
+            "border": "#e4e2e2"
+        }
+    }
+]
