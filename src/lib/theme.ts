@@ -7,7 +7,9 @@ export function getFallbackColor(
     color: string | undefined,
     fallbackColor: string
 ) {
-    return color ? `${(color.startsWith("#") ? "" : "#")}${color}` : fallbackColor;
+    return color
+        ? `${color.startsWith("#") ? "" : "#"}${color}`
+        : fallbackColor;
 }
 
 export function getFallbackDesign(
@@ -15,7 +17,8 @@ export function getFallbackDesign(
     overwriteDesign: ThemeDesign
 ): ThemeDesign {
     const defaultThemeObj = getTheme("THEME_DEFAULT")!;
-    const selectedThemeObj = getTheme(theme || "THEME_DEFAULT") || defaultThemeObj!;
+    const selectedThemeObj =
+        getTheme(theme || "THEME_DEFAULT") || defaultThemeObj!;
 
     const title = getFallbackColor(
         overwriteDesign.title || selectedThemeObj.design.title,
@@ -40,54 +43,6 @@ export function getFallbackDesign(
     return { title, icon, text, background, border };
 }
 
-export function combineStylesWithTheme(
-    theme: string,
-    styles: ThemeDesign
-): ThemeDesign {
-    const themeObj = getTheme(theme) || getTheme("THEME_DEFAULT")!;
-
-    const newThemeObj = Object.assign(themeObj.design, styles);
-
-    console.log(newThemeObj);
-    return {};
-
-    // const themeObj: ExtendedTheme = themes.filter(
-    //     (obj) => obj.identifier === theme.toUpperCase()
-    // )[0];
-    // const defaultTheme = themes.filter(
-    //     (theme) => theme.identifier === "THEME_DEFAULT"
-    // )[0];
-
-    // const buildingBlocks: BuildingBlock[] = Object.keys(themeDesign)
-    //     .filter((key: string) =>
-    //         ["title", "icon", "text", "background", "border"].includes(
-    //             key
-    //         )
-    //     )
-    //     .map((key) => {
-    //         console.log(key);
-    //         return {
-    //             type: key,
-    //             value: themeDesign[key],
-    //         };
-    //     });
-}
-
-export function getThemesNameAndId() {
-    let themes = fs
-        .readdirSync(path.join(process.cwd(), "themes"))
-        .filter((theme) => path.extname(theme) === ".json");
-    return themes.map((theme) => {
-        const themeObj: Theme = JSON.parse(
-            fs.readFileSync(path.join(process.cwd(), "themes", theme), "utf-8")
-        );
-        return {
-            value: themeObj.identifier.toLowerCase(),
-            label: themeObj.name,
-        };
-    });
-}
-
 export function getTheme(themeIdentifier: string): Theme | undefined {
     let themes = fs
         .readdirSync(path.join(process.cwd(), "themes"))
@@ -108,6 +63,8 @@ export function getTheme(themeIdentifier: string): Theme | undefined {
 }
 
 export function getThemes(): ExtendedTheme[] {
+    console.log(__dirname);
+    console.log(process.cwd());
     let themes = fs
         .readdirSync(path.join(process.cwd(), "themes"))
         .filter((theme) => path.extname(theme) === ".json");

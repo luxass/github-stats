@@ -5,7 +5,7 @@ import { graphql } from "@lib/fetcher";
 import { RepoStats } from "@lib/types";
 import { breakMultiLineText } from "@lib/utils";
 import parseQuery from "@lib/parseQuery";
-import { combineStylesWithTheme, getFallbackDesign } from "@lib/theme";
+import { getFallbackDesign } from "@lib/theme";
 
 export default async function handler(
     req: NextApiRequest,
