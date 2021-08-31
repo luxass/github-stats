@@ -68,6 +68,8 @@ export function getThemes(): ExtendedTheme[] {
     console.log(process.cwd());
     console.log(fs.readdirSync("../"))
     console.log(fs.readdirSync(path.join(process.cwd())))
+    console.log(fs.readdirSync(path.join(__dirname)))
+
     let themes = fs
         .readdirSync(path.join(process.cwd(), "themes"))
         .filter((theme) => path.extname(theme) === ".json");
