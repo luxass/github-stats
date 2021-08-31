@@ -44,6 +44,8 @@ export function getFallbackDesign(
 }
 
 export function getTheme(themeIdentifier: string): Theme | undefined {
+    console.log(__dirname);
+    console.log(process.cwd());
     let themes = fs
         .readdirSync(path.join(process.cwd(), "themes"))
         .filter((theme) => path.extname(theme) === ".json");
@@ -63,8 +65,7 @@ export function getTheme(themeIdentifier: string): Theme | undefined {
 }
 
 export function getThemes(): ExtendedTheme[] {
-    console.log(__dirname);
-    console.log(process.cwd());
+
     let themes = fs
         .readdirSync(path.join(process.cwd(), "themes"))
         .filter((theme) => path.extname(theme) === ".json");
