@@ -47,7 +47,6 @@ export function getDataFromNodes(repoNodes: RepoNode[]): {
     };
 }
 
-
 export function isProd() {
     return process.env.NODE_ENV === "production"
         ? "https://gh-statistics.vercel.app/"

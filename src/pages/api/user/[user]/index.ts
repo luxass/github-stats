@@ -91,6 +91,7 @@ export default async function handler(
         const totalCommits =
             data.user.contributionsCollection.totalCommitContributions +
             data.user.contributionsCollection.restrictedContributionsCount;
+
         const userStats: UserStats = {
             stars: stars.toString(),
             forks: forks.toString(),
