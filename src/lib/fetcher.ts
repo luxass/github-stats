@@ -13,14 +13,27 @@ export async function graphql<T>(query: string, variables: T) {
     }).then((response) => response.json());
 }
 
-export async function request(path: string) {
+export async function request(
+    path: string,
+    extraHeaders: { [key: string]: string } = {}
+) {
     if (path.startsWith("/")) {
         path = path.substring(1);
     }
-    return await fetch(`https://api.github.com/${path}`, {
-        method: "GET",
-        headers: {
+    let url = `https://api.github.com/${path}`;
+    let headers: { [key: string]: string } = {};
+    if (path.startsWith("https://github.com")) {
+        url = path;
+        headers = extraHeaders;
+    } else {
+        headers = {
             Authorization: `bearer ${process.env.GITHUB_TOKEN_1}`,
-        },
-    }).then((response) => response.json());
+            ...extraHeaders,
+        };
+    }
+
+    return await fetch(url, {
+        method: "GET",
+        headers: headers,
+    })
 }

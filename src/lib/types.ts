@@ -10,7 +10,17 @@ export type UserStats = {
     issues: string;
     commits: string;
 };
+export type CalendarData = {
+    total_contribution: number;
+    first_contribution: string;
+    longest_streak: number;
+    longest_streak_start: string;
+    longest_streak_end: string;
+    current_streak: number;
+    current_streak_start: string;
+    current_streak_end: string;
 
+};
 export type RepoStats = {
     name: string;
     description: string[];
