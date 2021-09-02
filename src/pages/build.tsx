@@ -114,6 +114,7 @@ export default function Build({
                 <OptionsText>Username</OptionsText>
                 <Input
                     type="text"
+                    maxLength={35}
                     onChange={(event) => setUsername(event.target.value)}
                 />
                 {card && card === "repo" && (

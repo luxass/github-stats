@@ -1,37 +1,16 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import ErrorCard from "@lib/cards/errorCard";
 import { request } from "@lib/fetcher";
-import parseQuery from "@lib/parseQuery";
-import { getFallbackDesign } from "@lib/theme";
-import StreakCard from "@lib/cards/streakCard";
-import fs from "fs";
-import { parseCalendar, parseCalendar2 } from "@lib/parser";
+import { RepoNode, UserStats } from "@lib/types";
+import { getDataFromNodes } from "@lib/utils";
+import { parseCalendar } from "@lib/parser";
 
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    const {
-        user,
-        tq,
-        custom_title,
-        hide_icons,
-        title,
-        icon,
-        text,
-        background,
-        border,
-    } = parseQuery(req.query);
+    const { user } = req.query as { user: string };
+    res.setHeader("Content-Type", "application/json");
 
-    const themeDesign = getFallbackDesign(tq, {
-        title,
-        icon,
-        text,
-        background,
-        border,
-    });
-    res.setHeader("Content-Type", "image/svg+xml");
-    res.setHeader("Cache-Control", "public, max-age=7200");
     try {
         const userData = await request(`/users/${user}`).then((res) =>
             res.json()
@@ -50,14 +29,15 @@ export default async function handler(
             ).then((res) => res.text());
             calendars.push(calendar);
         }
-
-
-        return res.status(200).send(new StreakCard(themeDesign).render());
+        return res.status(200).json({
+            user: user,
+            data: parseCalendar(calendars),
+        });
     } catch (err) {
         if (err instanceof Error) {
-            return res
-                .status(500)
-                .send(new ErrorCard(themeDesign, err.message).render());
+            return res.status(500).json({
+                error: err.message,
+            });
         }
         return console.error(err);
     }

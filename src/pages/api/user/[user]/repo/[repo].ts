@@ -102,8 +102,11 @@ export default async function handler(
             .status(200)
             .send(new RepoCard(themeDesign, repoData).render());
     } catch (err) {
-        return res
-            .status(500)
-            .send(new ErrorCard(themeDesign, err.message).render());
+        if (err instanceof Error) {
+            return res
+                .status(500)
+                .send(new ErrorCard(themeDesign, err.message).render());
+        }
+        return console.error(err);
     }
 }

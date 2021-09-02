@@ -83,7 +83,11 @@ export default async function handler(
             }
         );
         if (errors) {
-            throw new Error(errors[0].type === "NOT_FOUND" ? "Could not find a user with this name" : "Unknown Error")
+            throw new Error(
+                errors[0].type === "NOT_FOUND"
+                    ? "Could not find a user with this name"
+                    : "Unknown Error"
+            );
         }
         const repoNodes: RepoNode[] = data.user.repositories.nodes;
         const { stars, forks } = getDataFromNodes(repoNodes);
@@ -108,8 +112,13 @@ export default async function handler(
             }).render()
         );
     } catch (err) {
-        return res
-            .status(500)
-            .send(new ErrorCard(themeDesign, err.message).render());
+        if (err instanceof Error) {
+            return res
+                .status(500)
+                .send(new ErrorCard(themeDesign, err.message).render());
+        }
+
+        return console.error(err)
+        
     }
 }

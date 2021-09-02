@@ -86,8 +86,11 @@ export default async function handler(
         };
         return res.status(200).json(repoData);
     } catch (err) {
-        return res.status(500).json({
-            error: err.message,
-        });
+        if (err instanceof Error) {
+            return res.status(500).json({
+                error: err.message,
+            });
+        }
+        return console.error(err);
     }
 }
