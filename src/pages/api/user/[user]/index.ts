@@ -22,6 +22,9 @@ export default async function handler(
         border,
     } = parseQuery(req.query);
 
+
+
+    // Getting the fallback design
     const themeDesign = getFallbackDesign(tq, {
         title,
         icon,
@@ -29,8 +32,11 @@ export default async function handler(
         background,
         border,
     });
+
+
     res.setHeader("Content-Type", "image/svg+xml");
     res.setHeader("Cache-Control", "public, max-age=7200");
+
     try {
         const { data, errors } = await graphql<{
             login: string;
@@ -90,7 +96,14 @@ export default async function handler(
             );
         }
         const repoNodes: RepoNode[] = data.user.repositories.nodes;
-        const { stars, forks } = getDataFromNodes(repoNodes);
+        
+        const stars = repoNodes.reduce((prev, curr) => {
+            return prev + curr.stargazers!.totalCount;
+        }, 0);
+
+        const forks = repoNodes.reduce((prev, curr) => {
+            return prev + curr.forkCount!;
+        }, 0);
 
         const totalCommits =
             data.user.contributionsCollection.totalCommitContributions +
@@ -118,7 +131,6 @@ export default async function handler(
                 .send(new ErrorCard(themeDesign, err.message).render());
         }
 
-        return console.error(err)
-        
+        return console.error(err);
     }
 }

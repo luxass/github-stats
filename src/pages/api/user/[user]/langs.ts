@@ -7,6 +7,7 @@ import StreakCard from "@lib/cards/streakCard";
 import fs from "fs";
 import { parseCalendar, parseCalendar2 } from "@lib/parser";
 import { ThemeDesign } from "@lib/types";
+import LanguageCard from "@lib/cards/languageCard";
 
 export default async function handler(
     req: NextApiRequest,
@@ -54,7 +55,7 @@ export default async function handler(
         }
 
 
-        return res.status(200).send(new StreakCard(themeDesign, parseCalendar(calendars)).render());
+        return res.status(200).send(new LanguageCard(themeDesign, parseCalendar(calendars)).render());
     } catch (err) {
         if (err instanceof Error) {
             return res

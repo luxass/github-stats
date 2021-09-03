@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Select from "react-select";
 import { Theme } from "@lib/types";
 import { GetServerSidePropsContext, InferGetServerSidePropsType } from "next";
@@ -7,6 +7,7 @@ import { getThemes } from "@lib/theme";
 import CardProvider from "../components/card/CardProvider";
 import RepoCard from "../components/card/RepoCard";
 import MarkdownPreview from "../components/MarkdownPreview";
+import parseQuery from "@lib/parseQuery";
 
 const StyledWrapper = styled.div`
     margin: auto;
@@ -81,8 +82,16 @@ export default function Build({
     const [username, setUsername] = useState<string>("");
     const [repo, setRepo] = useState<string>("");
 
-    const [card, setCard] = useState<string>("");
+    const [card, setCard] = useState<string>("stats");
     const [theme, setTheme] = useState<string>("THEME_DEFAULT");
+
+    useEffect(() => {
+        const { card, username, repo, tq } = parseQuery(query);
+        setCard(card || "stats");
+        setRepo(repo || "");
+        setUsername(username || "");
+        setTheme(tq || "THEME_DEFAULT");
+    }, []);
 
     const design = themes.filter((themeObj) => themeObj.identifier === theme)[0]
         .design;
@@ -104,9 +113,9 @@ export default function Build({
                         { value: "repo", label: "Repo" },
                         { value: "stats", label: "Stats" },
                     ]}
-                    defaultValue={{
-                        value: "stats",
-                        label: "Stats",
+                    value={{
+                        value: card,
+                        label: card.toUpperCase()
                     }}
                     onChange={(e) => setCard(e !== null ? e.value : "stats")}
                 />
@@ -114,6 +123,7 @@ export default function Build({
                 <OptionsText>Username</OptionsText>
                 <Input
                     type="text"
+                    value={username}
                     maxLength={35}
                     onChange={(event) => setUsername(event.target.value)}
                 />
@@ -122,6 +132,7 @@ export default function Build({
                         <OptionsText>Repo</OptionsText>
                         <Input
                             type="text"
+                            value={repo}
                             onChange={(event) => setRepo(event.target.value)}
                         />
                     </>
@@ -142,7 +153,7 @@ export default function Build({
                 <OptionsHeader>Preview</OptionsHeader>
                 <Divider />
 
-                <CardProvider design={design} card={"repo"} />
+                <CardProvider design={design} card={card} />
 
                 <MarkdownPreview card={card} repo={repo} user={username} />
             </StyledPreview>

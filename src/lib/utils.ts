@@ -53,3 +53,14 @@ export function isProd() {
         : "http://localhost:3000";
 }
 
+
+function wordWrap(
+    input: string,
+    options: {
+        width: number;
+        break: boolean;
+    }
+) {
+
+    
+}

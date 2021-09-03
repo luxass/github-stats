@@ -1,8 +1,5 @@
-import fs from "fs";
-import path from "path";
 import themes from "../../themes/themes.json";
-import { ExtendedTheme, Theme, ThemeDesign } from "./types";
-import { isProd } from "./utils";
+import { Theme, ThemeDesign } from "./types";
 
 export function getFallbackColor(
     color: string | undefined,

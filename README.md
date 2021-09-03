@@ -113,7 +113,9 @@ This project is 100% free and open source. If you like it, please consider suppo
 ## Related Projects
 
 -   Inspired by a desire to improve upon
-    [anuraghazra/github-readme-stats](https://github.com/anuraghazra/github-readme-stats)
+    -   [anuraghazra/github-readme-stats](https://github.com/anuraghazra/github-readme-stats)
+    -   [denvercoder1/github-readme-streak-stats](https://github.com/DenverCoder1/github-readme-streak-stats)
+    -   [ashutosh00710/github-readme-activity-graph](https://github.com/Ashutosh00710/github-readme-activity-graph)
 -   Makes use of [GitHub Octicons](https://primer.style/octicons/) to precisely
     match the GitHub UI
 

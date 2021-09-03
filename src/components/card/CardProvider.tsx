@@ -10,9 +10,13 @@ type ProviderProps = {
 
 export default function CardProvider({ design, card }: ProviderProps) {
     return (
-        <div style={{
-            height: "250px"
-        }}>
+        <div
+            style={{
+                height: "250px",
+                display: "flex",
+                justifyContent: "center",
+            }}
+        >
             {(() => {
                 switch (card) {
                     case "repo":

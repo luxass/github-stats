@@ -19,7 +19,6 @@ export type CalendarData = {
     current_streak: number;
     current_streak_start: string;
     current_streak_end: string;
-
 };
 export type RepoStats = {
     name: string;
@@ -72,3 +71,18 @@ export type ThemeDesign = {
 export type ExtendedTheme = Theme & {
     url: string;
 };
+
+export type WordWrapOptions = {
+    breakWord?: boolean;
+    input?: string[];
+    minWidth?: number;
+    paddingLeft?: number;
+    paddingRight?: number;
+    returnFormat?: "string" | "array";
+    skipPadding?: boolean;
+    width?: number;
+    trim?: boolean;
+    splitAt?: string[];
+    errorChar?: string;
+};
+

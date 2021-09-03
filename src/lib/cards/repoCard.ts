@@ -13,13 +13,16 @@ export default class RepoCard extends BaseCard {
         const { name, description, language, stars, forks } = this.data;
         const { languageName, color } = language;
         const { totalCount } = stars;
+
         const height =
             (description.length > 1 ? 120 : 110) + description.length * 10;
 
         const { title, icon, border, background, text } = this.design;
         return `
             <svg width="400" height="${height}" viewBox="0 0 400 ${height}" xmlns="http://www.w3.org/2000/svg">
-                <rect x="5" y="5" width="390" height="${height - 10}" fill="${background}" stroke="${border}" stroke-width="1px" rx="6px" ry="6px" />
+                <rect x="5" y="5" width="390" height="${
+                    height - 10
+                }" fill="${background}" stroke="${border}" stroke-width="1px" rx="6px" ry="6px" />
                 <g transform="translate(25, 35)">
                     <g transform="translate(0, 0)">
                         <svg x="0" y="-13" viewBox="0 0 16 16" version="1.1" height="16" width="16" fill="${icon}">
@@ -27,7 +30,9 @@ export default class RepoCard extends BaseCard {
                         </svg>
                     </g>
                     <g transform="translate(25, 0)">
-                        <text x="0" y="0" style="font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;" fill="${title}">${name}</text>
+                        <text x="0" y="0" style="font: 600 18px 'Segoe UI', Ubuntu, Sans-Serif;" fill="${title}">
+                            ${name}
+                        </text>
                     </g>
                 </g>
                 <g transform="translate(0, 55)">
@@ -46,7 +51,7 @@ export default class RepoCard extends BaseCard {
                         </g>
                         <g transform="translate(${
                             language
-                                ? 155 - (languageName.length > 15 ? 0 : 30)
+                                ? 185 - (languageName.length > 15 ? 0 : 30)
                                 : 25
                         }, 0)">
                             <g transform="translate(0, 0)">
