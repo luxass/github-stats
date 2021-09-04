@@ -5,9 +5,8 @@ import parseQuery from "@lib/parseQuery";
 import { getFallbackDesign } from "@lib/theme";
 import StreakCard from "@lib/cards/streakCard";
 import fs from "fs";
-import { parseCalendar, parseCalendar2 } from "@lib/parser";
+import { parseCalendar } from "@lib/parser";
 import { ThemeDesign } from "@lib/types";
-import LanguageCard from "@lib/cards/languageCard";
 
 export default async function handler(
     req: NextApiRequest,
@@ -39,7 +38,7 @@ export default async function handler(
         const userData = await request(`/users/${user}`).then((res) =>
             res.json()
         );
-
+        console.log(new Date())
         const accountCreatedDate = new Date(userData["created_at"]);
         const currentYear = new Date();
         const calendars: any[] = [];
@@ -54,8 +53,8 @@ export default async function handler(
             calendars.push(calendar);
         }
 
-
-        return res.status(200).send(new LanguageCard(themeDesign, parseCalendar(calendars)).render());
+        console.log(parseCalendar(calendars))
+        return res.status(200).send(new StreakCard(themeDesign, parseCalendar(calendars)).render());
     } catch (err) {
         if (err instanceof Error) {
             return res

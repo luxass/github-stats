@@ -1,5 +1,5 @@
 import themes from "../../themes/themes.json";
-import { Theme, ThemeDesign } from "./types";
+import { FallbackDesign, Theme, ThemeDesign } from "./types";
 
 export function getFallbackColor(
     color: string | undefined,
@@ -13,7 +13,7 @@ export function getFallbackColor(
 export function getFallbackDesign(
     theme: string | undefined,
     overwriteDesign: ThemeDesign
-): ThemeDesign {
+): FallbackDesign {
     const defaultThemeObj = getTheme("THEME_DEFAULT")!;
     const selectedThemeObj =
         getTheme(theme || "THEME_DEFAULT") || defaultThemeObj!;

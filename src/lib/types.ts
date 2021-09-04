@@ -1,3 +1,31 @@
+import { VercelRequestQuery } from "@vercel/node";
+
+export type Maybe<T> = T | undefined;
+export type ValueOf<T> = T[keyof T];
+export type ValueOfQuery = ValueOf<VercelRequestQuery> | undefined;
+
+export interface StreaksFetcherResponse {
+    
+}
+
+export interface RepoFetcherResponse {
+    name: string;
+    nameWithOwner: string;
+    isPrivate: boolean;
+    isArchived: boolean;
+    isTemplate: boolean;
+    stargazers: {
+        totalCount: number;
+    };
+    description: string;
+    primaryLanguage: {
+        color: string;
+        id: string;
+        name: string;
+    };
+    forkCount: number;
+}
+
 export type StatsCardOptions = {
     customTitle?: string;
     hideIcons?: string;
@@ -59,7 +87,7 @@ export type Theme = {
     design: ThemeDesign;
 };
 export type ThemeDesign = {
-    [key: string]: string;
+    [key: string]: string | undefined;
 } & {
     title?: string;
     icon?: string;
@@ -67,6 +95,16 @@ export type ThemeDesign = {
     background?: string;
     border?: string;
 };
+export type FallbackDesign = {
+    [key: string]: string | undefined;
+} & {
+    title: string;
+    icon: string;
+    text: string;
+    background: string;
+    border: string;
+};
+
 
 export type ExtendedTheme = Theme & {
     url: string;
@@ -85,4 +123,3 @@ export type WordWrapOptions = {
     splitAt?: string[];
     errorChar?: string;
 };
-

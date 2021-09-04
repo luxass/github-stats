@@ -15,40 +15,7 @@ export default class LanguageCard extends BaseCard {
 
     render() {
         const { title, icon, border, background, text } = this.design;
-        const {
-            total_contribution,
-            first_contribution,
-            longest_streak,
-            longest_streak_start,
-            longest_streak_end,
-            current_streak,
-            current_streak_start,
-            current_streak_end,
-        } = this.data;
 
-        const currentStreak = `${DateTime.fromISO(current_streak_start)
-            .setLocale("en-US")
-            .toLocaleString({
-                month: "short",
-                day: "numeric",
-            })} - ${DateTime.fromISO(current_streak_end)
-            .setLocale("en-US")
-            .toLocaleString({
-                month: "short",
-                day: "numeric",
-            })}`;
-
-        const longestStreak = `${DateTime.fromISO(longest_streak_start)
-            .setLocale("en-US")
-            .toLocaleString({
-                month: "short",
-                day: "numeric",
-            })} - ${DateTime.fromISO(longest_streak_end)
-            .setLocale("en-US")
-            .toLocaleString({
-                month: "short",
-                day: "numeric",
-            })}`;
         return `
         <svg width="350" height="165" viewBox="0 0 350 165" fill="none" xmlns="http://www.w3.org/2000/svg">
         <style>

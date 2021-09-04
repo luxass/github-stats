@@ -37,24 +37,7 @@ export function parseCalendar(calendarString: string[]): CalendarData {
             }
         });
     });
-    /*     (
-        [totalContributions] => 402
-        [firstContribution] => 2018-06-30
-        [longestStreak] => Array
-            (
-                [start] => 2021-08-24
-                [end] => 2021-09-01
-                [length] => 9
-            )
-    
-        [currentStreak] => Array
-            (
-                [start] => 2021-08-24
-                [end] => 2021-09-01
-                [length] => 9
-            )
-    
-    ) */
+   
 
     const today = Object.keys(contributions)[Object.keys(contributions).length - 1];
 
@@ -86,87 +69,4 @@ export function parseCalendar(calendarString: string[]): CalendarData {
     });
 
     return calendarData;
-}
-export function parseCalendar2(calendarString: string) {
-    let data: any = {
-            last_year: 0,
-            longest_streak: -1,
-            longest_streak_range: [],
-            current_streak: 0,
-            current_streak_range: [],
-            longest_break: -1,
-            longest_break_range: [],
-            current_break: 0,
-            current_break_range: [],
-
-            last_contributed: null,
-        },
-        updateLongestStreak = () => {
-            if (data.current_streak > data.longest_streak) {
-                data.longest_streak = data.current_streak;
-                data.longest_streak_range[0] = data.current_streak_range[0];
-                data.longest_streak_range[1] = data.current_streak_range[1];
-            }
-        },
-        updateLongestBreak = () => {
-            if (data.current_break > data.longest_break) {
-                data.longest_break = data.current_break;
-                data.longest_break_range[0] = data.current_break_range[0];
-                data.longest_break_range[1] = data.current_break_range[1];
-            }
-        };
-
-    calendarString
-        .split("\n")
-        .slice(2)
-        .map((c) => c.trim())
-        .forEach((c) => {
-            if (c.startsWith("<g transform")) {
-            }
-
-            let level: any = c.match(/data-level="([0-9\-]+)"/i),
-                date: any = c.match(/data-date="([0-9\-]+)"/),
-                count: any = c.match(/data-count="([0-9]+)"/);
-            level = level && level[1];
-            date = date && date[1];
-            count = count && +count[1];
-
-            if (!level) {
-                return;
-            }
-
-            let obj = {
-                date: new Date(date),
-                count: count,
-                level,
-            };
-
-            if (data.current_streak === 0) {
-                data.current_streak_range[0] = obj.date;
-            }
-
-            if (data.current_break === 0) {
-                data.current_break_range[0] = obj.date;
-            }
-
-            if (obj.count) {
-                ++data.current_streak;
-                data.last_year += obj.count;
-                data.last_contributed = obj.date;
-                data.current_streak_range[1] = obj.date;
-
-                updateLongestBreak();
-                data.current_break = 0;
-            } else {
-                updateLongestStreak();
-                data.current_streak = 0;
-
-                ++data.current_break;
-                data.current_break_range[1] = obj.date;
-            }
-        });
-
-    updateLongestStreak();
-
-    return data;
 }
