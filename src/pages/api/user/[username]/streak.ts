@@ -3,24 +3,20 @@ import ErrorCard from "@lib/cards/errorCard";
 import { request } from "@lib/fetcher";
 import parseQuery from "@lib/parseQuery";
 import { getFallbackDesign } from "@lib/theme";
-import StreakCard from "@lib/cards/streakCard";
+// import StreakCard from "@lib/cards/streakCard";
+
 import fs from "fs";
 import { parseCalendar } from "@lib/parser";
 import { ThemeDesign } from "@lib/types";
+import defaultExport from "../../../../cards/StreaksCard";
 
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    const {
-        user,
-        tq,
-        title,
-        icon,
-        text,
-        background,
-        border,
-    } = parseQuery(req.query);
+    const { user, tq, title, icon, text, background, border } = parseQuery(
+        req.query
+    );
 
     const themeDesign: ThemeDesign = getFallbackDesign(tq, {
         title,
@@ -33,12 +29,10 @@ export default async function handler(
     res.setHeader("Content-Type", "image/svg+xml");
     res.setHeader("Cache-Control", "public, max-age=7200");
     try {
-
-
         const userData = await request(`/users/${user}`).then((res) =>
             res.json()
         );
-        console.log(new Date())
+        console.log(new Date());
         const accountCreatedDate = new Date(userData["created_at"]);
         const currentYear = new Date();
         const calendars: any[] = [];
@@ -53,8 +47,11 @@ export default async function handler(
             calendars.push(calendar);
         }
 
-        console.log(parseCalendar(calendars))
-        return res.status(200).send(new StreakCard(themeDesign, parseCalendar(calendars)).render());
+        console.log(parseCalendar(calendars));
+ 
+        res.status(200).send(
+            await new defaultExport(req.query).renderSVGString()
+        );
     } catch (err) {
         if (err instanceof Error) {
             return res

@@ -1,6 +1,6 @@
 import { toBoolean, toString } from "@helpers/query";
 import { DateTime } from "luxon";
-import { request } from "@lib/fetcher";
+import Fetcher from "@helpers/fetcher";
 import { RepoFetcherResponse, StreaksFetcherResponse } from "@lib/types";
 import { VercelRequestQuery } from "@vercel/node";
 import BaseCard, { CommonProps } from "./BaseCard";
@@ -8,6 +8,7 @@ import Card from "../components/Card";
 import wordwrap from "@lib/wordwrap";
 import { getFallbackDesign } from "@lib/theme";
 import getIcons from "src/icons";
+import { parseCalendar } from "@lib/parser";
 
 interface RepoCardProps extends CommonProps {
     repo: string;
@@ -25,33 +26,29 @@ export default class StreaksCard extends BaseCard {
 
     protected async fetch(): Promise<StreaksFetcherResponse> {
         const { username } = this.props as RepoCardProps;
-        const accountData = await request(`/users/${username}`)
+        const response = await Fetcher.request(`/users/${username}`);
+        const accountCreatedYear: number = new Date(
+            response.data.created_at
+        ).getFullYear();
+        const currentYear: number = new Date().getFullYear();
+
+        const arrayOfCalendars: string[] = [];
+
+        for (let i = accountCreatedYear; i <= currentYear; i++) {
+            const calendarString = await Fetcher.request(
+                `https://github.com/users/${username}/contributions?to=${i}-12-31`
+            );
+            arrayOfCalendars.push(calendarString.data);
+        }
+        return {
+            calendar: parseCalendar(arrayOfCalendars),
+        };
     }
 
-    protected render(data: RepoFetcherResponse) {
-        const {
-            name,
-            nameWithOwner,
-            isPrivate,
-            isArchived,
-            isTemplate,
-            stargazers,
-            description,
-            primaryLanguage,
-            forkCount,
-        } = data;
-
+    protected render(data: StreaksFetcherResponse) {
         const { repo, show_owner, text, border, title, icon, tq, background } =
             this.props as RepoCardProps;
-
-        let desc: string | string[] = description;
-        desc = desc || "No description provided";
-        desc = wordwrap(desc, {
-            width: 50,
-            breakWord: false,
-        });
-        const height = (desc.length > 1 ? 120 : 110) + desc.length * 10;
-
+        console.log(data)
         const design = getFallbackDesign(tq, {
             title,
             icon,
@@ -59,80 +56,87 @@ export default class StreaksCard extends BaseCard {
             background,
             border,
         });
-        const langName =
-            (primaryLanguage && primaryLanguage.name) || "Unspecified";
-        const langColor =
-            (primaryLanguage && primaryLanguage.color) || "#333333";
 
         const icons = getIcons();
         return `
-            <svg width="400" height="${height}" viewBox="0 0 400 ${height}" xmlns="http://www.w3.org/2000/svg" font-size="14" font-weight="400" font-family="'Segoe UI', Ubuntu, Sans-Serif">
-                <rect x="5" y="5" width="390" height="${height - 10}" fill="${
-            design.background
-        }" stroke="${design.border}" stroke-width="1px" rx="6px" ry="6px" />
-                <g transform="translate(25, 35)">
-                    <g transform="translate(0, 0)">
-                        <svg x="0" y="-13" viewBox="0 0 16 16" version="1.1" height="16" width="16" fill="${
-                            design.icon
-                        }">
-                            ${icons.contribution}
-                        </svg>
-                    </g>
-                    <g transform="translate(25, 0)">
-                        <text x="0" y="0" font-size="18" font-weight="600" fill="${
-                            design.title
-                        }">
-                            ${name}
-                        </text>
-                    </g>
-                </g>
-                <g transform="translate(0, 55)">
-                    <text x="25" y="-5" font-size="13" font-weight="400" fill="${
-                        design.text
-                    }">
-                        ${desc
-                            .map(
-                                (line: string) =>
-                                    `<tspan dy="1.2em" x="25">${line}</tspan>`
-                            )
-                            .join("")}
-                    </text>
-                    <g transform="translate(0, ${height - 75})">
-                        <g transform="translate(30, 0)">
-                            <circle cx="0" cy="-5" r="6" fill="${langColor}"/>
-                            <text font-size="12" font-weight="400" fill="${
-                                design.text
-                            }" x="15">${langName}</text>
-                        </g>
-                        <g transform="translate(${
-                            langName
-                                ? 185 - (langName.length > 15 ? 0 : 30)
-                                : 25
-                        }, 0)">
-                            <g transform="translate(0, 0)">
-                                <svg fill="${
-                                    design.icon
-                                }" y="-12" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                                    <path fill-rule="evenodd" d="M8 .25a.75.75 0 01.673.418l1.882 3.815 4.21.612a.75.75 0 01.416 1.279l-3.046 2.97.719 4.192a.75.75 0 01-1.088.791L8 12.347l-3.766 1.98a.75.75 0 01-1.088-.79l.72-4.194L.818 6.374a.75.75 0 01.416-1.28l4.21-.611L7.327.668A.75.75 0 018 .25zm0 2.445L6.615 5.5a.75.75 0 01-.564.41l-3.097.45 2.24 2.184a.75.75 0 01.216.664l-.528 3.084 2.769-1.456a.75.75 0 01.698 0l2.77 1.456-.53-3.084a.75.75 0 01.216-.664l2.24-2.183-3.096-.45a.75.75 0 01-.564-.41L8 2.694v.001z"/>
-                                </svg>
-                                <text font-size="12" font-weight="400" fill="${
-                                    design.text
-                                }" x="25">${stargazers.totalCount}</text>
-                            </g>
-                            <g transform="translate(65, 0)">
-                                <svg fill="${
-                                    design.icon
-                                }" y="-12" viewBox="0 0 16 16" version="1.1" width="16" height="16">
-                                    <path fill-rule="evenodd" d="M5 3.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm0 2.122a2.25 2.25 0 10-1.5 0v.878A2.25 2.25 0 005.75 8.5h1.5v2.128a2.251 2.251 0 101.5 0V8.5h1.5a2.25 2.25 0 002.25-2.25v-.878a2.25 2.25 0 10-1.5 0v.878a.75.75 0 01-.75.75h-4.5A.75.75 0 015 6.25v-.878zm3.75 7.378a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm3-8.75a.75.75 0 100-1.5.75.75 0 000 1.5z"/>
-                                </svg>
-                                <text font-size="12" font-weight="400" fill="${
-                                    design.text
-                                }" x="25">${forkCount}</text>
-                            </g>
-                        </g>
-                    </g>
-                </g>
-            </svg>
+        <svg version="1.1"
+        xmlns="http://www.w3.org/2000/svg" width="495" height="195" viewBox="0 0 495 195" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji" font-size="14px">
+        <rect x="5" y="5" width="485" height="185" fill="${background}" stroke="${border}" stroke-width="1px" rx="6px" ry="6px" />
+        <g>
+            <g transform="translate(1, 48)">
+                <text x="81.5" y="25" dy="0.25em" fill="${title}" stroke-width="0" text-anchor="middle">
+                    ${"total_contribution"}
+                </text>
+            </g>
+            <g transform="translate(1, 84)">
+    
+                <text x="81.5" y="25" dy="0.25em" stroke-width="0" fill="${text}" text-anchor="middle">
+                    Total Contributions
+                </text>
+            </g>
+            <g transform="translate(1, 114)">
+                <rect width="163" height="50" stroke="none" fill="none"></rect>
+                <text x="81.5" y="25" dy="0.25em" stroke-width="0" text-anchor="middle" fill="${text}">
+                    ${DateTime.fromISO("first_contribution")
+                        .setLocale("en-US")
+                        .toLocaleString({
+                            month: "short",
+                            day: "numeric",
+                            year: "numeric",
+                        })} - Present
+                </text>
+            </g>
+        </g>
+        <line x1="330" y1="28" x2="330" y2="170" vector-effect="non-scaling-stroke" stroke-width="1" stroke="${border}" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
+        <g>
+            <g transform="translate(166, 48)">
+                <text x="81.5" y="25" dy="0.25em" fill="${title}" stroke-width="0" text-anchor="middle">
+                        ${"current_streak"}
+                </text>
+            </g>
+            <g transform="translate(166, 108)">
+                <text x="81.5" y="25" dy="0.25em" stroke-width="0" fill="${text}" text-anchor="middle">
+                        Current Streak
+                </text>
+            </g>
+            <g transform="translate(166, 145)">
+    
+                <text x="81.5" y="13" dy="0.25em" fill="${text}" stroke-width="0" text-anchor="middle">
+                        ${"currentStreak"}
+                </text>
+            </g>
+            <defs>
+                <mask id="cut-off-area">
+                    <rect x="0" y="0" width="500" height="500" fill="white"/>
+                    <ellipse cx="247.5" cy="31" rx="13" ry="18"/>
+                </mask>
+            </defs>
+            <circle cx="247.5" cy="71" r="40" mask="url(#cut-off-area)" fill="none" stroke="#fb8c00" stroke-width="5"/>
+            <g>
+                <path d=" M 235.5 19.5 L 259.5 19.5 L 259.5 43.5 L 235.5 43.5 L 235.5 19.5 Z " fill="none"/>
+                <path d=" M 249 20.17 C 249 20.17 249.74 22.82 249.74 24.97 C 249.74 27.03 248.39 28.7 246.33 28.7 C 244.26 28.7 242.7 27.03 242.7 24.97 L 242.73 24.61 C 240.71 27.01 239.5 30.12 239.5 33.5 C 239.5 37.92 243.08 41.5 247.5 41.5 C 251.92 41.5 255.5 37.92 255.5 33.5 C 255.5 28.11 252.91 23.3 249 20.17 Z  M 247.21 38.5 C 245.43 38.5 243.99 37.1 243.99 35.36 C 243.99 33.74 245.04 32.6 246.8 32.24 C 248.57 31.88 250.4 31.03 251.42 29.66 C 251.81 30.95 252.01 32.31 252.01 33.7 C 252.01 36.35 249.86 38.5 247.21 38.5 Z " fill="#fb8c00"/>
+            </g>
+        </g>
+        <line x1="165" y1="28" x2="165" y2="170" vector-effect="non-scaling-stroke" stroke-width="1" stroke="${border}" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
+        <g>
+            <g transform="translate(331, 48)">
+                <text x="81.5" y="25" dy="0.25em" stroke-width="0" text-anchor="middle" fill="${title}">
+                    ${"longest_streak"}
+                </text>
+            </g>
+            <g transform="translate(331, 84)">
+                <text x="81.5" y="25" dy="0.25em" stroke-width="0" text-anchor="middle" fill="${text}">
+                    Longest Streak
+                </text>
+            </g>
+            <g transform="translate(331, 114)">
+    
+                <text x="81.5" y="25" dy="0.25em" fill="${text}" stroke-width="0" text-anchor="middle">
+                    ${"longestStreak"}
+                </text>
+            </g>
+        </g>
+    </svg>
         `;
     }
 }

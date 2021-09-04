@@ -1,5 +1,4 @@
 import { toBoolean, toString } from "@helpers/query";
-import { graphql } from "@lib/fetcher";
 import { RepoFetcherResponse } from "@lib/types";
 import { VercelRequestQuery } from "@vercel/node";
 import BaseCard, { CommonProps } from "./BaseCard";
@@ -7,10 +6,12 @@ import Card from "../components/Card";
 import wordwrap from "@lib/wordwrap";
 import { getFallbackDesign } from "@lib/theme";
 import getIcons from "src/icons";
+import Fetcher from "@helpers/fetcher";
+import NotFoundError from "@lib/errors/NotFoundError";
 
 interface RepoCardProps extends CommonProps {
     repo: string;
-    show_owner: boolean;
+    hide_owner: boolean;
 }
 
 export default class RepoCard extends BaseCard {
@@ -20,18 +21,18 @@ export default class RepoCard extends BaseCard {
 
     protected preprocess(query: VercelRequestQuery) {
         const commonProps: CommonProps = super.preprocess(query);
-        const { repo, show_owner } = query;
+        const { repo, hide_owner } = query;
 
         return {
             ...commonProps,
             repo: toString(repo) ?? "",
-            show_owner: toBoolean(show_owner) ?? false,
+            hide_owner: toBoolean(hide_owner) ?? false,
         };
     }
 
     protected async fetch(): Promise<RepoFetcherResponse> {
         const { username, repo } = this.props as RepoCardProps;
-        const { data, errors } = await graphql<{
+        let response = await Fetcher.graphql<{
             login: string;
             repo: string;
         }>(
@@ -71,8 +72,10 @@ export default class RepoCard extends BaseCard {
                 repo: repo,
             }
         );
+        const { data, errors } = response.data;
+
         if (!data.user && !data.organization) {
-            throw new Error("Both the user and organization was not found");
+            throw new NotFoundError();
         }
 
         const userRepo = data.organization === null && data.user;
@@ -112,7 +115,7 @@ export default class RepoCard extends BaseCard {
             forkCount,
         } = data;
 
-        const { repo, show_owner, text, border, title, icon, tq, background } =
+        const { repo, hide_owner, text, border, title, icon, tq, background } =
             this.props as RepoCardProps;
 
         let desc: string | string[] = description;
@@ -134,7 +137,7 @@ export default class RepoCard extends BaseCard {
             (primaryLanguage && primaryLanguage.name) || "Unspecified";
         const langColor =
             (primaryLanguage && primaryLanguage.color) || "#333333";
-            
+
         const icons = getIcons();
         return `
             <svg width="400" height="${height}" viewBox="0 0 400 ${height}" xmlns="http://www.w3.org/2000/svg" font-size="14" font-weight="400" font-family="'Segoe UI', Ubuntu, Sans-Serif">
@@ -153,7 +156,7 @@ export default class RepoCard extends BaseCard {
                         <text x="0" y="0" font-size="18" font-weight="600" fill="${
                             design.title
                         }">
-                            ${name}
+                            ${hide_owner ? name : nameWithOwner}
                         </text>
                     </g>
                 </g>

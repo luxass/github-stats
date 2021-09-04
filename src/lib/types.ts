@@ -5,7 +5,7 @@ export type ValueOf<T> = T[keyof T];
 export type ValueOfQuery = ValueOf<VercelRequestQuery> | undefined;
 
 export interface StreaksFetcherResponse {
-    
+    calendar: CalendarData
 }
 
 export interface RepoFetcherResponse {
