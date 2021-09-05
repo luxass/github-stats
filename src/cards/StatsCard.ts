@@ -161,7 +161,7 @@ export default class StatsCard extends BaseCard {
                             }
                             <text x="25" y="12.5" font-size="12px" fill="${
                                 design.text
-                            }">Stars</text>
+                            }">Stars Earned</text>
                             <text x="250" y="12.5" font-size="12px" fill="${
                                 design.text
                             }">${stars}</text>
