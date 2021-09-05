@@ -6,7 +6,7 @@ import BaseCard, { CommonProps } from "./BaseCard";
 import { getFallbackDesign } from "@lib/theme";
 import { parseCalendar } from "@lib/parser";
 
-export default class StreaksCard extends BaseCard {
+export default class StreakCard extends BaseCard {
     constructor(query: VercelRequestQuery) {
         super(query);
     }

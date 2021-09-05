@@ -14,9 +14,6 @@ export interface StreaksFetcherResponse {
 export interface RepoFetcherResponse {
     name: string;
     nameWithOwner: string;
-    isPrivate: boolean;
-    isArchived: boolean;
-    isTemplate: boolean;
     stargazers: {
         totalCount: number;
     };

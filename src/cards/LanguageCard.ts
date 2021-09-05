@@ -1,15 +1,11 @@
 import { toBoolean, toInteger, toString, toStringArray } from "@helpers/query";
 import {
     LanguageFetcherResponse,
-    RepoFetcherResponse,
     RepoNode,
 } from "@lib/types";
 import { VercelRequestQuery } from "@vercel/node";
 import BaseCard, { CommonProps } from "./BaseCard";
-import Card from "../components/Card";
-import wordwrap from "@lib/wordwrap";
 import { getFallbackDesign } from "@lib/theme";
-import getIcons from "src/icons";
 import Fetcher from "@helpers/fetcher";
 import NotFoundError from "@lib/errors/NotFoundError";
 import longLanguages from "@lib/languages";
@@ -42,7 +38,7 @@ export default class LanguageCard extends BaseCard {
             custom_title: toString(custom_title) ?? "",
             hide_langs: toStringArray(hide_langs),
             exclude_repos: toStringArray(exclude_repos),
-            langs_count: toInteger(langs_count) ?? 20,
+            langs_count: toInteger(langs_count) ?? 6,
             with_forks: toBoolean(with_forks) ?? false,
         };
     }
@@ -50,6 +46,9 @@ export default class LanguageCard extends BaseCard {
     protected async fetch(): Promise<LanguageFetcherResponse> {
         const { username, with_forks, exclude_repos } = this
             .props as LanguageCardProps;
+
+    
+
         let response = await Fetcher.graphql<{
             login: string;
         }>(
@@ -61,7 +60,7 @@ export default class LanguageCard extends BaseCard {
                     }, first: 100) {
                         nodes {
                             name
-                            languages(first: 20, orderBy: {field: SIZE, direction: DESC}) {
+                            languages(first: 10, orderBy: {field: SIZE, direction: DESC}) {
                                 edges {
                                    size
                                     node {
@@ -225,17 +224,15 @@ export default class LanguageCard extends BaseCard {
                 ? (lang.name = lang.name.slice(0, 15) + "...")
                 : lang.name
         );
-        let cardTitle = "Most Used Languages";
+        let cardTitle = `Most Used Languages ${with_forks ? "Including Forks" : ""}`;
         if (custom_title) cardTitle = custom_title;
 
         const height = 90 + Math.round(langs.length / 2) * 25;
         return `          
             <svg width="350" height="${height}" viewBox="0 0 350 ${height}" xmlns="http://www.w3.org/2000/svg" font-size="14" font-weight="400" font-family="'Segoe UI', Ubuntu, Sans-Serif">
                 <rect x="5" y="5" width="340" height="${height - 10}" fill="${
-                    design.background
-                }" stroke="${
-            design.border
-        }" stroke-width="1px" rx="6px" ry="6px" />
+            design.background
+        }" stroke="${design.border}" stroke-width="1px" rx="6px" ry="6px" />
                 <g transform="translate(25, 35)">
                     <g transform="translate(0, 0)">
                         <text x="0" y="0" font-weight="600" font-size="18" fill="${
@@ -249,7 +246,11 @@ export default class LanguageCard extends BaseCard {
                             <rect x="0" y="0" width="300" height="8" fill="white" rx="5" />
                         </mask>
                         ${this.renderProgressBar(totalSize, langs).join("")}
-                       ${this.renderLanguages(totalSize, langs, design.text).join("")}
+                       ${this.renderLanguages(
+                           totalSize,
+                           langs,
+                           design.text
+                       ).join("")}
                     </svg>
                 </g>
             </svg>

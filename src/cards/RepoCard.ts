@@ -2,12 +2,12 @@ import { toBoolean, toString } from "@helpers/query";
 import { RepoFetcherResponse } from "@lib/types";
 import { VercelRequestQuery } from "@vercel/node";
 import BaseCard, { CommonProps } from "./BaseCard";
-import Card from "../components/Card";
 import wordwrap from "@lib/wordwrap";
 import { getFallbackDesign } from "@lib/theme";
 import getIcons from "src/icons";
 import Fetcher from "@helpers/fetcher";
 import NotFoundError from "@lib/errors/NotFoundError";
+import wcwidth from "wcwidth";
 
 interface RepoCardProps extends CommonProps {
     repo: string;
@@ -40,9 +40,6 @@ export default class RepoCard extends BaseCard {
                 fragment RepoInfo on Repository {
                     name
                     nameWithOwner
-                    isPrivate
-                    isArchived
-                    isTemplate
                     stargazers {
                         totalCount
                     }
@@ -114,8 +111,8 @@ export default class RepoCard extends BaseCard {
             forkCount,
         } = data;
 
-        const { repo, hide_owner, text, border, title, icon, tq, background } =
-            this.props as RepoCardProps;
+        const { hide_owner, text, border, title, icon, tq, background } = this
+            .props as RepoCardProps;
 
         let desc: string | string[] = description;
         desc = desc || "No description provided";
@@ -123,6 +120,16 @@ export default class RepoCard extends BaseCard {
             width: 50,
             breakWord: false,
         });
+
+        let repoName = hide_owner ? name : nameWithOwner;
+        
+        repoName =
+            wcwidth(repoName) >= 32
+                ? repoName.substring(
+                      0,
+                      32 / wcwidth(repoName.substring(0, 1))
+                  ) + "..."
+                : repoName;
         const height = (desc.length > 1 ? 120 : 110) + desc.length * 10;
 
         const design = getFallbackDesign(tq, {
@@ -155,7 +162,7 @@ export default class RepoCard extends BaseCard {
                         <text x="0" y="0" font-size="18" font-weight="600" fill="${
                             design.title
                         }">
-                            ${hide_owner ? name : nameWithOwner}
+                            ${repoName}
                         </text>
                     </g>
                 </g>

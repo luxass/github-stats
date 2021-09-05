@@ -29,14 +29,18 @@ export default class BaseCard {
             const stats = await this.fetch();
             return this.render(stats);
         } catch (err) {
-            console.error(err);
-            if (err instanceof Error) {
-                return `ReactDOMServer.renderToString(<ErrorComp error={err} />);`;
-            }
-            return `ReactDOMServer.renderToString(
-                <ErrorComp error={} />
-            );
-            `;
+            return this.renderError(err as Error);
+        }
+    }
+
+    public async renderJSON() {
+        try {
+            const stats = await this.fetch();
+            return { username: this.props.username, stats: stats };
+        } catch (err) {
+            return {
+                error: err,
+            };
         }
     }
 
@@ -45,7 +49,22 @@ export default class BaseCard {
     protected render(stats: any): string {
         return `<svg></svg>`;
     }
-
+    private renderError(error: Error | string): string {
+        return `
+            <svg width="495" height="120" viewBox="0 0 495 120" xmlns="http://www.w3.org/2000/svg">
+                <rect x="5" y="5" width="485" height="110" rx="6" ry="6" fill="#FFFEFE"  stroke="#E4E2E2"/>
+                <text x="25" y="15" style="font: 600 16px 'Segoe UI', Ubuntu, Sans-Serif;" fill="#2f80ed">
+                    <tspan x="25" dy="18">An error occurred</tspan>
+                    <tspan x="25" dy="18">Report at https://git.io/J0sDR</tspan>
+                </text>
+                <text x="25" y="65" style="font: 600 12px 'Segoe UI', Ubuntu, Sans-Serif;" fill="#252525">
+                    <tspan x="25" dy="18">
+                        ${error}
+                    </tspan>
+                </text>
+            </svg>
+        `;
+    }
     protected preprocess(query: VercelRequestQuery): CommonProps {
         const { username, title, text, icon, border, background, tq } = query;
         return {
