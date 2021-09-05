@@ -36,6 +36,14 @@ export interface UserFetcherResponse {
     contributions: string;
 }
 
+export interface LanguageFetcherResponse {
+    languages: {
+        name: string;
+        color: string;
+        size: number;
+    }[];
+}
+
 export type StatsCardOptions = {
     customTitle?: string;
     hideIcons?: string;
@@ -72,8 +80,8 @@ export type RepoStats = {
 };
 
 export type RepoNode = {
-    name?: string;
-    nameWithOwner?: string;
+    name: string;
+    nameWithOwner: string;
     languages?: {
         edges: LanguageEdge[];
     };

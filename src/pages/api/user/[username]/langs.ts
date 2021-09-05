@@ -6,14 +6,13 @@ import { getFallbackDesign } from "@lib/theme";
 import { parseCalendar } from "@lib/parser";
 import { ThemeDesign } from "@lib/types";
 import LanguageCard from "@lib/cards/languageCard";
-
+import defaultExport from "../../../../cards/LanguageCard";
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    const { user, tq, title, icon, text, background, border, use_fork } = parseQuery(
-        req.query
-    );
+    const { user, tq, title, icon, text, background, border, use_fork } =
+        parseQuery(req.query);
 
     const themeDesign: ThemeDesign = getFallbackDesign(tq, {
         title,
@@ -26,29 +25,14 @@ export default async function handler(
     res.setHeader("Content-Type", "image/svg+xml");
     res.setHeader("Cache-Control", "public, max-age=7200");
     try {
-        const { data, errors } = await graphql<{
-            login: string;
-        }>(`
-            query userQuery($login: String!) {
-                user(login: $login) {
-                    repositories(ownerAffiliations: OWNER, ${use_fork === "true" ? "isFork: true" : "isFork: false"}) {
-                        nodes {
-                            name
-                            languages()
-                        }
-                    }
-                }
-            }
-        
-        `, {
-            login: user,
-        });
-
+        // return res
+        //     .status(200)
+        //     .send(
+        //         new LanguageCard(themeDesign, parseCalendar(calendars)).render()
+        //     );
         return res
             .status(200)
-            .send(
-                new LanguageCard(themeDesign, parseCalendar(calendars)).render()
-            );
+            .send(await new defaultExport(req.query).renderSVGString());
     } catch (err) {
         if (err instanceof Error) {
             return res
