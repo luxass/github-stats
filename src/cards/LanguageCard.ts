@@ -12,6 +12,7 @@ import { getFallbackDesign } from "@lib/theme";
 import getIcons from "src/icons";
 import Fetcher from "@helpers/fetcher";
 import NotFoundError from "@lib/errors/NotFoundError";
+import longLanguages from "@lib/languages";
 
 interface LanguageCardProps extends CommonProps {
     custom_title: string;
@@ -151,7 +152,8 @@ export default class LanguageCard extends BaseCard {
     }
     protected renderLanguages(
         totalSize: number,
-        languages: { name: string; color: string; size: number }[]
+        languages: { name: string; color: string; size: number }[],
+        text: string
     ) {
         return languages.map(
             (
@@ -160,7 +162,7 @@ export default class LanguageCard extends BaseCard {
             ) => {
                 const percentage = ((lang.size / totalSize) * 100).toFixed(2);
                 const color = lang.color || "#858585";
-                const x = index % 2 === 0 ? 0 : 180;
+                const x = index % 2 === 0 ? 0 : 170;
                 const y =
                     index % 2 === 0 ? 12.5 * index + 25 : 12.5 * (index + 1);
 
@@ -172,7 +174,7 @@ export default class LanguageCard extends BaseCard {
                             r="5"
                             fill="${color}"
                         />
-                        <text x="15" y="10" font-size="11">${lang.name} ${percentage}%</text>
+                        <text x="15" y="10" font-size="11" fill="${text}">${lang.name} ${percentage}%</text>
                     </g>
                 `;
             }
@@ -181,6 +183,9 @@ export default class LanguageCard extends BaseCard {
 
     protected render(data: LanguageFetcherResponse) {
         const { languages } = data;
+
+        // Make a Set from all the long language names
+        const longLanguageNames = new Set(longLanguages);
 
         const {
             custom_title,
@@ -216,9 +221,12 @@ export default class LanguageCard extends BaseCard {
             background,
             border,
         });
-
-        return `
-          
+        langs.map((lang) =>
+            longLanguageNames.has(lang.name)
+                ? (lang.name = lang.name.slice(0, 15) + "...")
+                : lang.name
+        );
+        return `          
             <svg width="350" height="165" viewBox="0 0 350 165" xmlns="http://www.w3.org/2000/svg" font-size="14" font-weight="400" font-family="'Segoe UI', Ubuntu, Sans-Serif">
                 <rect x="5" y="5" width="340" height="155" fill="${
                     design.background
@@ -227,7 +235,9 @@ export default class LanguageCard extends BaseCard {
         }" stroke-width="1px" rx="6px" ry="6px" />
                 <g transform="translate(25, 35)">
                     <g transform="translate(0, 0)">
-                        <text x="0" y="0" class="header">Most Used Languages</text>
+                        <text x="0" y="0" font-weight="600" font-size="18" fill="${
+                            design.title
+                        }">Most Used Languages</text>
                     </g>
                 </g>
                 <g transform="translate(0, 55)">
@@ -236,7 +246,7 @@ export default class LanguageCard extends BaseCard {
                             <rect x="0" y="0" width="300" height="8" fill="white" rx="5" />
                         </mask>
                         ${this.renderProgressBar(totalSize, langs).join("")}
-                       ${this.renderLanguages(totalSize, langs).join("")}
+                       ${this.renderLanguages(totalSize, langs, design.text).join("")}
                     </svg>
                 </g>
             </svg>
