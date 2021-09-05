@@ -52,7 +52,7 @@ export default async function handler(
         //     forks: forks,
         // };
 
-        res.status(200).send(await new defaultExport(req.query).renderSVGString());
+        return res.status(200).send(await new defaultExport(req.query).renderSVGString());
 
     } catch (err) {
         if (err instanceof Error) {

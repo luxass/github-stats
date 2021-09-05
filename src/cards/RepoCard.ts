@@ -75,7 +75,9 @@ export default class RepoCard extends BaseCard {
         const { data, errors } = response.data;
 
         if (!data.user && !data.organization) {
-            throw new NotFoundError();
+            throw new NotFoundError(
+                "Both the user and organization was not found"
+            );
         }
 
         const userRepo = data.organization === null && data.user;
@@ -84,7 +86,7 @@ export default class RepoCard extends BaseCard {
         let dataRepo;
         if (userRepo) {
             if (!data.user.repository || data.user.repository.isPrivate) {
-                throw new Error("No User Repository found");
+                throw new NotFoundError("No User Repository found");
             }
             dataRepo = data.user.repository;
         }
@@ -94,7 +96,7 @@ export default class RepoCard extends BaseCard {
                 !data.organization.repository ||
                 data.organization.repository.isPrivate
             ) {
-                throw new Error("No Organization Repository found");
+                throw new NotFoundError("No Organization Repository found");
             }
             dataRepo = data.organization.repository;
         }

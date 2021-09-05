@@ -5,7 +5,7 @@ export type ValueOf<T> = T[keyof T];
 export type ValueOfQuery = ValueOf<VercelRequestQuery> | undefined;
 
 export interface StreaksFetcherResponse {
-    calendar: CalendarData
+    calendar: CalendarData;
     currentStreak: string;
     longestStreak: string;
     firstContribution: string;
@@ -27,6 +27,13 @@ export interface RepoFetcherResponse {
         name: string;
     };
     forkCount: number;
+}
+export interface UserFetcherResponse {
+    stars: string;
+    forks: string;
+    issues: string;
+    commits: string;
+    contributions: string;
 }
 
 export type StatsCardOptions = {
@@ -107,7 +114,6 @@ export type FallbackDesign = {
     background: string;
     border: string;
 };
-
 
 export type ExtendedTheme = Theme & {
     url: string;

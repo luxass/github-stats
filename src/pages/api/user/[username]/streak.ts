@@ -29,29 +29,9 @@ export default async function handler(
     res.setHeader("Content-Type", "image/svg+xml");
     res.setHeader("Cache-Control", "public, max-age=7200");
     try {
-        const userData = await request(`/users/${user}`).then((res) =>
-            res.json()
-        );
-        console.log(new Date());
-        const accountCreatedDate = new Date(userData["created_at"]);
-        const currentYear = new Date();
-        const calendars: any[] = [];
-        for (
-            let i = accountCreatedDate.getFullYear();
-            i <= currentYear.getFullYear();
-            i++
-        ) {
-            const calendar = await request(
-                `https://github.com/users/${user}/contributions?to=${i}-12-31`
-            ).then((res) => res.text());
-            calendars.push(calendar);
-        }
-
-        console.log(parseCalendar(calendars));
- 
-        res.status(200).send(
-            await new defaultExport(req.query).renderSVGString()
-        );
+        return res
+            .status(200)
+            .send(await new defaultExport(req.query).renderSVGString());
     } catch (err) {
         if (err instanceof Error) {
             return res

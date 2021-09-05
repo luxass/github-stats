@@ -1,6 +1,6 @@
 export default class NotFoundError extends Error {
-    constructor() {
-        super("Both the user and organization was not found");
+    constructor(message?: string) {
+        super(message || "Not Found Error");
 
         this.name = "NotFoundError";
     }
