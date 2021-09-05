@@ -1,11 +1,7 @@
-import { VercelRequestQuery, VercelResponse } from "@vercel/node";
+import { VercelRequestQuery } from "@vercel/node";
 import {
     toString,
-    toInteger,
-    toFloatingNumber,
-    toBoolean,
 } from "@helpers/query";
-import ErrorComp from "../components/Error";
 
 export interface CommonProps {
     username: string;

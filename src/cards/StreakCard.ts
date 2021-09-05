@@ -2,7 +2,7 @@ import { DateTime } from "luxon";
 import Fetcher from "@helpers/fetcher";
 import { StreaksFetcherResponse } from "@lib/types";
 import { VercelRequestQuery } from "@vercel/node";
-import BaseCard, { CommonProps } from "./BaseCard";
+import BaseCard from "./BaseCard";
 import { getFallbackDesign } from "@lib/theme";
 import { parseCalendar } from "@lib/parser";
 
