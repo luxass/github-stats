@@ -1,3 +1,46 @@
+import { VercelRequestQuery } from "@vercel/node";
+
+export type Maybe<T> = T | undefined;
+export type ValueOf<T> = T[keyof T];
+export type ValueOfQuery = ValueOf<VercelRequestQuery> | undefined;
+
+export interface StreaksFetcherResponse {
+    calendar: CalendarData;
+    currentStreak: string;
+    longestStreak: string;
+    firstContribution: string;
+}
+
+export interface RepoFetcherResponse {
+    name: string;
+    nameWithOwner: string;
+    stargazers: {
+        totalCount: number;
+    };
+    description: string;
+    primaryLanguage: {
+        color: string;
+        id: string;
+        name: string;
+    };
+    forkCount: number;
+}
+export interface UserFetcherResponse {
+    stars: string;
+    forks: string;
+    issues: string;
+    commits: string;
+    contributions: string;
+}
+
+export interface LanguageFetcherResponse {
+    languages: {
+        name: string;
+        color: string;
+        size: number;
+    }[];
+}
+
 export type StatsCardOptions = {
     customTitle?: string;
     hideIcons?: string;
@@ -10,7 +53,16 @@ export type UserStats = {
     issues: string;
     commits: string;
 };
-
+export type CalendarData = {
+    total_contribution: number;
+    first_contribution: string;
+    longest_streak: number;
+    longest_streak_start: string;
+    longest_streak_end: string;
+    current_streak: number;
+    current_streak_start: string;
+    current_streak_end: string;
+};
 export type RepoStats = {
     name: string;
     description: string[];
@@ -25,8 +77,8 @@ export type RepoStats = {
 };
 
 export type RepoNode = {
-    name?: string;
-    nameWithOwner?: string;
+    name: string;
+    nameWithOwner: string;
     languages?: {
         edges: LanguageEdge[];
     };
@@ -50,7 +102,7 @@ export type Theme = {
     design: ThemeDesign;
 };
 export type ThemeDesign = {
-    [key: string]: string;
+    [key: string]: string | undefined;
 } & {
     title?: string;
     icon?: string;
@@ -58,7 +110,30 @@ export type ThemeDesign = {
     background?: string;
     border?: string;
 };
+export type FallbackDesign = {
+    [key: string]: string | undefined;
+} & {
+    title: string;
+    icon: string;
+    text: string;
+    background: string;
+    border: string;
+};
 
 export type ExtendedTheme = Theme & {
     url: string;
+};
+
+export type WordWrapOptions = {
+    breakWord?: boolean;
+    input?: string[];
+    minWidth?: number;
+    paddingLeft?: number;
+    paddingRight?: number;
+    returnFormat?: "string" | "array";
+    skipPadding?: boolean;
+    width?: number;
+    trim?: boolean;
+    splitAt?: string[];
+    errorChar?: string;
 };

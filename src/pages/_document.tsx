@@ -9,6 +9,8 @@ export default class MyDocument extends Document {
         try {
             ctx.renderPage = () =>
                 originalRenderPage({
+                    // NextJS 11.0.0 breaks this stuff
+                    // eslint-disable-next-line react/display-name
                     enhanceApp: (App) => (props) =>
                         sheet.collectStyles(<App {...props} />),
                 });

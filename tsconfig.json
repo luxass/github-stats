@@ -1,7 +1,7 @@
 {
     "compilerOptions": {
         "target": "es5",
-        "lib": ["dom", "dom.iterable", "esnext"],
+        "lib": ["dom", "dom.iterable", "esnext", "ES2020"],
         "allowJs": true,
         "skipLibCheck": true,
         "strict": true,
@@ -11,12 +11,14 @@
         "module": "esnext",
         "moduleResolution": "node",
         "resolveJsonModule": true,
-        "isolatedModules": true,
         "jsx": "preserve",
         "baseUrl": ".",
         "paths": {
-            "@lib/*": ["./src/lib/*"]
-        }
+            "@lib/*": ["./src/lib/*"],
+            "@helpers/*": ["./src/helpers/*"],
+            "@cards/*": ["./src/cards/*"]
+        },
+        "isolatedModules": true
     },
     "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
     "exclude": ["node_modules"]
