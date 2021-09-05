@@ -1,13 +1,9 @@
-import { toBoolean, toString } from "@helpers/query";
 import { DateTime } from "luxon";
 import Fetcher from "@helpers/fetcher";
-import { RepoFetcherResponse, StreaksFetcherResponse } from "@lib/types";
+import { StreaksFetcherResponse } from "@lib/types";
 import { VercelRequestQuery } from "@vercel/node";
 import BaseCard, { CommonProps } from "./BaseCard";
-import Card from "../components/Card";
-import wordwrap from "@lib/wordwrap";
 import { getFallbackDesign } from "@lib/theme";
-import getIcons from "src/icons";
 import { parseCalendar } from "@lib/parser";
 
 export default class StreaksCard extends BaseCard {
@@ -87,7 +83,6 @@ export default class StreaksCard extends BaseCard {
             longestStreak,
             firstContribution,
         } = data;
-        console.log(data)
         const design = getFallbackDesign(tq, {
             title,
             icon,

@@ -42,7 +42,7 @@ export default class LanguageCard extends BaseCard {
             custom_title: toString(custom_title) ?? "",
             hide_langs: toStringArray(hide_langs),
             exclude_repos: toStringArray(exclude_repos),
-            langs_count: toInteger(langs_count) ?? 5,
+            langs_count: toInteger(langs_count) ?? 20,
             with_forks: toBoolean(with_forks) ?? false,
         };
     }
@@ -191,7 +191,6 @@ export default class LanguageCard extends BaseCard {
             custom_title,
             hide_langs,
             langs_count,
-            exclude_repos,
             with_forks,
             text,
             border,
@@ -226,9 +225,13 @@ export default class LanguageCard extends BaseCard {
                 ? (lang.name = lang.name.slice(0, 15) + "...")
                 : lang.name
         );
+        let cardTitle = "Most Used Languages";
+        if (custom_title) cardTitle = custom_title;
+
+        const height = 90 + Math.round(langs.length / 2) * 25;
         return `          
-            <svg width="350" height="165" viewBox="0 0 350 165" xmlns="http://www.w3.org/2000/svg" font-size="14" font-weight="400" font-family="'Segoe UI', Ubuntu, Sans-Serif">
-                <rect x="5" y="5" width="340" height="155" fill="${
+            <svg width="350" height="${height}" viewBox="0 0 350 ${height}" xmlns="http://www.w3.org/2000/svg" font-size="14" font-weight="400" font-family="'Segoe UI', Ubuntu, Sans-Serif">
+                <rect x="5" y="5" width="340" height="${height - 10}" fill="${
                     design.background
                 }" stroke="${
             design.border
@@ -237,7 +240,7 @@ export default class LanguageCard extends BaseCard {
                     <g transform="translate(0, 0)">
                         <text x="0" y="0" font-weight="600" font-size="18" fill="${
                             design.title
-                        }">Most Used Languages</text>
+                        }">${cardTitle}</text>
                     </g>
                 </g>
                 <g transform="translate(0, 55)">

@@ -108,9 +108,6 @@ export default class RepoCard extends BaseCard {
         const {
             name,
             nameWithOwner,
-            isPrivate,
-            isArchived,
-            isTemplate,
             stargazers,
             description,
             primaryLanguage,

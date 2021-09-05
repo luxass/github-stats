@@ -18,11 +18,14 @@
 -   [Usage](#usage)
     -   [Stats Card](#stats-card)
     -   [Repo Card](#repo-card)
+    -   [Language Card](#language-card)
+    -   [Streak Card](#streak-card)
 -   [Themes](#themes)
 -   [Customization](#customization)
     -   [Common Options](#common-options)
     -   [Stats Card Exclusive Options](#exclusive-options-to-stats-card)
     -   [Repo Card Exclusive Options](#exclusive-options-to-repo-card)
+    -   [Language Card Exclusive Options](#exclusive-options-to-language-card)
 -   [How to contribute](#how-to-contribute)
 
 ## Usage
@@ -48,7 +51,7 @@ We got you covered! You can pass `hide_icons=true` as a query parameter to hide 
 Copy the following code into your readme file and change the `username` to match your GitHub username and `reponame` to match your repository name.
 
 ```md
-[![DeprecatedLuxas' GitHub stats](https://github-stats.vercel.app/api/user/username/repo/reponame)](https://github.com/deprecatedluxas/github-stats)
+[![DeprecatedLuxas' GitHub repo stats](https://github-stats.vercel.app/api/user/username/repo/reponame)](https://github.com/deprecatedluxas/github-stats)
 ```
 
 #### Want to hide the owner?
@@ -58,6 +61,39 @@ We got you covered! You can pass `hide_owner=true` as a query parameter to hide 
 ```md
 [![DeprecatedLuxas' GitHub stats](https://github-stats.vercel.app/api/user/deprecatedluxas?hide_owner=true)](https://github.com/deprecatedluxas/github-stats)
 ```
+
+### Language Card
+
+Copy the following code into your readme file and change the `username` to match your GitHub username.
+
+```md
+[![DeprecatedLuxas' GitHub Languages Stats](https://github-stats.vercel.app/api/user/username/langs)](https://github.com/deprecatedluxas/github-stats)
+```
+
+#### Want to hide some languages?
+
+We got you covered! You can pass `hide_langs=HTML,TypeScript` as a query parameter to hide the languages.
+
+```md
+[![DeprecatedLuxas' GitHub Languages Stats](https://github-stats.vercel.app/api/user/username?hide_langs=HTML,TypeScript)](https://github.com/deprecatedluxas/github-stats)
+```
+
+#### Want to include forks in the stats?
+
+We got you covered! You can pass `with_forks=true` as a query parameter to include forks.
+
+```md
+[![DeprecatedLuxas' GitHub Languages Stats](https://github-stats.vercel.app/api/user/username?with_forks=true)](https://github.com/deprecatedluxas/github-stats)
+```
+
+### Streak Card
+
+Copy the following code into your readme file and change the `username` to match your GitHub username.
+
+```md
+[![DeprecatedLuxas' GitHub Streak](https://github-stats.vercel.app/api/user/username/streak)](https://github.com/deprecatedluxas/github-stats)
+```
+
 
 ## Themes
 
@@ -77,7 +113,7 @@ You can preview all the themes right [here](./themes/README.md) or you can check
 
 ## Customization
 
-You can customize the appearance of your `Stats Card` or `Repo Card` however you wish with URL parameters.
+You can customize the appearance of your `Stats Card`, `Language Card` or `Repo Card` however you wish with URL parameters.
 
 #### Common Options:
 
@@ -98,6 +134,16 @@ You can customize the appearance of your `Stats Card` or `Repo Card` however you
 #### Exclusive Options to Repo Card:
 
 -   `hide_owner` - Hides the repo's owner name _(boolean)_
+
+#### Exclusive Options to Language Card:
+
+-   `custom_title` - Sets a custom title for the card
+-   `langs_count` - Show more languages on the card, between 1-20, defaults to 6 _(number)_
+-   `hide_langs` - Hide the languages specified from the card _(Comma-separated values)_
+-   `exclude_repos` - Exclude specified repositories _(Comma-separated values)_
+-   `with_forks` - Include forks in the language stats _(boolean)_
+
+> Important: Language names should be uri-escaped, as specified in [Percent Encoding](https://en.wikipedia.org/wiki/Percent-encoding) (i.e: `c++` should become `c%2B%2B`, `jupyter notebook` should become `jupyter%20notebook`, etc.) You can use urlencoder.org to help you do this automatically.
 
 ## How to contribute
 

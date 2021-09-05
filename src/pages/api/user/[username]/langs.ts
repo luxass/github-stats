@@ -25,11 +25,6 @@ export default async function handler(
     res.setHeader("Content-Type", "image/svg+xml");
     res.setHeader("Cache-Control", "public, max-age=7200");
     try {
-        // return res
-        //     .status(200)
-        //     .send(
-        //         new LanguageCard(themeDesign, parseCalendar(calendars)).render()
-        //     );
         return res
             .status(200)
             .send(await new defaultExport(req.query).renderSVGString());
