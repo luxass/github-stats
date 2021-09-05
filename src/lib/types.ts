@@ -6,6 +6,9 @@ export type ValueOfQuery = ValueOf<VercelRequestQuery> | undefined;
 
 export interface StreaksFetcherResponse {
     calendar: CalendarData
+    currentStreak: string;
+    longestStreak: string;
+    firstContribution: string;
 }
 
 export interface RepoFetcherResponse {
