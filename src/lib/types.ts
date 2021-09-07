@@ -4,6 +4,18 @@ export type Maybe<T> = T | undefined;
 export type ValueOf<T> = T[keyof T];
 export type ValueOfQuery = ValueOf<VercelRequestQuery> | undefined;
 
+export interface TypeFetcherResponse {
+    morning: TypeObject;
+    daytime: TypeObject;
+    evening: TypeObject;
+    night: TypeObject;
+}
+
+export type TypeObject = {
+    name: string;
+    commits: number;
+    percent: number;
+};
 export interface StreaksFetcherResponse {
     calendar: CalendarData;
     currentStreak: string;

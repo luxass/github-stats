@@ -1,8 +1,5 @@
 import { toBoolean, toInteger, toString, toStringArray } from "@helpers/query";
-import {
-    LanguageFetcherResponse,
-    RepoNode,
-} from "@lib/types";
+import { LanguageFetcherResponse, RepoNode } from "@lib/types";
 import { VercelRequestQuery } from "@vercel/node";
 import BaseCard, { CommonProps } from "./BaseCard";
 import { getFallbackDesign } from "@lib/theme";
@@ -46,8 +43,6 @@ export default class LanguageCard extends BaseCard {
     protected async fetch(): Promise<LanguageFetcherResponse> {
         const { username, with_forks, exclude_repos } = this
             .props as LanguageCardProps;
-
-    
 
         let response = await Fetcher.graphql<{
             login: string;
@@ -224,7 +219,9 @@ export default class LanguageCard extends BaseCard {
                 ? (lang.name = lang.name.slice(0, 15) + "...")
                 : lang.name
         );
-        let cardTitle = `Most Used Languages ${with_forks ? "Including Forks" : ""}`;
+        let cardTitle = `Most Used Languages ${
+            with_forks ? "Including Forks" : ""
+        }`;
         if (custom_title) cardTitle = custom_title;
 
         const height = 90 + Math.round(langs.length / 2) * 25;

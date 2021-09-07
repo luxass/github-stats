@@ -122,7 +122,7 @@ export default class RepoCard extends BaseCard {
         });
 
         let repoName = hide_owner ? name : nameWithOwner;
-        
+
         repoName =
             wcwidth(repoName) >= 32
                 ? repoName.substring(

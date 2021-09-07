@@ -2755,6 +2755,11 @@ process@0.11.10, process@^0.11.10:
   resolved "https://registry.yarnpkg.com/process/-/process-0.11.10.tgz#7332300e840161bda3e69a1d1d91a7d4bc16f182"
   integrity sha1-czIwDoQBYb2j5podHZGn1LwW8YI=
 
+progress-graph@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/progress-graph/-/progress-graph-1.0.0.tgz#5180206c924da596a440d8410e13d30866992e3c"
+  integrity sha512-2BgX9brAHhOM8JIEdpGhEIwdCVEOSbIgKehMJh/5cbIwmidzTvOS+D0nqDZjGZVbptA7wdELmUgtOZHKDzw9bg==
+
 progress@^2.0.0:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/progress/-/progress-2.0.3.tgz#7e8cf8d8f5b8f239c1bc68beb4eb78567d572ef8"
