@@ -5,6 +5,7 @@ export type ValueOf<T> = T[keyof T];
 export type ValueOfQuery = ValueOf<VercelRequestQuery> | undefined;
 
 export interface TypeFetcherResponse {
+    type: string;
     morning: TypeObject;
     daytime: TypeObject;
     evening: TypeObject;
