@@ -11,6 +11,8 @@
         },
         "text": {
             "family": "'Segoe UI', Ubuntu, Sans-Serif",
+            "size": "12",
+            "weight": "400",
             "title": {
                 "size": "14",
                 "weight": "700"
@@ -33,6 +35,8 @@
         },
         "text": {
             "family": "'Segoe UI', Ubuntu, Sans-Serif",
+            "size": "12",
+            "weight": "400",
             "title": {
                 "size": "14",
                 "weight": "700"
@@ -55,6 +59,8 @@
         },
         "text": {
             "family": "'Segoe UI', Ubuntu, Sans-Serif",
+            "size": "12",
+            "weight": "400",
             "title": {
                 "size": "14",
                 "weight": "700"
@@ -77,6 +83,8 @@
         },
         "text": {
             "family": "'Segoe UI', Ubuntu, Sans-Serif",
+            "size": "12",
+            "weight": "400",
             "title": {
                 "size": "14",
                 "weight": "700"
@@ -99,6 +107,8 @@
         },
         "text": {
             "family": "'Segoe UI', Ubuntu, Sans-Serif",
+            "size": "12",
+            "weight": "400",
             "title": {
                 "size": "14",
                 "weight": "700"

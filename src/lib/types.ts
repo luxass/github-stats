@@ -121,6 +121,8 @@ export type Theme = {
     design: ThemeDesign;
     text: {
         family: string;
+        size: string;
+        weight: string;
         title?: ThemeText;
         text?: ThemeText;
     };
@@ -148,6 +150,20 @@ export type FallbackDesign = {
     text: string;
     background: string;
     border: string;
+};
+
+export type FallbackText = {
+    family: string;
+    size: string;
+    weight: string;
+    title: {
+        size: string;
+        weight: string;
+    };
+    text: {
+        size: string;
+        weight: string;
+    };
 };
 
 export type WordWrapOptions = {
