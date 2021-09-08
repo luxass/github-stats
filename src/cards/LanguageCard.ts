@@ -6,6 +6,7 @@ import { getFallbackDesign } from "@lib/theme";
 import Fetcher from "@helpers/fetcher";
 import NotFoundError from "@lib/errors/NotFoundError";
 import longLanguages from "@lib/languages";
+import { parseImage } from "@lib/parser";
 
 interface LanguageCardProps extends CommonProps {
     custom_title: string;
@@ -41,7 +42,7 @@ export default class LanguageCard extends BaseCard {
     }
 
     protected async fetch(): Promise<LanguageFetcherResponse> {
-        const { username, with_forks, exclude_repos } = this
+        const { username, with_forks, exclude_repos, url } = this
             .props as LanguageCardProps;
 
         let response = await Fetcher.graphql<{
@@ -115,11 +116,11 @@ export default class LanguageCard extends BaseCard {
                 [key: string]: { name: string; color: string; size: number };
             }
         );
-
         return {
             languages: Object.values(languages).sort(
                 ({ size: size1 }, { size: size2 }) => size2 - size1
             ),
+            base64: await parseImage(url),
         };
     }
 
@@ -176,7 +177,7 @@ export default class LanguageCard extends BaseCard {
     }
 
     protected render(data: LanguageFetcherResponse) {
-        const { languages } = data;
+        const { languages, base64 } = data;
 
         // Make a Set from all the long language names
         const longLanguageNames = new Set(longLanguages);
@@ -230,6 +231,16 @@ export default class LanguageCard extends BaseCard {
                 <rect x="5" y="5" width="340" height="${height - 10}" fill="${
             design.background
         }" stroke="${design.border}" stroke-width="1px" rx="6px" ry="6px" />
+                     ${
+                         typeof base64 === "string"
+                             ? `              <clipPath id="clipCircle">
+                <rect x="5" y="5" width="390" height="${height - 10}" rx="6" />
+            </clipPath>
+            <image x="5" y="5" clip-path="url(#clipCircle)" preserveAspectRatio="xMidYMid slice" href="data:image/png;base64,${base64}" width="390" height="${
+                                   height - 10
+                               }" />`
+                             : ""
+                     }
                 <g transform="translate(25, 35)">
                     <g transform="translate(0, 0)">
                         <text x="0" y="0" font-weight="600" font-size="18" fill="${

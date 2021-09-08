@@ -8,7 +8,7 @@ import getIcons from "src/icons";
 import Fetcher from "@helpers/fetcher";
 import NotFoundError from "@lib/errors/NotFoundError";
 import wcwidth from "wcwidth";
-
+import { parseImage } from "@lib/parser";
 interface RepoCardProps extends CommonProps {
     repo: string;
     hide_owner: boolean;
@@ -31,7 +31,7 @@ export default class RepoCard extends BaseCard {
     }
 
     protected async fetch(): Promise<RepoFetcherResponse> {
-        const { username, repo } = this.props as RepoCardProps;
+        const { username, repo, url } = this.props as RepoCardProps;
         let response = await Fetcher.graphql<{
             login: string;
             repo: string;
@@ -98,7 +98,7 @@ export default class RepoCard extends BaseCard {
             dataRepo = data.organization.repository;
         }
 
-        return dataRepo;
+        return { ...dataRepo, base64: await parseImage(url) };
     }
 
     protected render(data: RepoFetcherResponse) {
@@ -109,6 +109,7 @@ export default class RepoCard extends BaseCard {
             description,
             primaryLanguage,
             forkCount,
+            base64,
         } = data;
 
         const { hide_owner, text, border, title, icon, tq, background } = this
@@ -145,11 +146,22 @@ export default class RepoCard extends BaseCard {
             (primaryLanguage && primaryLanguage.color) || "#333333";
 
         const icons = getIcons();
+        
         return `
             <svg width="400" height="${height}" viewBox="0 0 400 ${height}" xmlns="http://www.w3.org/2000/svg" font-size="14" font-weight="400" font-family="'Segoe UI', Ubuntu, Sans-Serif">
                 <rect x="5" y="5" width="390" height="${height - 10}" fill="${
             design.background
-        }" stroke="${design.border}" stroke-width="1px" rx="6px" ry="6px" />
+        }" stroke="${design.border}" stroke-width="1px" rx="6px" />
+                ${
+                    typeof base64 === "string"
+                        ? `              <clipPath id="clipCircle">
+                <rect x="5" y="5" width="390" height="${height - 10}" rx="6" />
+            </clipPath>
+            <image x="5" y="5" clip-path="url(#clipCircle)" preserveAspectRatio="xMidYMid slice" href="data:image/png;base64,${base64}" width="390" height="${
+                              height - 10
+                          }" />`
+                        : ""
+                }
                 <g transform="translate(25, 35)">
                     <g transform="translate(0, 0)">
                         <svg x="0" y="-13" viewBox="0 0 16 16" version="1.1" height="16" width="16" fill="${

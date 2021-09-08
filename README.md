@@ -123,7 +123,9 @@ You can customize the appearance of your `Stats Card`, `Language Card` or `Repo 
 -   `border` - Card's border color _(hex color)_
 -   `background` - Card's background color _(hex color)_
 -   `tq` - identifier of the theme, choose from [all available themes](./themes/README.md)
+-   `url` - URL to a image to use as a background _[EXPERIMENTAL FEATURE]_
 
+> Note on _url_: Choose a some good color combinations, because the background image will maybe make it unreadable.
 > Note on _hex color_: Write the hex color without the #, because the # is used as a hash in the URL.
 
 #### Exclusive Options to Stats Card:

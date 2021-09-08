@@ -11,6 +11,7 @@ import Fetcher from "@helpers/fetcher";
 import NotFoundError from "@lib/errors/NotFoundError";
 import { DateTime } from "luxon";
 import makeGraph from "progress-graph";
+import { parseImage } from "@lib/parser";
 
 export default class Typecard extends BaseCard {
     constructor(query: VercelRequestQuery) {
@@ -26,7 +27,7 @@ export default class Typecard extends BaseCard {
     }
 
     protected async fetch(): Promise<TypeFetcherResponse> {
-        const { username } = this.props;
+        const { username, url } = this.props;
         let userResponse = await Fetcher.request(`/users/${username}`);
         const userId = userResponse.data.node_id;
         /*
@@ -141,6 +142,7 @@ export default class Typecard extends BaseCard {
             morning + daytime >= evening + night
                 ? "I'm an Early 🐤"
                 : "I'm a Night 🦉";
+
         return {
             type: type,
             morning: {
@@ -163,11 +165,12 @@ export default class Typecard extends BaseCard {
                 commits: night,
                 percent: Math.round((night / sum) * 100),
             },
+            base64: await parseImage(url),
         };
     }
 
     protected render(data: TypeFetcherResponse) {
-        const { type, daytime, morning, evening, night } = data;
+        const { type, daytime, morning, evening, night, base64 } = data;
 
         const { username, text, border, title, icon, tq, background } =
             this.props;
@@ -212,6 +215,14 @@ export default class Typecard extends BaseCard {
                 }" stroke="${
             design.border
         }" stroke-width="1px" rx="6px" ry="6px" />
+        ${
+            typeof base64 === "string"
+                ? `              <clipPath id="clipCircle">
+        <rect x="5" y="5" width="390" height="175" rx="6" />
+    </clipPath>
+    <image x="5" y="5" clip-path="url(#clipCircle)" preserveAspectRatio="xMidYMid slice" href="data:image/png;base64,${base64}" width="390" height="175" />`
+                : ""
+        }
                 <text x="25" y="30" fill="${design.title}">${type}</text>
                 ${generateTypeLines(design).join("")}
             

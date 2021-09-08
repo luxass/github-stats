@@ -16,6 +16,7 @@ export const toString = (value: ValueOfQuery): Maybe<string> => {
     return typeof originalValue === "string" ? originalValue : undefined;
 };
 
+
 export const toInteger = (value: ValueOfQuery = ""): Maybe<number> => {
     const number = parseInt(value.toString(), 10);
     return isNaN(number) ? undefined : number;

@@ -1,4 +1,15 @@
+import axios from "axios";
 import { CalendarData } from "./types";
+
+export async function parseImage(imageUrl: string | undefined) {
+    if (typeof imageUrl === "undefined") {
+        return undefined;
+    }
+    const response = await axios.get(imageUrl, {
+        responseType: "arraybuffer",
+    });
+    return Buffer.from(response.data, "binary").toString("base64");
+}
 
 export function parseCalendar(calendarString: string[]): CalendarData {
     let calendarData: CalendarData = {
@@ -37,9 +48,9 @@ export function parseCalendar(calendarString: string[]): CalendarData {
             }
         });
     });
-   
 
-    const today = Object.keys(contributions)[Object.keys(contributions).length - 1];
+    const today =
+        Object.keys(contributions)[Object.keys(contributions).length - 1];
 
     Object.keys(contributions).forEach((contribution) => {
         let count = contributions[contribution];
@@ -47,7 +58,7 @@ export function parseCalendar(calendarString: string[]): CalendarData {
         if (count > 0) {
             ++calendarData.current_streak;
             calendarData.current_streak_end = contribution;
-            
+
             if (calendarData.current_streak === 1) {
                 calendarData.current_streak_start = contribution;
             }
