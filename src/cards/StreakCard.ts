@@ -5,6 +5,7 @@ import { VercelRequestQuery } from "@vercel/node";
 import BaseCard from "./BaseCard";
 import { getFallbackDesign } from "@lib/theme";
 import { parseCalendar } from "@lib/parser";
+import { parseImage } from "@lib/parser";
 
 export default class StreakCard extends BaseCard {
     constructor(query: VercelRequestQuery) {
@@ -16,7 +17,7 @@ export default class StreakCard extends BaseCard {
     }
 
     protected async fetch(): Promise<StreaksFetcherResponse> {
-        const { username } = this.props;
+        const { username, url } = this.props;
         const response = await Fetcher.request(`/users/${username}`);
         const accountCreatedYear: number = new Date(
             response.data.created_at
@@ -68,20 +69,18 @@ export default class StreakCard extends BaseCard {
                     day: "numeric",
                     year: "numeric",
                 }),
+            base64: await parseImage(url),
         };
     }
 
     protected render(data: StreaksFetcherResponse) {
         const { text, border, title, icon, tq, background } = this.props;
         const {
-            calendar: {
-                total_contribution,
-                longest_streak,
-                current_streak,
-            },
+            calendar: { total_contribution, longest_streak, current_streak },
             currentStreak,
             longestStreak,
             firstContribution,
+            base64,
         } = data;
         const design = getFallbackDesign(tq, {
             title,
@@ -97,6 +96,14 @@ export default class StreakCard extends BaseCard {
         <rect x="5" y="5" width="485" height="185" fill="${
             design.background
         }" stroke="${design.border}" stroke-width="1px" rx="6px" ry="6px" />
+        ${
+            typeof base64 === "string"
+                ? `              <clipPath id="clipCircle">
+        <rect x="5" y="5" width="390" height="185" rx="6" />
+    </clipPath>
+    <image x="5" y="5" clip-path="url(#clipCircle)" preserveAspectRatio="xMidYMid slice" href="data:image/png;base64,${base64}" width="390" height="185" />`
+                : ""
+        }
         <g>
             <g transform="translate(1, 48)">
                 <text x="81.5" y="25" dy="0.25em" fill="${

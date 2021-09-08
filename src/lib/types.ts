@@ -10,6 +10,7 @@ export interface TypeFetcherResponse {
     daytime: TypeObject;
     evening: TypeObject;
     night: TypeObject;
+    base64: Maybe<string>;
 }
 
 export type TypeObject = {
@@ -22,6 +23,7 @@ export interface StreaksFetcherResponse {
     currentStreak: string;
     longestStreak: string;
     firstContribution: string;
+    base64: Maybe<string>;
 }
 
 export interface RepoFetcherResponse {
@@ -37,6 +39,7 @@ export interface RepoFetcherResponse {
         name: string;
     };
     forkCount: number;
+    base64: Maybe<string>;
 }
 export interface UserFetcherResponse {
     stars: string;
@@ -44,6 +47,7 @@ export interface UserFetcherResponse {
     issues: string;
     commits: string;
     contributions: string;
+    base64: Maybe<string>;
 }
 
 export interface LanguageFetcherResponse {
@@ -52,11 +56,13 @@ export interface LanguageFetcherResponse {
         color: string;
         size: number;
     }[];
+    base64: Maybe<string>;
 }
 
 export type StatsCardOptions = {
     customTitle?: string;
     hideIcons?: string;
+    
 };
 
 export type UserStats = {

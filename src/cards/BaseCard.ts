@@ -1,7 +1,6 @@
 import { VercelRequestQuery } from "@vercel/node";
-import {
-    toString,
-} from "@helpers/query";
+import { toString } from "@helpers/query";
+import { removePair } from "@lib/json";
 
 export interface CommonProps {
     username: string;
@@ -11,6 +10,7 @@ export interface CommonProps {
     border?: string;
     background?: string;
     tq?: string;
+    url?: string;
 }
 
 export default class BaseCard {
@@ -31,7 +31,9 @@ export default class BaseCard {
 
     public async renderJSON() {
         try {
-            const stats = await this.fetch();
+            let stats = await this.fetch();
+            
+            delete stats.base64;
             return { username: this.props.username, stats: stats };
         } catch (err) {
             return {
@@ -62,7 +64,9 @@ export default class BaseCard {
         `;
     }
     protected preprocess(query: VercelRequestQuery): CommonProps {
-        const { username, title, text, icon, border, background, tq } = query;
+        const { username, title, text, icon, border, background, tq, url } =
+            query;
+
         return {
             username: toString(username) ?? "",
             title: toString(title),
@@ -71,6 +75,7 @@ export default class BaseCard {
             border: toString(border),
             background: toString(background),
             tq: toString(tq),
+            url: toString(url),
         };
     }
 }
