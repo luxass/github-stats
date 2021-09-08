@@ -62,7 +62,6 @@ export interface LanguageFetcherResponse {
 export type StatsCardOptions = {
     customTitle?: string;
     hideIcons?: string;
-    
 };
 
 export type UserStats = {
@@ -119,7 +118,18 @@ export type Theme = {
     name: string;
     identifier: string;
     design: ThemeDesign;
+    text: {
+        title?: ThemeText;
+        text?: ThemeText;
+    };
 };
+
+export type ThemeText = {
+    family?: string;
+    size?: string;
+    weight?: string;
+};
+
 export type ThemeDesign = {
     [key: string]: string | undefined;
 } & {
@@ -137,10 +147,6 @@ export type FallbackDesign = {
     text: string;
     background: string;
     border: string;
-};
-
-export type ExtendedTheme = Theme & {
-    url: string;
 };
 
 export type WordWrapOptions = {

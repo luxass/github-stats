@@ -8,6 +8,18 @@
             "text": "#333",
             "background": "#fffefe",
             "border": "#e4e2e2"
+        },
+        "text": {
+            "title": {
+                "family": "",
+                "size": "",
+                "weight": ""
+            },
+            "text": {
+                "family": "",
+                "size": "",
+                "weight": ""
+            }
         }
     },
     {
@@ -19,6 +31,18 @@
             "text": "#f8f8f2",
             "background": "#282a36",
             "border": "#e4e2e2"
+        },
+        "text": {
+            "title": {
+                "family": "",
+                "size": "",
+                "weight": ""
+            },
+            "text": {
+                "family": "",
+                "size": "",
+                "weight": ""
+            }
         }
     },
     {
@@ -30,6 +54,18 @@
             "text": "#f1f1eb",
             "background": "#272822",
             "border": "#e4e2e2"
+        },
+        "text": {
+            "title": {
+                "family": "",
+                "size": "",
+                "weight": ""
+            },
+            "text": {
+                "family": "",
+                "size": "",
+                "weight": ""
+            }
         }
     },
     {
@@ -41,6 +77,18 @@
             "text": "#df6d74",
             "background": "#282c34",
             "border": "#e4e2e2"
+        },
+        "text": {
+            "title": {
+                "family": "",
+                "size": "",
+                "weight": ""
+            },
+            "text": {
+                "family": "",
+                "size": "",
+                "weight": ""
+            }
         }
     },
     {
@@ -52,6 +100,18 @@
             "text": "#a6accd",
             "background": "#292d3e",
             "border": "#e4e2e2"
+        },
+        "text": {
+            "title": {
+                "family": "",
+                "size": "",
+                "weight": ""
+            },
+            "text": {
+                "family": "",
+                "size": "",
+                "weight": ""
+            }
         }
     }
 ]
