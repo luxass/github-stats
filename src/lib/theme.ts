@@ -10,6 +10,12 @@ export function getFallbackColor(
         : fallbackColor;
 }
 
+export function getFallbackFont() {}
+
+export function getFallbackSize() {}
+
+export function getFallbackWeight() {}
+
 export function getFallbackDesign(
     theme: string | undefined,
     overwriteDesign: ThemeDesign

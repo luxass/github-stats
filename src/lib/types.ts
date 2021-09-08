@@ -114,18 +114,19 @@ export type LanguageNode = {
     color: string;
     name: string;
 };
+
 export type Theme = {
     name: string;
     identifier: string;
     design: ThemeDesign;
     text: {
+        family: string;
         title?: ThemeText;
         text?: ThemeText;
     };
 };
 
 export type ThemeText = {
-    family?: string;
     size?: string;
     weight?: string;
 };

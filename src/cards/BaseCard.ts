@@ -11,6 +11,13 @@ export interface CommonProps {
     background?: string;
     tq?: string;
     url?: string;
+    font?: string;
+    size?: string;
+    weight?: string;
+    textsize?: string;
+    titlesize?: string;
+    textweight?: string;
+    titleweight?: string;
 }
 
 export default class BaseCard {
@@ -64,7 +71,7 @@ export default class BaseCard {
         `;
     }
     protected preprocess(query: VercelRequestQuery): CommonProps {
-        const { username, title, text, icon, border, background, tq, url } =
+        const { username, title, text, icon, border, background, tq, url, font, size, weight, textsize, titlesize, textweight, titleweight } =
             query;
 
         return {
@@ -76,6 +83,13 @@ export default class BaseCard {
             background: toString(background),
             tq: toString(tq),
             url: toString(url),
+            font: toString(font),
+            size: toString(size),
+            weight: toString(weight),
+            textsize: toString(textsize),
+            titlesize: toString(titlesize),
+            textweight: toString(textweight),
+            titleweight: toString(titleweight),
         };
     }
 }
