@@ -3,6 +3,7 @@
 
  <h2 align="center">GitHub Stats</h2>
  <p align="center">✨ Dynamically generated github statistics for your readmes</p>
+ <p align="center"><a href="#related-projects">Related Projects</a></p>
 </p>
 
   <p align="center">
@@ -93,7 +94,6 @@ Copy the following code into your readme file and change the `username` to match
 ```md
 [![DeprecatedLuxas' GitHub Streak](https://github-stats.vercel.app/api/user/username/streak)](https://github.com/deprecatedluxas/github-stats)
 ```
-
 
 ## Themes
 
