@@ -8,6 +8,19 @@
             "text": "#333",
             "background": "#fffefe",
             "border": "#e4e2e2"
+        },
+        "text": {
+            "font": "'Segoe UI', Ubuntu, Sans-Serif",
+            "size": "12",
+            "weight": "400",
+            "title": {
+                "size": "14",
+                "weight": "700"
+            },
+            "text": {
+                "size": "12",
+                "weight": "400"
+            }
         }
     },
     {
@@ -19,6 +32,19 @@
             "text": "#f8f8f2",
             "background": "#282a36",
             "border": "#e4e2e2"
+        },
+        "text": {
+            "font": "'Segoe UI', Ubuntu, Sans-Serif",
+            "size": "12",
+            "weight": "400",
+            "title": {
+                "size": "14",
+                "weight": "700"
+            },
+            "text": {
+                "size": "12",
+                "weight": "400"
+            }
         }
     },
     {
@@ -30,6 +56,19 @@
             "text": "#f1f1eb",
             "background": "#272822",
             "border": "#e4e2e2"
+        },
+        "text": {
+            "font": "'Segoe UI', Ubuntu, Sans-Serif",
+            "size": "12",
+            "weight": "400",
+            "title": {
+                "size": "14",
+                "weight": "700"
+            },
+            "text": {
+                "size": "12",
+                "weight": "400"
+            }
         }
     },
     {
@@ -41,6 +80,19 @@
             "text": "#df6d74",
             "background": "#282c34",
             "border": "#e4e2e2"
+        },
+        "text": {
+            "font": "'Segoe UI', Ubuntu, Sans-Serif",
+            "size": "12",
+            "weight": "400",
+            "title": {
+                "size": "14",
+                "weight": "700"
+            },
+            "text": {
+                "size": "12",
+                "weight": "400"
+            }
         }
     },
     {
@@ -52,6 +104,19 @@
             "text": "#a6accd",
             "background": "#292d3e",
             "border": "#e4e2e2"
+        },
+        "text": {
+            "font": "'Segoe UI', Ubuntu, Sans-Serif",
+            "size": "12",
+            "weight": "400",
+            "title": {
+                "size": "14",
+                "weight": "700"
+            },
+            "text": {
+                "size": "12",
+                "weight": "400"
+            }
         }
     }
 ]

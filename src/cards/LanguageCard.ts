@@ -2,7 +2,7 @@ import { toBoolean, toInteger, toString, toStringArray } from "@helpers/query";
 import { LanguageFetcherResponse, RepoNode } from "@lib/types";
 import { VercelRequestQuery } from "@vercel/node";
 import BaseCard, { CommonProps } from "./BaseCard";
-import { getFallbackDesign } from "@lib/theme";
+import { getFallbackTheme } from "@lib/theme";
 import Fetcher from "@helpers/fetcher";
 import NotFoundError from "@lib/errors/NotFoundError";
 import longLanguages from "@lib/languages";
@@ -148,7 +148,9 @@ export default class LanguageCard extends BaseCard {
     protected renderLanguages(
         totalSize: number,
         languages: { name: string; color: string; size: number }[],
-        text: string
+        fill: string,
+        weight: string,
+        size: string
     ) {
         return languages.map(
             (
@@ -169,7 +171,7 @@ export default class LanguageCard extends BaseCard {
                             r="5"
                             fill="${color}"
                         />
-                        <text x="15" y="10" font-size="11" fill="${text}">${lang.name} ${percentage}%</text>
+                        <text x="15" y="10" fill="${fill}" font-size="${size}" font-weight="${weight}">${lang.name} ${percentage}%</text>
                     </g>
                 `;
             }
@@ -193,6 +195,13 @@ export default class LanguageCard extends BaseCard {
             icon,
             tq,
             background,
+            font,
+            size,
+            weight,
+            titlesize,
+            titleweight,
+            textsize,
+            textweight,
         } = this.props as LanguageCardProps;
 
         // Set of hidden languages
@@ -208,12 +217,27 @@ export default class LanguageCard extends BaseCard {
 
         const totalSize = langs.reduce((acc, curr) => acc + curr.size, 0);
 
-        const design = getFallbackDesign(tq, {
-            title,
-            icon,
-            text,
-            background,
-            border,
+        const design = getFallbackTheme(tq, {
+            design: {
+                title,
+                icon,
+                text,
+                background,
+                border,
+            },
+            text: {
+                font,
+                size,
+                weight,
+                title: {
+                    size: titlesize,
+                    weight: titleweight,
+                },
+                text: {
+                    size: textsize,
+                    weight: textweight,
+                },
+            },
         });
         langs.map((lang) =>
             longLanguageNames.has(lang.name)
@@ -227,25 +251,31 @@ export default class LanguageCard extends BaseCard {
 
         const height = 90 + Math.round(langs.length / 2) * 25;
         return `          
-            <svg width="350" height="${height}" viewBox="0 0 350 ${height}" xmlns="http://www.w3.org/2000/svg" font-size="14" font-weight="400" font-family="'Segoe UI', Ubuntu, Sans-Serif">
+            <svg width="350" height="${height}" viewBox="0 0 350 ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${
+            design.text.font
+        }" font-size="${design.text.size}" font-weight="${design.text.weight}">
                 <rect x="5" y="5" width="340" height="${height - 10}" fill="${
-            design.background
-        }" stroke="${design.border}" stroke-width="1px" rx="6px" ry="6px" />
+            design.design.background
+        }" stroke="${
+            design.design.border
+        }" stroke-width="1px" rx="6px" ry="6px" />
                      ${
                          typeof base64 === "string"
-                             ? `              <clipPath id="clipCircle">
+                             ? `              <clipPath id="background">
                 <rect x="5" y="5" width="390" height="${height - 10}" rx="6" />
             </clipPath>
-            <image x="5" y="5" clip-path="url(#clipCircle)" preserveAspectRatio="xMidYMid slice" href="data:image/png;base64,${base64}" width="390" height="${
+            <image x="5" y="5" clip-path="url(#background)" preserveAspectRatio="xMidYMid slice" href="data:image/png;base64,${base64}" width="390" height="${
                                    height - 10
                                }" />`
                              : ""
                      }
                 <g transform="translate(25, 35)">
                     <g transform="translate(0, 0)">
-                        <text x="0" y="0" font-weight="600" font-size="18" fill="${
-                            design.title
-                        }">${cardTitle}</text>
+                        <text x="0" y="0" font-weight="${
+                            design.text.title.weight
+                        }" font-size="${design.text.title.size}" fill="${
+            design.design.title
+        }">${cardTitle}</text>
                     </g>
                 </g>
                 <g transform="translate(0, 55)">
@@ -257,7 +287,9 @@ export default class LanguageCard extends BaseCard {
                        ${this.renderLanguages(
                            totalSize,
                            langs,
-                           design.text
+                           design.design.text,
+                           design.text.text.weight,
+                           design.text.text.size
                        ).join("")}
                     </svg>
                 </g>

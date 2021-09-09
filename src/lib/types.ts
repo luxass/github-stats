@@ -62,7 +62,6 @@ export interface LanguageFetcherResponse {
 export type StatsCardOptions = {
     customTitle?: string;
     hideIcons?: string;
-    
 };
 
 export type UserStats = {
@@ -115,33 +114,6 @@ export type LanguageNode = {
     color: string;
     name: string;
 };
-export type Theme = {
-    name: string;
-    identifier: string;
-    design: ThemeDesign;
-};
-export type ThemeDesign = {
-    [key: string]: string | undefined;
-} & {
-    title?: string;
-    icon?: string;
-    text?: string;
-    background?: string;
-    border?: string;
-};
-export type FallbackDesign = {
-    [key: string]: string | undefined;
-} & {
-    title: string;
-    icon: string;
-    text: string;
-    background: string;
-    border: string;
-};
-
-export type ExtendedTheme = Theme & {
-    url: string;
-};
 
 export type WordWrapOptions = {
     breakWord?: boolean;
@@ -156,3 +128,58 @@ export type WordWrapOptions = {
     splitAt?: string[];
     errorChar?: string;
 };
+
+export interface Theme {
+    name: string;
+    identifier: string;
+    design?: ThemeDesign;
+    text?: ThemeText;
+}
+
+export interface ThemeDesign {
+    title?: string;
+    icon?: string;
+    text?: string;
+    background?: string;
+    border?: string;
+}
+
+export interface ThemeText {
+    font?: string;
+    size?: string;
+    weight?: string;
+    title?: {
+        size?: string;
+        weight?: string;
+    };
+    text?: {
+        size?: string;
+        weight?: string;
+    };
+}
+
+export interface FallbackTheme {
+    design: FallbackThemeDesign;
+    text: FallbackThemeText;
+}
+export interface FallbackThemeDesign {
+    title: string;
+    icon: string;
+    text: string;
+    background: string;
+    border: string;
+}
+
+export interface FallbackThemeText {
+    font: string;
+    size: string;
+    weight: string;
+    title: {
+        size: string;
+        weight: string;
+    };
+    text: {
+        size: string;
+        weight: string;
+    };
+}

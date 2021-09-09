@@ -3,6 +3,7 @@
 
  <h2 align="center">GitHub Stats</h2>
  <p align="center">✨ Dynamically generated github statistics for your readmes</p>
+ <p align="center"><a href="#related-projects">Related Projects</a></p>
 </p>
 
   <p align="center">
@@ -94,7 +95,6 @@ Copy the following code into your readme file and change the `username` to match
 [![DeprecatedLuxas' GitHub Streak](https://github-stats.vercel.app/api/user/username/streak)](https://github.com/deprecatedluxas/github-stats)
 ```
 
-
 ## Themes
 
 With our inbuilt themes, you can customize the look of the without doing any additional [customization](#customization).
@@ -126,6 +126,7 @@ You can customize the appearance of your `Stats Card`, `Language Card` or `Repo 
 -   `url` - URL to a image to use as a background _[EXPERIMENTAL FEATURE]_
 
 > Note on _url_: Choose a some good color combinations, because the background image will maybe make it unreadable.
+
 > Note on _hex color_: Write the hex color without the #, because the # is used as a hash in the URL.
 
 #### Exclusive Options to Stats Card:
