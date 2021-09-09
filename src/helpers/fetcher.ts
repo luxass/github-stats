@@ -25,6 +25,7 @@ export default class Fetcher {
             console.log(
                 `Fetching GH GraphQL Api with PAT TOKEN ${this.RETRIES_LIST[retries]}`
             );
+
             if (path.startsWith("/")) {
                 path = path.substring(1);
             }
@@ -35,7 +36,9 @@ export default class Fetcher {
                 headers = extraHeaders;
             } else {
                 headers = {
-                    Authorization: `bearer ${process.env[`GH_PAT_${this.RETRIES_LIST[retries]}`]}`,
+                    Authorization: `bearer ${
+                        process.env[`GH_PAT_${this.RETRIES_LIST[retries]}`]
+                    }`,
                     ...extraHeaders,
                 };
             }
