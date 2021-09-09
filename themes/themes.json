@@ -10,7 +10,7 @@
             "border": "#e4e2e2"
         },
         "text": {
-            "family": "'Segoe UI', Ubuntu, Sans-Serif",
+            "font": "'Segoe UI', Ubuntu, Sans-Serif",
             "size": "12",
             "weight": "400",
             "title": {
@@ -34,7 +34,7 @@
             "border": "#e4e2e2"
         },
         "text": {
-            "family": "'Segoe UI', Ubuntu, Sans-Serif",
+            "font": "'Segoe UI', Ubuntu, Sans-Serif",
             "size": "12",
             "weight": "400",
             "title": {
@@ -58,7 +58,7 @@
             "border": "#e4e2e2"
         },
         "text": {
-            "family": "'Segoe UI', Ubuntu, Sans-Serif",
+            "font": "'Segoe UI', Ubuntu, Sans-Serif",
             "size": "12",
             "weight": "400",
             "title": {
@@ -82,7 +82,7 @@
             "border": "#e4e2e2"
         },
         "text": {
-            "family": "'Segoe UI', Ubuntu, Sans-Serif",
+            "font": "'Segoe UI', Ubuntu, Sans-Serif",
             "size": "12",
             "weight": "400",
             "title": {
@@ -106,7 +106,7 @@
             "border": "#e4e2e2"
         },
         "text": {
-            "family": "'Segoe UI', Ubuntu, Sans-Serif",
+            "font": "'Segoe UI', Ubuntu, Sans-Serif",
             "size": "12",
             "weight": "400",
             "title": {

@@ -3,7 +3,7 @@ import Fetcher from "@helpers/fetcher";
 import { StreaksFetcherResponse } from "@lib/types";
 import { VercelRequestQuery } from "@vercel/node";
 import BaseCard from "./BaseCard";
-import { getFallbackDesign } from "@lib/theme";
+import { getFallbackTheme } from "@lib/theme";
 import { parseCalendar } from "@lib/parser";
 import { parseImage } from "@lib/parser";
 
@@ -74,7 +74,21 @@ export default class StreakCard extends BaseCard {
     }
 
     protected render(data: StreaksFetcherResponse) {
-        const { text, border, title, icon, tq, background } = this.props;
+        const {
+            text,
+            border,
+            title,
+            icon,
+            tq,
+            background,
+            font,
+            size,
+            weight,
+            textsize,
+            titlesize,
+            textweight,
+            titleweight,
+        } = this.props;
         const {
             calendar: { total_contribution, longest_streak, current_streak },
             currentStreak,
@@ -82,68 +96,100 @@ export default class StreakCard extends BaseCard {
             firstContribution,
             base64,
         } = data;
-        const design = getFallbackDesign(tq, {
-            title,
-            icon,
-            text,
-            background,
-            border,
+
+        const design = getFallbackTheme(tq, {
+            design: {
+                title,
+                icon,
+                text,
+                background,
+                border,
+            },
+            text: {
+                font,
+                size,
+                weight,
+                title: {
+                    size: titlesize,
+                    weight: titleweight,
+                },
+                text: {
+                    size: textsize,
+                    weight: textweight,
+                },
+            },
         });
 
         return `
         <svg version="1.1"
-        xmlns="http://www.w3.org/2000/svg" width="495" height="195" viewBox="0 0 495 195" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji" font-size="14px">
+        xmlns="http://www.w3.org/2000/svg" width="495" height="195" viewBox="0 0 495 195" font-size="${
+            design.text.size
+        }" font-family="${design.text.font}" font-weight="${
+            design.text.weight
+        }">
         <rect x="5" y="5" width="485" height="185" fill="${
-            design.background
-        }" stroke="${design.border}" stroke-width="1px" rx="6px" ry="6px" />
+            design.design.background
+        }" stroke="${
+            design.design.border
+        }" stroke-width="1px" rx="6px" ry="6px" />
         ${
             typeof base64 === "string"
-                ? `              <clipPath id="clipCircle">
+                ? `              <clipPath id="background">
         <rect x="5" y="5" width="390" height="185" rx="6" />
     </clipPath>
-    <image x="5" y="5" clip-path="url(#clipCircle)" preserveAspectRatio="xMidYMid slice" href="data:image/png;base64,${base64}" width="390" height="185" />`
+    <image x="5" y="5" clip-path="url(#background)" preserveAspectRatio="xMidYMid slice" href="data:image/png;base64,${base64}" width="390" height="185" />`
                 : ""
         }
         <g>
             <g transform="translate(1, 48)">
                 <text x="81.5" y="25" dy="0.25em" fill="${
-                    design.title
-                }" stroke-width="0" text-anchor="middle">
+                    design.design.title
+                }" font-size="${design.text.title.size}" font-weight="${
+            design.text.title.weight
+        }" stroke-width="0" text-anchor="middle">
                     ${total_contribution}
                 </text>
             </g>
             <g transform="translate(1, 84)">
     
                 <text x="81.5" y="25" dy="0.25em" stroke-width="0" fill="${
-                    design.text
-                }" text-anchor="middle">
+                    design.design.text
+                }" font-size="${design.text.text.size}" font-weight="${
+            design.text.text.weight
+        }" text-anchor="middle">
                     Total Contributions
                 </text>
             </g>
             <g transform="translate(1, 114)">
                 <rect width="163" height="50" stroke="none" fill="none"></rect>
                 <text x="81.5" y="25" dy="0.25em" stroke-width="0" text-anchor="middle" fill="${
-                    design.text
-                }">
+                    design.design.text
+                }" font-size="${design.text.text.size}" font-weight="${
+            design.text.text.weight
+        }">
                     ${firstContribution} - Present
                 </text>
             </g>
         </g>
         <line x1="330" y1="28" x2="330" y2="170" vector-effect="non-scaling-stroke" stroke-width="1" stroke="${
-            design.border
+            design.design.border
         }" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
         <g>
             <g transform="translate(166, 48)">
                 <text x="81.5" y="25" dy="0.25em" fill="${
-                    design.title
-                }" stroke-width="0" text-anchor="middle">
+                    design.design.title
+                }" font-size="${design.text.title.size}" font-weight="${
+            design.text.title.weight
+        }" stroke-width="0" text-anchor="middle">
                         ${current_streak}
                 </text>
             </g>
             <g transform="translate(166, 108)">
                 <text x="81.5" y="25" dy="0.25em" stroke-width="0" fill="${
-                    design.text
-                }" text-anchor="middle">
+                    design.design.text
+                }" font-size="${design.text.text.size}" font-weight="${
+            design.text.text.weight
+        }" text-anchor="middle">
                         Current Streak
                 </text>
             </g>
@@ -151,7 +197,9 @@ export default class StreakCard extends BaseCard {
     
                 <text x="81.5" y="13" dy="0.25em" fill="${
                     design.text
-                }" stroke-width="0" text-anchor="middle">
+                }" font-size="${design.text.text.size}" font-weight="${
+            design.text.text.weight
+        }" stroke-width="0" text-anchor="middle">
                         ${currentStreak}
                 </text>
             </g>
@@ -168,20 +216,24 @@ export default class StreakCard extends BaseCard {
             </g>
         </g>
         <line x1="165" y1="28" x2="165" y2="170" vector-effect="non-scaling-stroke" stroke-width="1" stroke="${
-            design.border
+            design.design.border
         }" stroke-linejoin="miter" stroke-linecap="square" stroke-miterlimit="3"/>
         <g>
             <g transform="translate(331, 48)">
                 <text x="81.5" y="25" dy="0.25em" stroke-width="0" text-anchor="middle" fill="${
-                    design.title
-                }">
+                    design.design.title
+                }" font-size="${design.text.title.size}" font-weight="${
+            design.text.title.weight
+        }">
                     ${longest_streak}
                 </text>
             </g>
             <g transform="translate(331, 84)">
                 <text x="81.5" y="25" dy="0.25em" stroke-width="0" text-anchor="middle" fill="${
                     design.text
-                }">
+                }" font-size="${design.text.text.size}" font-weight="${
+            design.text.text.weight
+        }">
                     Longest Streak
                 </text>
             </g>
@@ -189,7 +241,9 @@ export default class StreakCard extends BaseCard {
     
                 <text x="81.5" y="25" dy="0.25em" fill="${
                     design.text
-                }" stroke-width="0" text-anchor="middle">
+                }" font-size="${design.text.text.size}" font-weight="${
+            design.text.text.weight
+        }" stroke-width="0" text-anchor="middle">
                     ${longestStreak}
                 </text>
             </g>

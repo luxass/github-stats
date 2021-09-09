@@ -2,11 +2,13 @@ import {
     RepoNode,
     TypeFetcherResponse,
     TypeObject,
-    FallbackDesign,
+    FallbackThemeDesign,
+    FallbackThemeText,
+    FallbackTheme,
 } from "@lib/types";
 import { VercelRequestQuery } from "@vercel/node";
 import BaseCard, { CommonProps } from "./BaseCard";
-import { getFallbackDesign } from "@lib/theme";
+import { getFallbackTheme } from "@lib/theme";
 import Fetcher from "@helpers/fetcher";
 import NotFoundError from "@lib/errors/NotFoundError";
 import { DateTime } from "luxon";
@@ -172,36 +174,70 @@ export default class Typecard extends BaseCard {
     protected render(data: TypeFetcherResponse) {
         const { type, daytime, morning, evening, night, base64 } = data;
 
-        const { username, text, border, title, icon, tq, background } =
-            this.props;
-
-        const design = getFallbackDesign(tq, {
+        const {
+            username,
+            text,
+            border,
             title,
             icon,
-            text,
+            tq,
             background,
-            border,
+            font,
+            size,
+            weight,
+            textsize,
+            titlesize,
+            textweight,
+            titleweight,
+        } = this.props;
+
+        const design = getFallbackTheme(tq, {
+            design: {
+                title,
+                icon,
+                text,
+                background,
+                border,
+            },
+            text: {
+                font,
+                size,
+                weight,
+                title: {
+                    size: titlesize,
+                    weight: titleweight,
+                },
+                text: {
+                    size: textsize,
+                    weight: textweight,
+                },
+            },
         });
 
-        const generateTypeLines = (design: FallbackDesign) => {
+        const generateTypeLines = (fallback: FallbackTheme) => {
             let y = 30;
+            const { design, text } = fallback;
             return [morning, daytime, evening, night].map(
-                (type: TypeObject, index: number) => {
+                (type: TypeObject) => {
                     y += 30;
                     return `
                         <g transform="translate(25, ${y})">
-                            <text x="0" fill="${design.text}">${
-                        type.name
-                    }</text>
-                            <text x="90" fill="${design.text}">${
+                            <text x="0" fill="${design.text}" font-size="${
+                        text.text.size
+                    }" font-weight="${text.text.weight}">${type.name}</text>
+                            <text x="90" fill="${design.text}" font-size="${
+                        text.text.size
+                    }" font-weight="${text.text.weight}">${
                         type.commits
                     } commits</text>
-                            <text x="180" fill="${design.text}">${makeGraph(
+                            <text x="180" fill="${design.text}" font-size="${
+                        text.text.size
+                    }" font-weight="${text.text.weight}">${makeGraph(
                         type.percent
                     )}</text>
-                            <text x="450" fill="${design.text}">${
-                        type.percent
-                    }%</text>
+                            <text x="450" fill="${design.text}" font-size="${
+                        text.text.size
+                    }" font-weight="${text.text.weight}">${type.percent}%</text>
                         </g>
                     `;
                 }
@@ -209,22 +245,31 @@ export default class Typecard extends BaseCard {
         };
 
         return `
-            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="530" height="185" viewBox="0 0 530 185" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji" font-size="85%">
+            <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="530" height="185" viewBox="0 0 530 185" font-size="${
+                design.text.size
+            }" font-family="${design.text.font}" font-weight="${
+            design.text.weight
+        }">
                 <rect x="5" y="5" width="520" height="175" fill="${
-                    design.background
+                    design.design.background
                 }" stroke="${
-            design.border
+            design.design.border
         }" stroke-width="1px" rx="6px" ry="6px" />
         ${
             typeof base64 === "string"
-                ? `              <clipPath id="clipCircle">
+                ? `              <clipPath id="background">
         <rect x="5" y="5" width="390" height="175" rx="6" />
     </clipPath>
-    <image x="5" y="5" clip-path="url(#clipCircle)" preserveAspectRatio="xMidYMid slice" href="data:image/png;base64,${base64}" width="390" height="175" />`
+    <image x="5" y="5" clip-path="url(#background)" preserveAspectRatio="xMidYMid slice" href="data:image/png;base64,${base64}" width="390" height="175" />`
                 : ""
         }
-                <text x="25" y="30" fill="${design.title}">${type}</text>
-                ${generateTypeLines(design).join("")}
+                <text x="25" y="30" fill="${design.design.title}" font-size="${
+            design.text.title.size
+        }" font-weight="${design.text.title.weight}">${type}</text>
+                ${generateTypeLines({
+                    design: design.design,
+                    text: design.text,
+                }).join("")}
             
             </svg>
         `;

@@ -1,13 +1,12 @@
 import themes from "../../themes/themes.json";
 import {
-    FallbackDesign,
-    FallbackText,
+    FallbackTheme,
     Theme,
     ThemeDesign,
     ThemeText,
 } from "./types";
 
-export function getFallbackColor(
+function getFallbackColor(
     color: string | undefined,
     fallbackColor: string
 ): string {
@@ -16,108 +15,101 @@ export function getFallbackColor(
         : fallbackColor;
 }
 
-export function getFallbackFont(
+function getFallbackFont(
     font: string | undefined,
     fallbackFont: string
 ): string {
     return font ? font : fallbackFont;
 }
 
-export function getFallbackSize(
+function getFallbackSize(
     size: string | undefined,
     fallbackSize: string
 ): string {
     return size ? size : fallbackSize;
 }
 
-export function getFallbackWeight(
+function getFallbackWeight(
     weight: string | undefined,
     fallbackWeight: string
 ): string {
     return weight ? weight : fallbackWeight;
 }
 
-export function getFallbackDesign(
+export function getFallbackTheme(
     theme: string | undefined,
-    overwriteDesign: {
-        odesign: ThemeDesign;
-        otext: {
-            family?: string;
-            size?: string;
-            weight?: string;
-            title?: ThemeText;
-            text?: ThemeText;
-        };
+    overwriteThemeOptions: {
+        design: ThemeDesign;
+        text: ThemeText;
     }
-): {
-    fdesign: FallbackDesign;
-    ftext: FallbackText;
-} {
+): FallbackTheme {
     const defaultThemeObj = getTheme("THEME_DEFAULT")!;
     const selectedThemeObj =
         getTheme(theme || "THEME_DEFAULT") || defaultThemeObj!;
 
     const title = getFallbackColor(
-        overwriteDesign.odesign.title || selectedThemeObj.design.title,
-        defaultThemeObj.design.title!
+        overwriteThemeOptions.design.title || selectedThemeObj.design!.title,
+        defaultThemeObj.design!.title!
     );
     const icon = getFallbackColor(
-        overwriteDesign.odesign.icon || selectedThemeObj.design.icon,
-        defaultThemeObj.design.icon!
+        overwriteThemeOptions.design.icon || selectedThemeObj.design!.icon,
+        defaultThemeObj.design!.icon!
     );
     const text = getFallbackColor(
-        overwriteDesign.odesign.text || selectedThemeObj.design.text,
-        defaultThemeObj.design.text!
+        overwriteThemeOptions.design.text || selectedThemeObj.design!.text,
+        defaultThemeObj.design!.text!
     );
     const background = getFallbackColor(
-        overwriteDesign.odesign.background ||
-            selectedThemeObj.design.background,
-        defaultThemeObj.design.background!
+        overwriteThemeOptions.design.background ||
+            selectedThemeObj.design!.background,
+        defaultThemeObj.design!.background!
     );
     const border = getFallbackColor(
-        overwriteDesign.odesign.border || selectedThemeObj.design.border,
-        defaultThemeObj.design.border!
+        overwriteThemeOptions.design.border || selectedThemeObj.design!.border,
+        defaultThemeObj.design!.border!
     );
 
-    const family = getFallbackFont(
-        overwriteDesign.otext.family || selectedThemeObj.text.family,
-        defaultThemeObj.text.family!
+    const font = getFallbackFont(
+        overwriteThemeOptions.text.font || selectedThemeObj.text!.font,
+        defaultThemeObj.text!.font!
     );
 
     const size = getFallbackSize(
-        overwriteDesign.otext.size || selectedThemeObj.text.size,
-        defaultThemeObj.text.size!
+        overwriteThemeOptions.text.size || selectedThemeObj.text!.size,
+        defaultThemeObj.text!.size!
     );
 
     const weight = getFallbackWeight(
-        overwriteDesign.otext.weight || selectedThemeObj.text.weight,
-        defaultThemeObj.text.weight!
+        overwriteThemeOptions.text.weight || selectedThemeObj.text!.weight,
+        defaultThemeObj.text!.weight!
     );
 
     const titleSize = getFallbackSize(
-        overwriteDesign.otext.title!.size || selectedThemeObj.text.title!.size,
-        defaultThemeObj.text.title!.size!
+        overwriteThemeOptions.text.title!.size ||
+            selectedThemeObj.text!.title!.size,
+        defaultThemeObj.text!.title!.size!
     );
     const titleWeight = getFallbackWeight(
-        overwriteDesign.otext.title!.weight ||
-            selectedThemeObj.text.title!.weight,
-        defaultThemeObj.text.title!.weight!
+        overwriteThemeOptions.text.title!.weight ||
+            selectedThemeObj.text!.title!.weight,
+        defaultThemeObj.text!.title!.weight!
     );
 
     const textSize = getFallbackSize(
-        overwriteDesign.otext.text!.size || selectedThemeObj.text.text!.size,
-        defaultThemeObj.text.text!.size!
+        overwriteThemeOptions.text.text!.size ||
+            selectedThemeObj.text!.text!.size,
+        defaultThemeObj.text!.text!.size!
     );
     const textWeight = getFallbackWeight(
-        overwriteDesign.otext.text!.weight ||
-            selectedThemeObj.text.text!.weight,
-        defaultThemeObj.text.text!.weight!
+        overwriteThemeOptions.text.text!.weight ||
+            selectedThemeObj.text!.text!.weight,
+        defaultThemeObj.text!.text!.weight!
     );
 
     return {
-        fdesign: { title, icon, text, background, border },
-        ftext: {
-            family,
+        design: { title, icon, text, background, border },
+        text: {
+            font,
             size,
             weight,
             title: {
@@ -132,10 +124,10 @@ export function getFallbackDesign(
     };
 }
 
-export function getTheme(themeIdentifier: string): Theme | undefined {
+export function getTheme(identifier: string) {
     return themes.filter(
         (theme: Theme) =>
-            theme.identifier.toLowerCase() === themeIdentifier.toLowerCase()
+            theme.identifier.toLowerCase() === identifier.toLowerCase()
     )[0];
 }
 

@@ -1,6 +1,5 @@
 import { VercelRequestQuery } from "@vercel/node";
 import { toString } from "@helpers/query";
-import { removePair } from "@lib/json";
 
 export interface CommonProps {
     username: string;
@@ -39,7 +38,6 @@ export default class BaseCard {
     public async renderJSON() {
         try {
             let stats = await this.fetch();
-            
             delete stats.base64;
             return { username: this.props.username, stats: stats };
         } catch (err) {

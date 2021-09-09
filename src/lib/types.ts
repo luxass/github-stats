@@ -115,57 +115,6 @@ export type LanguageNode = {
     name: string;
 };
 
-export type Theme = {
-    name: string;
-    identifier: string;
-    design: ThemeDesign;
-    text: {
-        family: string;
-        size: string;
-        weight: string;
-        title?: ThemeText;
-        text?: ThemeText;
-    };
-};
-
-export type ThemeText = {
-    size?: string;
-    weight?: string;
-};
-
-export type ThemeDesign = {
-    [key: string]: string | undefined;
-} & {
-    title?: string;
-    icon?: string;
-    text?: string;
-    background?: string;
-    border?: string;
-};
-export type FallbackDesign = {
-    [key: string]: string | undefined;
-} & {
-    title: string;
-    icon: string;
-    text: string;
-    background: string;
-    border: string;
-};
-
-export type FallbackText = {
-    family: string;
-    size: string;
-    weight: string;
-    title: {
-        size: string;
-        weight: string;
-    };
-    text: {
-        size: string;
-        weight: string;
-    };
-};
-
 export type WordWrapOptions = {
     breakWord?: boolean;
     input?: string[];
@@ -179,3 +128,58 @@ export type WordWrapOptions = {
     splitAt?: string[];
     errorChar?: string;
 };
+
+export interface Theme {
+    name: string;
+    identifier: string;
+    design?: ThemeDesign;
+    text?: ThemeText;
+}
+
+export interface ThemeDesign {
+    title?: string;
+    icon?: string;
+    text?: string;
+    background?: string;
+    border?: string;
+}
+
+export interface ThemeText {
+    font?: string;
+    size?: string;
+    weight?: string;
+    title?: {
+        size?: string;
+        weight?: string;
+    };
+    text?: {
+        size?: string;
+        weight?: string;
+    };
+}
+
+export interface FallbackTheme {
+    design: FallbackThemeDesign;
+    text: FallbackThemeText;
+}
+export interface FallbackThemeDesign {
+    title: string;
+    icon: string;
+    text: string;
+    background: string;
+    border: string;
+}
+
+export interface FallbackThemeText {
+    font: string;
+    size: string;
+    weight: string;
+    title: {
+        size: string;
+        weight: string;
+    };
+    text: {
+        size: string;
+        weight: string;
+    };
+}
