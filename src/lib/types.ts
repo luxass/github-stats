@@ -58,6 +58,10 @@ export interface LanguageFetcherResponse {
     }[];
     base64: Maybe<string>;
 }
+export interface EditorFetcherResponse {
+    editors: WakatimeEditor[];
+    base64: Maybe<string>;
+}
 
 export type StatsCardOptions = {
     customTitle?: string;
@@ -158,10 +162,22 @@ export interface ThemeText {
     };
 }
 
+export interface WakatimeEditor {
+    decimal: string;
+    digital: string;
+    hours: number;
+    minutes: number;
+    name: string;
+    percent: number;
+    text: string;
+    total_seconds: number;
+}
+
 export interface FallbackTheme {
     design: FallbackThemeDesign;
     text: FallbackThemeText;
 }
+
 export interface FallbackThemeDesign {
     title: string;
     icon: string;
@@ -182,4 +198,11 @@ export interface FallbackThemeText {
         size: string;
         weight: string;
     };
+}
+export interface PieChartData {
+    data: PieChartObject[]
+}
+export interface PieChartObject {
+    name: string;
+    value: string;
 }
