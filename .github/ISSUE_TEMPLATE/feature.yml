@@ -1,0 +1,44 @@
+name: Feature Request
+description: Suggest an feature for this project
+title: "[Feature]: "
+labels: [feature]
+body:
+    - type: markdown
+      attributes:
+          value: |
+              Thanks for taking the time to fill out this feature request!
+    - type: textarea
+      id: solution
+      attributes:
+          label: Solution
+          description: A clear and concise description of what you want to happen.
+          placeholder: Tell us what you see!
+          value: ""
+      validations:
+          required: true
+    - type: textarea
+      id: other_solution
+      attributes:
+          label: Alternative Solution
+          description: A clear and concise description of any alternative solutions or features you've considered.
+          placeholder: What solutions have you considered?
+          value: ""
+      validations:
+          required: true
+    - type: dropdown
+      id: type
+      attributes:
+          label: What type of feature request is this
+          multiple: false
+          options:
+              - Theme
+              - Card
+    - type: textarea
+      id: additional_context
+      attributes:
+          label: Additional context
+          description: Add any other context or screenshots about the feature request here.
+          placeholder: Is there more we should know?
+          value: ""
+      validations:
+          required: false
