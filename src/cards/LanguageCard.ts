@@ -263,7 +263,7 @@ export default class LanguageCard extends BaseCard {
                      ${
                          typeof base64 === "string"
                              ? `              <clipPath id="background">
-                <rect x="5" y="5" width="390" height="${height - 10}" rx="6" />
+                <rect x="5" y="5" width="340" height="${height - 10}" rx="6" />
             </clipPath>
             <image x="5" y="5" clip-path="url(#background)" preserveAspectRatio="xMidYMid slice" href="data:image/png;base64,${base64}" width="390" height="${
                                    height - 10
