@@ -63,6 +63,22 @@ export interface EditorFetcherResponse {
     base64: Maybe<string>;
 }
 
+export interface WakaLanguageFetcherResponse {
+    languages: WakatimeLanguage[];
+    base64: Maybe<string>;
+}
+
+export interface WakatimeLanguage {
+    decimal: string;
+    digital: string;
+    hours: number;
+    minutes: number;
+    name: string;
+    percent: number;
+    text: string;
+    total_seconds: number;
+}
+
 export type StatsCardOptions = {
     customTitle?: string;
     hideIcons?: string;
@@ -198,11 +214,4 @@ export interface FallbackThemeText {
         size: string;
         weight: string;
     };
-}
-export interface PieChartData {
-    data: PieChartObject[]
-}
-export interface PieChartObject {
-    name: string;
-    value: string;
 }

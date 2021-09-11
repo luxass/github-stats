@@ -145,6 +145,7 @@ export default class LanguageCard extends BaseCard {
             }
         );
     }
+    
     protected renderLanguages(
         totalSize: number,
         languages: { name: string; color: string; size: number }[],

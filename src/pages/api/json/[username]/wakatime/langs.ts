@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import RepoCard from "@cards/RepoCard";
+import LanguageCard from "@cards/Wakatime/LanguageCard";
 
 export default async function handler(
     req: NextApiRequest,
@@ -8,5 +8,5 @@ export default async function handler(
     res.setHeader("Content-Type", "application/json");
     res.setHeader("Cache-Control", "public, max-age=7200");
 
-    res.status(200).send(await new RepoCard(req.query).renderJSON());
+    res.status(200).send(await new LanguageCard(req.query).renderJSON());
 }
