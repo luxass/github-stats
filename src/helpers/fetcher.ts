@@ -12,6 +12,15 @@ export default class Fetcher {
     private static RETRIES_LIST = getMaximumOfRetries();
     static readonly MAX_RETRIES = getMaximumOfRetries().length;
 
+    static async requestOtherservice(url: string): Promise<AxiosResponse> {
+        try {
+            const response = await axios.get(url);
+            return response;
+        } catch (err) {
+            throw err;
+        }
+    }
+
     static async request(
         path: string,
         extraHeaders: { [key: string]: string } = {},

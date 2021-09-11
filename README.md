@@ -21,12 +21,15 @@
     -   [Repo Card](#repo-card)
     -   [Language Card](#language-card)
     -   [Streak Card](#streak-card)
+    -   [Wakatime Editor Card](#wakatime-editor-card)
+    -   [Wakatime Language Card](#wakatime-language-card)
 -   [Themes](#themes)
 -   [Customization](#customization)
     -   [Common Options](#common-options)
     -   [Stats Card Exclusive Options](#exclusive-options-to-stats-card)
     -   [Repo Card Exclusive Options](#exclusive-options-to-repo-card)
     -   [Language Card Exclusive Options](#exclusive-options-to-language-card)
+    -   [Wakatime Cards Exclusive Options](#exclusive-options-to-both-wakatime-cards)
 -   [How to contribute](#how-to-contribute)
 
 ## Usage
@@ -60,7 +63,7 @@ Copy the following code into your readme file and change the `username` to match
 We got you covered! You can pass `hide_owner=true` as a query parameter to hide the owner.
 
 ```md
-[![DeprecatedLuxas' GitHub stats](https://github-stats.vercel.app/api/user/deprecatedluxas?hide_owner=true)](https://github.com/deprecatedluxas/github-stats)
+[![DeprecatedLuxas' GitHub stats](https://github-stats.vercel.app/api/user/username?hide_owner=true)](https://github.com/deprecatedluxas/github-stats)
 ```
 
 ### Language Card
@@ -93,6 +96,24 @@ Copy the following code into your readme file and change the `username` to match
 
 ```md
 [![DeprecatedLuxas' GitHub Streak](https://github-stats.vercel.app/api/user/username/streak)](https://github.com/deprecatedluxas/github-stats)
+```
+
+
+### Wakatime Editor Card
+
+Copy the following code into your readme file and change the `username` to match your Wakatime username.
+
+```md
+[![DeprecatedLuxas' Wakatime Editors](https://github-stats.vercel.app/api/user/username/wakatime/editor)](https://github.com/deprecatedluxas/github-stats)
+```
+
+
+### Wakatime Language Card
+
+Copy the following code into your readme file and change the `username` to match your Wakatime username.
+
+```md
+[![DeprecatedLuxas' GitHub Streak](https://github-stats.vercel.app/api/user/username/wakatime/langs)](https://github.com/deprecatedluxas/github-stats)
 ```
 
 ## Themes
@@ -147,6 +168,10 @@ You can customize the appearance of your `Stats Card`, `Language Card` or `Repo 
 -   `with_forks` - Include forks in the language stats _(boolean)_
 
 > Important: Language names should be uri-escaped, as specified in [Percent Encoding](https://en.wikipedia.org/wiki/Percent-encoding) (i.e: `c++` should become `c%2B%2B`, `jupyter notebook` should become `jupyter%20notebook`, etc.) You can use urlencoder.org to help you do this automatically.
+
+#### Exclusive Options to both Wakatime Cards:
+
+-   `custom_title` - Sets a custom title for the card
 
 ## How to contribute
 

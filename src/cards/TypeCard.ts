@@ -258,7 +258,7 @@ export default class Typecard extends BaseCard {
         ${
             typeof base64 === "string"
                 ? `              <clipPath id="background">
-        <rect x="5" y="5" width="390" height="175" rx="6" />
+        <rect x="5" y="5" width="520" height="175" rx="6" />
     </clipPath>
     <image x="5" y="5" clip-path="url(#background)" preserveAspectRatio="xMidYMid slice" href="data:image/png;base64,${base64}" width="390" height="175" />`
                 : ""

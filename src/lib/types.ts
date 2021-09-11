@@ -58,6 +58,26 @@ export interface LanguageFetcherResponse {
     }[];
     base64: Maybe<string>;
 }
+export interface EditorFetcherResponse {
+    editors: WakatimeEditor[];
+    base64: Maybe<string>;
+}
+
+export interface WakaLanguageFetcherResponse {
+    languages: WakatimeLanguage[];
+    base64: Maybe<string>;
+}
+
+export interface WakatimeLanguage {
+    decimal: string;
+    digital: string;
+    hours: number;
+    minutes: number;
+    name: string;
+    percent: number;
+    text: string;
+    total_seconds: number;
+}
 
 export type StatsCardOptions = {
     customTitle?: string;
@@ -158,10 +178,22 @@ export interface ThemeText {
     };
 }
 
+export interface WakatimeEditor {
+    decimal: string;
+    digital: string;
+    hours: number;
+    minutes: number;
+    name: string;
+    percent: number;
+    text: string;
+    total_seconds: number;
+}
+
 export interface FallbackTheme {
     design: FallbackThemeDesign;
     text: FallbackThemeText;
 }
+
 export interface FallbackThemeDesign {
     title: string;
     icon: string;

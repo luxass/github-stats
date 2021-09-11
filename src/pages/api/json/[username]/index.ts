@@ -6,6 +6,7 @@ export default async function handler(
     res: NextApiResponse
 ) {
     res.setHeader("Content-Type", "application/json");
+    res.setHeader("Cache-Control", "public, max-age=7200");
 
     res.status(200).send(await new StatsCard(req.query).renderJSON());
 }

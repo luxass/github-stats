@@ -1,6 +1,7 @@
 {
     "name": "github-stats",
-    "version": "0.1.0",
+    "version": "0.2.0",
+    "description": "Generate stats for your readme",
     "private": true,
     "scripts": {
         "dev": "next dev",
@@ -12,11 +13,10 @@
         "axios": "^0.21.2",
         "image-to-base64": "^2.2.0",
         "luxon": "^2.0.2",
-        "next": "11.1.0",
+        "next": "^11.1.2",
         "progress-graph": "^1.0.0",
-        "react": "17.0.2",
-        "react-dom": "17.0.2",
-        "react-select": "^4.3.1",
+        "react": "^17.0.2",
+        "react-dom": "^17.0.2",
         "strip-ansi": "^7.0.0",
         "styled-components": "^5.3.1",
         "wcwidth": "^1.0.1"
@@ -24,8 +24,7 @@
     "devDependencies": {
         "@types/image-to-base64": "^2.1.0",
         "@types/luxon": "^2.0.2",
-        "@types/react": "17.0.19",
-        "@types/react-select": "^4.0.17",
+        "@types/react": "^17.0.20",
         "@types/styled-components": "^5.1.12",
         "@types/wcwidth": "^1.0.0",
         "@vercel/node": "^1.12.1",
