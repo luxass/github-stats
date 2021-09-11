@@ -11,11 +11,11 @@ import Fetcher from "@helpers/fetcher";
 import { parseImage } from "@lib/parser";
 import { languageColors } from "@lib/colors";
 
-interface EditorCardProps extends CommonProps {
+interface LanguageCardProps extends CommonProps {
     custom_title: string;
 }
 
-export default class EditorCard extends BaseCard {
+export default class LanguageCard extends BaseCard {
     constructor(query: VercelRequestQuery) {
         super(query);
     }
@@ -120,7 +120,7 @@ export default class EditorCard extends BaseCard {
             titleweight,
             textsize,
             textweight,
-        } = this.props as EditorCardProps;
+        } = this.props as LanguageCardProps;
 
         const design = getFallbackTheme(tq, {
             design: {
