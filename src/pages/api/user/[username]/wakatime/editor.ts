@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import EditorCard from "@cards/Wakatime/EditorCard";
+import EditorCard from "@cards/wakatime/editor";
 
 export default async function handler(
     req: NextApiRequest,

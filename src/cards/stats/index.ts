@@ -8,7 +8,7 @@ import fetch from "./fetcher";
 interface StatsCardProps extends CommonProps {
     custom_title: string;
     hide_icons: boolean;
-    show_ranking: boolean;
+    show_rank: boolean;
 }
 
 export default class StatsCard extends BaseCard {
@@ -18,13 +18,13 @@ export default class StatsCard extends BaseCard {
 
     protected preprocess(query: VercelRequestQuery) {
         const commonProps: CommonProps = super.preprocess(query);
-        const { custom_title, hide_icons, show_ranking } = query;
+        const { custom_title, hide_icons, show_rank } = query;
 
         return {
             ...commonProps,
             custom_title: toString(custom_title) ?? "",
             hide_icons: toBoolean(hide_icons) ?? false,
-            show_ranking: toBoolean(show_ranking) ?? false,
+            show_rank: toBoolean(show_rank) ?? false,
         };
     }
 
@@ -37,6 +37,7 @@ export default class StatsCard extends BaseCard {
         const {
             custom_title,
             hide_icons,
+            show_rank,
             username,
             text,
             border,
@@ -96,6 +97,30 @@ export default class StatsCard extends BaseCard {
             },
         });
         console.log(ranking);
+        const rankCircle = show_rank
+            ? `<g
+        transform="translate(280, ${185 / 2 - 45})">
+      <circle stroke="${
+          design.design.title
+      }" fill="none" stroke-width="6" opacity="0.2" cx="-10" cy="8" r="40" />
+      <circle stroke="${
+          design.design.title
+      }" stroke-dasharray="250" fill="none" stroke-width="6" stroke-linecap="round" opacity="0.8" cx="-10" cy="8" r="40" />
+      <g class="rank-text">
+        <text
+          x="-10"
+          y="0"
+          alignment-baseline="central"
+          dominant-baseline="central"
+          text-anchor="middle"
+        >
+          ${ranking.ranking}
+        </text>
+      </g>
+    </g>`
+            : "";
+
+            const textX = show_rank ? "185" : "250"
         return `
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="360" height="185" viewBox="0 0 360 185" font-family="${
         design.text.font
@@ -119,6 +144,7 @@ export default class StatsCard extends BaseCard {
             design.text.title.size
         }" x="25" y="35">${cardTitle}</text>
         <g transform="translate(${hide_icons ? "0" : "25"}, 55)">
+        ${rankCircle}
             <g transform="translate(0, 0)">
                 <g transform="translate(0, 0)">
                     ${
@@ -131,7 +157,7 @@ export default class StatsCard extends BaseCard {
                     }" font-weight="${design.text.text.weight}" fill="${
             design.design.text
         }">Stars Earned</text>
-                    <text x="250" y="12.5" font-size="${
+                    <text x="${textX}" y="12.5" font-size="${
                         design.text.text.size
                     }" font-weight="${design.text.text.weight}" fill="${
             design.design.text
@@ -148,7 +174,7 @@ export default class StatsCard extends BaseCard {
                     }" font-weight="${design.text.text.weight}" fill="${
             design.design.text
         }">Forks</text>
-                    <text x="250" y="12.5" font-size="${
+                    <text x="${textX}" y="12.5" font-size="${
                         design.text.text.size
                     }" font-weight="${design.text.text.weight}" fill="${
             design.design.text
@@ -165,7 +191,7 @@ export default class StatsCard extends BaseCard {
                     }" font-weight="${design.text.text.weight}" fill="${
             design.design.text
         }">Issues</text>
-                    <text x="250" y="12.5" font-size="${
+                    <text x="${textX}" y="12.5" font-size="${
                         design.text.text.size
                     }" font-weight="${design.text.text.weight}" fill="${
             design.design.text
@@ -182,7 +208,7 @@ export default class StatsCard extends BaseCard {
                     }" font-weight="${design.text.text.weight}" fill="${
             design.design.text
         }">Commits</text>
-                    <text x="250" y="12.5" font-size="${
+                    <text x="${textX}" y="12.5" font-size="${
                         design.text.text.size
                     }" font-weight="${design.text.text.weight}" fill="${
             design.design.text
@@ -199,7 +225,7 @@ export default class StatsCard extends BaseCard {
                     }" font-weight="${design.text.text.weight}" fill="${
             design.design.text
         }">Contributions</text>
-                    <text x="250" y="12.5" font-size="${
+                    <text x="${textX}" y="12.5" font-size="${
                         design.text.text.size
                     }" font-weight="${design.text.text.weight}" fill="${
             design.design.text
@@ -207,6 +233,7 @@ export default class StatsCard extends BaseCard {
                 </g>
             </g>
         </g>
+
     </svg>
 `;
     }

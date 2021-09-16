@@ -1,21 +1,18 @@
-import { toString } from "@helpers/query";
-import {
-    WakaLanguageFetcherResponse,
-    WakatimeEditor,
-    WakatimeLanguage,
-} from "@lib/types";
+import { toInteger, toString, toStringArray } from "@helpers/query";
+import { EditorFetcherResponse, WakatimeEditor } from "@lib/types";
 import { VercelRequestQuery } from "@vercel/node";
-import BaseCard, { CommonProps } from "../BaseCard";
+import BaseCard, { CommonProps } from "../../BaseCard";
 import { getFallbackTheme } from "@lib/theme";
 import Fetcher from "@helpers/fetcher";
+import { editorColors } from "@lib/colors";
 import { parseImage } from "@lib/parser";
-import { languageColors } from "@lib/colors";
+import fetch from "./fetcher";
 
-interface LanguageCardProps extends CommonProps {
+interface EditorCardProps extends CommonProps {
     custom_title: string;
 }
 
-export default class LanguageCard extends BaseCard {
+export default class EditorCard extends BaseCard {
     constructor(query: VercelRequestQuery) {
         super(query);
     }
@@ -30,17 +27,9 @@ export default class LanguageCard extends BaseCard {
         };
     }
 
-    protected async fetch(): Promise<WakaLanguageFetcherResponse> {
+    protected async fetch(): Promise<EditorFetcherResponse> {
         const { username, url } = this.props;
-        const response = await Fetcher.requestOtherservice(
-            `https://wakatime.com/api/v1/users/${username}/stats`
-        );
-        const languages: WakatimeLanguage[] = response.data.data.languages;
-
-        return {
-            languages,
-            base64: await parseImage(url),
-        };
+        return await fetch(username, url);
     }
 
     protected renderBar(
@@ -65,7 +54,7 @@ export default class LanguageCard extends BaseCard {
         );
     }
 
-    protected renderLanguages(
+    protected renderEditors(
         totalSize: number,
         editors: { name: string; color: string; percentage: number }[],
 
@@ -102,8 +91,8 @@ export default class LanguageCard extends BaseCard {
         );
     }
 
-    protected render(data: WakaLanguageFetcherResponse) {
-        const { languages, base64 } = data;
+    protected render(data: EditorFetcherResponse) {
+        const { editors, base64 } = data;
 
         const {
             custom_title,
@@ -120,7 +109,7 @@ export default class LanguageCard extends BaseCard {
             titleweight,
             textsize,
             textweight,
-        } = this.props as LanguageCardProps;
+        } = this.props as EditorCardProps;
 
         const design = getFallbackTheme(tq, {
             design: {
@@ -144,18 +133,18 @@ export default class LanguageCard extends BaseCard {
                 },
             },
         });
-        const parsedLanguages = languages.map((lang: WakatimeLanguage) => {
+        const parsedEditors = editors.map((editor: WakatimeEditor) => {
             return {
-                name: lang.name,
-                color: languageColors[lang.name]!,
-                percentage: lang.percent,
+                name: editor.name,
+                color: editorColors[editor.name],
+                percentage: editor.percent,
             };
         });
 
-        let cardTitle = "Most used wakatime languages";
+        let cardTitle = "Most used editors";
         if (custom_title) cardTitle = custom_title;
 
-        const height = 90 + Math.round(parsedLanguages.length / 2) * 25;
+        const height = 90 + Math.round(parsedEditors.length / 2) * 25;
 
         return `          
             <svg width="350" height="${height}" viewBox="0 0 350 ${height}" xmlns="http://www.w3.org/2000/svg" font-family="${
@@ -189,10 +178,10 @@ export default class LanguageCard extends BaseCard {
                     <mask id="bar-mask">
                         <rect x="0" y="0" width="300" height="8" fill="white" rx="5" />
                     </mask>
-                    ${this.renderBar(100, parsedLanguages).join("")}
-                    ${this.renderLanguages(
+                    ${this.renderBar(100, parsedEditors).join("")}
+                    ${this.renderEditors(
                         100,
-                        parsedLanguages,
+                        parsedEditors,
                         design.design.text,
                         design.text.text.weight,
                         design.text.text.size
