@@ -1,15 +1,14 @@
 import { toBoolean, toString } from "@helpers/query";
 import { RepoNode, UserFetcherResponse } from "@lib/types";
 import { VercelRequestQuery } from "@vercel/node";
-import BaseCard, { CommonProps } from "./BaseCard";
+import BaseCard, { CommonProps } from "../BaseCard";
 import { getFallbackTheme } from "@lib/theme";
-import Fetcher from "@helpers/fetcher";
-import NotFoundError from "@lib/errors/NotFoundError";
-import { parseImage } from "@lib/parser";
+import fetch from "./fetcher";
 
 interface StatsCardProps extends CommonProps {
     custom_title: string;
     hide_icons: boolean;
+    show_rank: boolean;
 }
 
 export default class StatsCard extends BaseCard {
@@ -19,106 +18,26 @@ export default class StatsCard extends BaseCard {
 
     protected preprocess(query: VercelRequestQuery) {
         const commonProps: CommonProps = super.preprocess(query);
-        const { custom_title, hide_icons } = query;
+        const { custom_title, hide_icons, show_rank } = query;
 
         return {
             ...commonProps,
             custom_title: toString(custom_title) ?? "",
             hide_icons: toBoolean(hide_icons) ?? false,
+            show_rank: toBoolean(show_rank) ?? false,
         };
     }
 
     protected async fetch(): Promise<UserFetcherResponse> {
         const { username, url } = this.props as StatsCardProps;
-        let response = await Fetcher.graphql<{
-            login: string;
-        }>(
-            `
-            query userInfo($login: String!) {
-                user(login: $login) {
-                    name
-                    login
-                    contributionsCollection {
-                        totalCommitContributions
-                        restrictedContributionsCount
-                    }
-                    repositoriesContributedTo(
-                        first: 1
-                        contributionTypes: [
-                            COMMIT
-                            ISSUE
-                            PULL_REQUEST
-                            REPOSITORY
-                        ]
-                    ) {
-                        totalCount
-                        nodes {
-                            forkCount
-                        }
-                    }
-                    issues(first: 1) {
-                        totalCount
-                    }
-                    repositories(
-                        first: 100
-                        ownerAffiliations: OWNER
-                        orderBy: { direction: DESC, field: UPDATED_AT }
-                    ) {
-                        totalCount
-                        nodes {
-                            nameWithOwner
-                            stargazers {
-                                totalCount
-                            }
-                            forkCount
-                        }
-                    }
-                }
-            }   
-            `,
-            {
-                login: username,
-            }
-        );
-        const { data, errors } = response.data;
-
-        if (errors) {
-            throw new NotFoundError("Could not find a user with this name");
-        }
-
-        const repoNodes: RepoNode[] = data.user.repositories.nodes;
-
-        // Getting the amount of stars user has
-        const stars = repoNodes.reduce((prev, curr) => {
-            return prev + curr.stargazers!.totalCount;
-        }, 0);
-
-        // Getting the amount of forks user has
-        const forks = repoNodes.reduce((prev, curr) => {
-            return prev + curr.forkCount!;
-        }, 0);
-
-        const totalCommits: number =
-            data.user.contributionsCollection.totalCommitContributions +
-            data.user.contributionsCollection.restrictedContributionsCount;
-
-        return {
-            stars: stars.toString(),
-            forks: forks.toString(),
-            issues: data.user.issues.totalCount.toString(),
-            commits: totalCommits.toString(),
-            contributions:
-                data.user.repositoriesContributedTo.totalCount.toString(),
-            base64: await parseImage(url),
-        };
+        return await fetch(username, url);
     }
 
     protected render(data: UserFetcherResponse) {
-        const { stars, forks, issues, commits, contributions, base64 } = data;
-
         const {
             custom_title,
             hide_icons,
+            show_rank,
             username,
             text,
             border,
@@ -134,6 +53,16 @@ export default class StatsCard extends BaseCard {
             textsize,
             textweight,
         } = this.props as StatsCardProps;
+
+        const {
+            stars,
+            forks,
+            issues,
+            commits,
+            contributions,
+            ranking,
+            base64,
+        } = data;
 
         const includeApostrophe = ["x", "s"].includes(
             username.slice(-1).toLocaleLowerCase()
@@ -167,6 +96,30 @@ export default class StatsCard extends BaseCard {
                 },
             },
         });
+        const rankCircle = show_rank
+            ? `<g
+        transform="translate(280, ${185 / 2 - 45})">
+      <circle stroke="${
+          design.design.title
+      }" fill="none" stroke-width="6" opacity="0.2" cx="-10" cy="8" r="40" />
+      <circle stroke="${
+          design.design.title
+      }" stroke-dasharray="250" fill="none" stroke-width="6" stroke-linecap="round" opacity="0.8" cx="-10" cy="8" r="40" />
+      <g class="rank-text">
+        <text
+          x="-10"
+          y="0"
+          alignment-baseline="central"
+          dominant-baseline="central"
+          text-anchor="middle"
+        >
+          ${ranking.ranking}
+        </text>
+      </g>
+    </g>`
+            : "";
+
+        const textX = show_rank ? "185" : "250";
         return `
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="360" height="185" viewBox="0 0 360 185" font-family="${
         design.text.font
@@ -190,6 +143,7 @@ export default class StatsCard extends BaseCard {
             design.text.title.size
         }" x="25" y="35">${cardTitle}</text>
         <g transform="translate(${hide_icons ? "0" : "25"}, 55)">
+        ${rankCircle}
             <g transform="translate(0, 0)">
                 <g transform="translate(0, 0)">
                     ${
@@ -202,9 +156,9 @@ export default class StatsCard extends BaseCard {
                     }" font-weight="${design.text.text.weight}" fill="${
             design.design.text
         }">Stars Earned</text>
-                    <text x="250" y="12.5" font-size="${
-                        design.text.text.size
-                    }" font-weight="${design.text.text.weight}" fill="${
+                    <text x="${textX}" y="12.5" font-size="${
+            design.text.text.size
+        }" font-weight="${design.text.text.weight}" fill="${
             design.design.text
         }">${stars}</text>
                 </g>
@@ -219,9 +173,9 @@ export default class StatsCard extends BaseCard {
                     }" font-weight="${design.text.text.weight}" fill="${
             design.design.text
         }">Forks</text>
-                    <text x="250" y="12.5" font-size="${
-                        design.text.text.size
-                    }" font-weight="${design.text.text.weight}" fill="${
+                    <text x="${textX}" y="12.5" font-size="${
+            design.text.text.size
+        }" font-weight="${design.text.text.weight}" fill="${
             design.design.text
         }">${forks}</text>
                 </g>
@@ -236,9 +190,9 @@ export default class StatsCard extends BaseCard {
                     }" font-weight="${design.text.text.weight}" fill="${
             design.design.text
         }">Issues</text>
-                    <text x="250" y="12.5" font-size="${
-                        design.text.text.size
-                    }" font-weight="${design.text.text.weight}" fill="${
+                    <text x="${textX}" y="12.5" font-size="${
+            design.text.text.size
+        }" font-weight="${design.text.text.weight}" fill="${
             design.design.text
         }">${issues}</text>
                 </g>
@@ -253,9 +207,9 @@ export default class StatsCard extends BaseCard {
                     }" font-weight="${design.text.text.weight}" fill="${
             design.design.text
         }">Commits</text>
-                    <text x="250" y="12.5" font-size="${
-                        design.text.text.size
-                    }" font-weight="${design.text.text.weight}" fill="${
+                    <text x="${textX}" y="12.5" font-size="${
+            design.text.text.size
+        }" font-weight="${design.text.text.weight}" fill="${
             design.design.text
         }">${commits}</text>
                 </g>
@@ -270,14 +224,15 @@ export default class StatsCard extends BaseCard {
                     }" font-weight="${design.text.text.weight}" fill="${
             design.design.text
         }">Contributions</text>
-                    <text x="250" y="12.5" font-size="${
-                        design.text.text.size
-                    }" font-weight="${design.text.text.weight}" fill="${
+                    <text x="${textX}" y="12.5" font-size="${
+            design.text.text.size
+        }" font-weight="${design.text.text.weight}" fill="${
             design.design.text
         }">${contributions}</text>
                 </g>
             </g>
         </g>
+
     </svg>
 `;
     }

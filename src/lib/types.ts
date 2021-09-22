@@ -47,6 +47,7 @@ export interface UserFetcherResponse {
     issues: string;
     commits: string;
     contributions: string;
+    ranking: UserRanking;
     base64: Maybe<string>;
 }
 
@@ -214,4 +215,19 @@ export interface FallbackThemeText {
         size: string;
         weight: string;
     };
+}
+
+export interface RankingValues {
+    commits: number;
+    contributions: number;
+    repos: number;
+    issues: number;
+    stars: number;
+    pullRequests: number;
+    followers: number;
+}
+
+export interface UserRanking {
+    ranking: "Beginner" | "Intermediate" | "Advanced" | "Expert" | "Master" | "Guru" | "God"; 
+    points: number;
 }

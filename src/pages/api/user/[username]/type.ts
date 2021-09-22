@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import TypeCard from "@cards/TypeCard";
+import TypeCard from "@cards/type";
 
 export default async function handler(
     req: NextApiRequest,

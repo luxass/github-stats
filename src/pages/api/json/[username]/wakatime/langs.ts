@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import LanguageCard from "@cards/Wakatime/LanguageCard";
+import LanguageCard from "@cards/wakatime/language";
 
 export default async function handler(
     req: NextApiRequest,

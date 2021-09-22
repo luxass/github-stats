@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import StatsCard from "@cards/StatsCard";
+import StatsCard from "@cards/stats";
 
 export default async function handler(
     req: NextApiRequest,

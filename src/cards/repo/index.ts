@@ -1,14 +1,12 @@
 import { toBoolean, toString } from "@helpers/query";
 import { RepoFetcherResponse } from "@lib/types";
 import { VercelRequestQuery } from "@vercel/node";
-import BaseCard, { CommonProps } from "./BaseCard";
+import BaseCard, { CommonProps } from "../BaseCard";
 import wordwrap from "@lib/wordwrap";
 import { getFallbackTheme } from "@lib/theme";
-import getIcons from "src/icons";
-import Fetcher from "@helpers/fetcher";
-import NotFoundError from "@lib/errors/NotFoundError";
+import fetch from "./fetcher";
 import wcwidth from "wcwidth";
-import { parseImage } from "@lib/parser";
+
 interface RepoCardProps extends CommonProps {
     repo: string;
     hide_owner: boolean;
@@ -32,73 +30,7 @@ export default class RepoCard extends BaseCard {
 
     protected async fetch(): Promise<RepoFetcherResponse> {
         const { username, repo, url } = this.props as RepoCardProps;
-        let response = await Fetcher.graphql<{
-            login: string;
-            repo: string;
-        }>(
-            `
-                fragment RepoInfo on Repository {
-                    name
-                    nameWithOwner
-                    stargazers {
-                        totalCount
-                    }
-                    description
-                    primaryLanguage {
-                        color
-                        id
-                        name
-                    }
-                    forkCount
-                }
-                query getRepo($login: String!, $repo: String!) {
-                    user(login: $login) {
-                        repository(name: $repo) {
-                            ...RepoInfo
-                        }
-                    }
-                    organization(login: $login) {
-                        repository(name: $repo) {
-                            ...RepoInfo
-                        }
-                    }
-                }
-            `,
-            {
-                login: username,
-                repo: repo,
-            }
-        );
-        const { data, errors } = response.data;
-
-        if (!data.user && !data.organization) {
-            throw new NotFoundError(
-                "Both the user and organization was not found"
-            );
-        }
-
-        const userRepo = data.organization === null && data.user;
-        const orgRepo = data.user === null && data.organization;
-
-        let dataRepo;
-        if (userRepo) {
-            if (!data.user.repository || data.user.repository.isPrivate) {
-                throw new NotFoundError("No User Repository found");
-            }
-            dataRepo = data.user.repository;
-        }
-
-        if (orgRepo) {
-            if (
-                !data.organization.repository ||
-                data.organization.repository.isPrivate
-            ) {
-                throw new NotFoundError("No Organization Repository found");
-            }
-            dataRepo = data.organization.repository;
-        }
-
-        return { ...dataRepo, base64: await parseImage(url) };
+        return await fetch(username, repo, url);
     }
 
     protected render(data: RepoFetcherResponse) {
