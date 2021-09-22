@@ -64,6 +64,7 @@ export default async function fetch(
                 id
                 }
                 repository(owner: $login, name: $repo) {
+                    name
                 defaultBranchRef {
                     target {
                     ... on Commit {
@@ -86,7 +87,9 @@ export default async function fetch(
                 id: userId,
             }
         );
-
+        if (response.data.data.repository.defaultBranchRef === null) {
+            return [];
+        }
         return response.data.data.repository.defaultBranchRef.target.history.edges.map(
             (v: any) => v.node.committedDate
         );
