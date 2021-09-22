@@ -20,7 +20,7 @@ enum Ranks {
     GOD = "God",
 }
 
-// Should probably be reworked
+// Should probably be reworked, but requires feedback from the community
 function getRank(points: number) {
     if (points < 10000) return Ranks.BEGINNER;
     if (points < 120000) return Ranks.INTERMEDIATE;

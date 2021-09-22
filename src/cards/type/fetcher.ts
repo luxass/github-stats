@@ -1,5 +1,4 @@
 import Fetcher from "@helpers/fetcher";
-import { getRanking } from "@helpers/ranking";
 import NotFoundError from "@lib/errors/NotFoundError";
 import { parseImage } from "@lib/parser";
 import { RepoNode, TypeFetcherResponse, UserFetcherResponse } from "@lib/types";
