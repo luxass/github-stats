@@ -349,24 +349,33 @@
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
 
 "@types/luxon@^2.0.2":
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/@types/luxon/-/luxon-2.0.2.tgz#89db62ab8299ed3a703e75eef525d6bdf94349bc"
-  integrity sha512-CUrDlIVYv7TNkdQV8YfT2WGAHyMAwFIT1PXoUcQhX2EFMVL20lxEQHWc73gdJfRtMsI6Vc22HvR7eUN0jkx6+w==
+  version "2.4.0"
+  resolved "https://registry.yarnpkg.com/@types/luxon/-/luxon-2.4.0.tgz#897d3abc23b68d78b69d76a12c21e01eb5adab95"
+  integrity sha512-oCavjEjRXuR6URJEtQm0eBdfsBiEcGBZbq21of8iGkeKxU1+1xgKuFPClaBZl2KB8ZZBSWlgk61tH6Mf+nvZVw==
 
 "@types/node@*":
-  version "16.7.10"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.7.10.tgz#7aa732cc47341c12a16b7d562f519c2383b6d4fc"
-  integrity sha512-S63Dlv4zIPb8x6MMTgDq5WWRJQe56iBEY0O3SOFA9JrRienkOVDXSXBjjJw6HTNQYSE2JI6GMCR6LVbIMHJVvA==
+  version "20.2.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.2.5.tgz#26d295f3570323b2837d322180dfbf1ba156fefb"
+  integrity sha512-JJulVEQXmiY9Px5axXHeYGLSjhkZEnD+MDPDGbCbIAbMslkKwmygtZFy1X6s/075Yo94sf8GuSlFfPzysQrWZQ==
 
 "@types/prop-types@*":
-  version "15.7.4"
-  resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.4.tgz#fcf7205c25dff795ee79af1e30da2c9790808f11"
-  integrity sha512-rZ5drC/jWjrArrS8BR6SIr4cWpW09RNTYt9AMZo3Jwwif+iacXAqgVjm0B0Bv/S1jhDXKHqRVNCbACkJ89RAnQ==
+  version "15.7.5"
+  resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.5.tgz#5f19d2b85a98e9558036f6a3cacc8819420f05cf"
+  integrity sha512-JCB8C6SnDoQf0cNycqd/35A7MjcnK+ZTqE7judS6o7utxUCg6imJg3QK2qzHKszlTjcj2cn+NwMB2i96ubpj7w==
 
-"@types/react@*", "@types/react@^17.0.20":
-  version "17.0.20"
-  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.20.tgz#a4284b184d47975c71658cd69e759b6bd37c3b8c"
-  integrity sha512-wWZrPlihslrPpcKyCSlmIlruakxr57/buQN1RjlIeaaTWDLtJkTtRW429MoQJergvVKc4IWBpRhWw7YNh/7GVA==
+"@types/react@*":
+  version "18.2.7"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-18.2.7.tgz#dfb4518042a3117a045b8c222316f83414a783b3"
+  integrity sha512-ojrXpSH2XFCmHm7Jy3q44nXDyN54+EYKP2lBhJ2bqfyPj6cIUW/FZW/Csdia34NQgq7KYcAlHi5184m4X88+yw==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/react@^17.0.20":
+  version "17.0.60"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.60.tgz#a4a97dcdbebad76612c188fc06440e4995fd8ad2"
+  integrity sha512-pCH7bqWIfzHs3D+PDs3O/COCQJka+Kcw3RnO9rFA2zalqoXg7cNjJDh6mZ7oRtY1wmY4LVwDdAbA1F7Z8tv3BQ==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -2168,9 +2177,9 @@ lru-cache@^6.0.0:
     yallist "^4.0.0"
 
 luxon@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/luxon/-/luxon-2.0.2.tgz#11f2cd4a11655fdf92e076b5782d7ede5bcdd133"
-  integrity sha512-ZRioYLCgRHrtTORaZX1mx+jtxKtKuI5ZDvHNAmqpUzGqSrR+tL4FVLn/CUGMA3h0+AKD1MAxGI5GnCqR5txNqg==
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/luxon/-/luxon-2.5.2.tgz#17ed497f0277e72d58a4756d6a9abee4681457b6"
+  integrity sha512-Yg7/RDp4nedqmLgyH0LwgGRvMEKVzKbUdkBYyCosbHgJ+kaOUx0qzSiSatVc3DFygnirTPYnMM2P5dg2uH1WvA==
 
 make-dir@^3.0.2:
   version "3.1.0"
