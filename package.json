@@ -10,7 +10,7 @@
         "lint": "next lint"
     },
     "dependencies": {
-        "axios": "^0.21.2",
+        "axios": "^0.27.0",
         "image-to-base64": "^2.2.0",
         "luxon": "^2.0.2",
         "next": "^11.1.2",
@@ -29,7 +29,7 @@
         "@types/wcwidth": "^1.0.0",
         "@vercel/node": "^1.12.1",
         "eslint": "7.32.0",
-        "eslint-config-next": "11.1.0",
+        "eslint-config-next": "11.1.4",
         "typescript": "^4.4.2"
     }
 }
