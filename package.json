@@ -10,7 +10,7 @@
         "lint": "next lint"
     },
     "dependencies": {
-        "axios": "^0.21.2",
+        "axios": "^1.0.0",
         "image-to-base64": "^2.2.0",
         "luxon": "^2.0.2",
         "next": "^11.1.2",
