@@ -23,7 +23,7 @@
     },
     "devDependencies": {
         "@types/image-to-base64": "^2.1.0",
-        "@types/luxon": "^2.0.2",
+        "@types/luxon": "^3.0.0",
         "@types/react": "^17.0.20",
         "@types/styled-components": "^5.1.12",
         "@types/wcwidth": "^1.0.0",
