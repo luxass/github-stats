@@ -1,42 +1,10 @@
-# Nuxt 3 Minimal Starter
+<p align="center">
+ <img width="150px" src="./.github/logo.svg" align="center" alt="GitHub Stats" />
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+ <h2 align="center">GitHub Stats</h2>
+ <p align="center">✨ Dynamically generated github statistics for your readmes</p>
+</p>
 
-## Setup
+> NOTE: No longer maintained. Please use [github-readme-stats](github.com/anuraghazra/github-readme-stats) instead.
 
-Make sure to install the dependencies:
-
-```bash
-# yarn
-yarn install
-
-# npm
-npm install
-
-# pnpm
-pnpm install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`
-
-```bash
-npm run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-npm run build
-```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+</p>

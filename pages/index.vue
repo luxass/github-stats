@@ -6,9 +6,9 @@
       </h1>
       <p>
         Archived repository, please use
-        <Link href="https: github.com/anuraghazra/github-readme-stats">
+        <NuxtLink to="https://github.com/anuraghazra/github-readme-stats" class="underline underline-offset-5">
           GitHub Readme Stats
-        </Link> instead
+        </NuxtLink>instead.
       </p>
     </div>
   </div>
