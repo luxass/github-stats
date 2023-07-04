@@ -1,35 +1,20 @@
 {
-    "name": "github-stats",
-    "version": "0.2.0",
-    "description": "Generate stats for your readme",
-    "private": true,
-    "scripts": {
-        "dev": "next dev",
-        "build": "next build",
-        "start": "next start",
-        "lint": "next lint"
-    },
-    "dependencies": {
-        "axios": "^0.21.2",
-        "image-to-base64": "^2.2.0",
-        "luxon": "^2.0.2",
-        "next": "^11.1.2",
-        "progress-graph": "^1.0.0",
-        "react": "^17.0.2",
-        "react-dom": "^17.0.2",
-        "strip-ansi": "^7.0.0",
-        "styled-components": "^5.3.1",
-        "wcwidth": "^1.0.1"
-    },
-    "devDependencies": {
-        "@types/image-to-base64": "^2.1.0",
-        "@types/luxon": "^2.0.2",
-        "@types/react": "^17.0.20",
-        "@types/styled-components": "^5.1.12",
-        "@types/wcwidth": "^1.0.0",
-        "@vercel/node": "^1.12.1",
-        "eslint": "7.32.0",
-        "eslint-config-next": "11.1.0",
-        "typescript": "^4.4.2"
-    }
+  "name": "github-stats",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@luxass/eslint-config": "^3.2.0",
+    "@nuxt/devtools": "^0.6.6",
+    "@types/node": "^18",
+    "@unocss/nuxt": "^0.53.4",
+    "@unocss/reset": "^0.53.4",
+    "eslint": "^8.41.0",
+    "nuxt": "^3.5.2"
+  }
 }
