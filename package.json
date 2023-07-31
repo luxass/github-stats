@@ -12,8 +12,8 @@
     "@luxass/eslint-config": "^3.2.0",
     "@nuxt/devtools": "^0.7.0",
     "@types/node": "^18",
-    "@unocss/nuxt": "^0.53.4",
-    "@unocss/reset": "^0.53.4",
+    "@unocss/nuxt": "^0.54.0",
+    "@unocss/reset": "^0.54.0",
     "eslint": "^8.41.0",
     "nuxt": "^3.5.2"
   }
