@@ -9,12 +9,12 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "@luxass/eslint-config": "^3.2.0",
-    "@nuxt/devtools": "^0.7.0",
-    "@types/node": "^18",
-    "@unocss/nuxt": "^0.54.0",
-    "@unocss/reset": "^0.54.0",
-    "eslint": "^8.41.0",
-    "nuxt": "^3.5.2"
+    "@luxass/eslint-config": "^3.2.2",
+    "@nuxt/devtools": "^0.7.4",
+    "@types/node": "^18.17.1",
+    "@unocss/nuxt": "^0.54.1",
+    "@unocss/reset": "^0.54.1",
+    "eslint": "^8.46.0",
+    "nuxt": "^3.6.5"
   }
 }
