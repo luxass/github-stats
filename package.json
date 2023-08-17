@@ -8,13 +8,16 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
+  "dependencies": {
+    "@vercel/analytics": "^1.0.2"
+  },
   "devDependencies": {
-    "@luxass/eslint-config": "^3.2.2",
-    "@nuxt/devtools": "^0.7.4",
+    "@luxass/eslint-config": "^3.3.1",
+    "@nuxt/devtools": "^0.8.0",
     "@types/node": "^18.17.1",
-    "@unocss/nuxt": "^0.54.1",
-    "@unocss/reset": "^0.54.1",
-    "eslint": "^8.46.0",
+    "@unocss/nuxt": "^0.55.1",
+    "@unocss/reset": "^0.55.1",
+    "eslint": "^8.47.0",
     "nuxt": "^3.6.5"
   }
 }
