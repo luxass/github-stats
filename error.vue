@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import "./styles/global.css";
-
 useHead({
   title: "github stats",
 });
@@ -12,14 +10,22 @@ useSeoMeta({
 });
 
 defineOgImage({
-  title: "github stats",
-  description: "An archive of the github-stats project.",
+  title: "404",
+  description: "Page not found",
   component: "Base",
 });
 </script>
 
 <template>
-  <div class="md:px14 py3 md:py10 flex flex-col h-full">
-    <NuxtPage />
+  <div class="h-100dvh flex gap-4 flex-col items-center justify-center">
+    <h1 class="text-8xl text-blue-600">
+      404
+    </h1>
+    <p class="mb-8 text-2xl">
+      Page not found
+    </p>
+    <NuxtLink href="/">
+      Go back
+    </NuxtLink>
   </div>
 </template>
