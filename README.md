@@ -5,6 +5,7 @@
  <p align="center">✨ Dynamically generated github statistics for your readmes</p>
 </p>
 
-> NOTE: No longer maintained. Please use [github-readme-stats](github.com/anuraghazra/github-readme-stats) instead.
+> [!IMPORTANT]:  
+> No longer maintained. Please use [github-readme-stats](github.com/anuraghazra/github-readme-stats) instead.
 
 </p>
