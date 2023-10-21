@@ -17,11 +17,6 @@ html.dark {
   @apply: max-w-4xl lg:!mx-auto !mx-4;
 }
 
-.shiki {
-  @apply: overflow-auto p-4 border border-base rounded;
-}
-
-
 html {
   @apply: antialiased touch-manipulation scroll-smooth;
   text-rendering: optimizeLegibility;
